@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <!-- Aquí van tus estilos y scripts comunes -->
+</head>
+<body>
+  <header>
+    {% include 'partials/header.njk' %}
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    {% include 'partials/footer.njk' %}
+  </footer>
+</body>
+</html>

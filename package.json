@@ -2,11 +2,14 @@
   "name": "pandora",
   "version": "1.0.0",
   "description": "Knowledge Base for Comsistelco",
-  "main": "main",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "push" : "git add . && git commit -am merge && git push origin master"
-
+    "push": "git add . && git commit -am merge && git push origin master",
+    "create:model": "touch models/{modelName}.js",
+    "create:view": "touch views/{viewName}.ejs",
+    "create:controller": "touch controllers/{controllerName}.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +26,13 @@
   "bugs": {
     "url": "https://github.com/henry8812/Pandora/issues"
   },
-  "homepage": "https://github.com/henry8812/Pandora#readme"
+  "homepage": "https://github.com/henry8812/Pandora#readme",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "handlebars": "^4.7.7",
+    "nunjucks": "^3.2.4",
+    "pug": "^3.0.2"
+  }
 }
