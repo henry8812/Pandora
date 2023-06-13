@@ -1,0 +1,25 @@
+{
+  "name": "pandora",
+  "version": "1.0.0",
+  "description": "Knowledge Base for Comsistelco",
+  "main": "main",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henry8812/Pandora.git"
+  },
+  "keywords": [
+    "knowledge",
+    "base",
+    "node",
+    "passport"
+  ],
+  "author": "Henry A. Gomez M.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henry8812/Pandora/issues"
+  },
+  "homepage": "https://github.com/henry8812/Pandora#readme"
+}
