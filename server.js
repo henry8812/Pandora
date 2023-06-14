@@ -2,8 +2,11 @@ const express = require('express');
 const nunjucks = require('nunjucks');
 const app = express();
 const port = 3000;
+app.locals.baseUrl = 'http://localhost:3000'; // Reemplaza con la URL base de tu aplicación
 
 // Configurar el motor de plantillas Nunjucks
+app.use('/assets', express.static('assets'));
+
 app.set('view engine', 'njk');
 nunjucks.configure('views', {
   autoescape: true,
@@ -12,7 +15,7 @@ nunjucks.configure('views', {
 
 // Rutas
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Base de Conocimiento' }); // Renderizar la vista index.njk
+  res.render('index', { title: 'Base de Conocimiento', req }); // Renderizar la vista index.njk y pasar el objeto req como contexto
 });
 
 // Iniciar el servidor
