@@ -9,7 +9,8 @@
     "push": "git add . && git commit -am merge && git push origin master",
     "create:model": "touch models/{modelName}.js",
     "create:view": "touch views/{viewName}.ejs",
-    "create:controller": "touch controllers/{controllerName}.js"
+    "create:controller": "touch controllers/{controllerName}.js",
+    "create:admin": "node createAdmin.js"
   },
   "repository": {
     "type": "git",
@@ -28,11 +29,16 @@
   },
   "homepage": "https://github.com/henry8812/Pandora#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.1.4",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",
     "handlebars": "^4.7.7",
+    "mysql2": "^3.3.5",
     "nunjucks": "^3.2.4",
+    "prompt": "^1.3.0",
+    "prompt-sync": "^4.2.0",
     "pug": "^3.0.2"
   }
 }
