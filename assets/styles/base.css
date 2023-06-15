@@ -83,26 +83,38 @@
     top: 45%;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
   }
   
   .search-input {
     width: 50%;
     height: 80px;
+    padding-left: 20px;
     font-family: 'Montserrat', sans-serif;
     color: #333;
     font-size: 14px;
+    border-radius: 15px 0 0 15px;
+    border-color: transparent;
   }
   
   .search-select {
     width: 30%;
-    height: 80px;
+    height: 82px;
     font-family: 'Montserrat', sans-serif;
     color: #333;
     font-size: 14px;
+    border-color: transparent
   }
   
   .search-button {
     width: 20%;
-    height: 80px;
+    height: 82px;
+    color: white;
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 20px;
+    border-radius: 0 15px 15px 0;
+    border-color: transparent;
+    background-color: #1c89e1ca;
   }
   
