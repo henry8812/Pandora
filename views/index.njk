@@ -1,6 +1,21 @@
 {% extends 'layout.njk' %}
 
-{% block content %}
-  <h1>Bienvenido a la Base de Conocimiento</h1>
-  <!-- Aquí puedes agregar contenido específico para la página de inicio -->
+{% block body %}
+  <div class="container">
+    <section id="news">
+      active news
+      {% for item in items %}
+      
+      {% endfor %}
+    </section>
+    <section id="featured">
+      list featured articles
+    </section>
+    <section id="latest_news">
+      list latest news
+    </section>
+    <section id="latest_articles">
+      list latest articles
+    </section>
+  </div>
 {% endblock %}

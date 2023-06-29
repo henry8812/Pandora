@@ -1,0 +1,24 @@
+{% extends 'layout_articles.njk' %}
+
+{% block body %}
+
+<div class="container">
+
+        
+    <article class="blog-container post container main-page-content" lang="en-US">
+        <figure class="blog-image">
+            <img alt="{{article.title}}" src="{{article.banner}}" height="420" width="800">
+        </figure>
+        <h1>{{article.title}}</h1>
+        <div class="date-author">
+            <a href="/profiles/{{article.author.id}}" class="external author" target="_blank" rel="noreferrer">
+            <img src="{{article.author.image}}" alt="Author avatar" style="margin-right: 5px;">{{article.author.name}}</a>
+            <time class="date" style="margin-left: 10px;">{{article.creation_date | date("DD/MM/YYYY HH:mm")}}</time>
+        </div>
+        <div class="section-content">
+            {{article.content | renderHtml }}
+        </div>
+    </article>
+
+</div>
+{% endblock %}

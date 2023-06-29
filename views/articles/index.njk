@@ -1,0 +1,48 @@
+{% extends 'layout_articles.njk' %}
+
+{% block body %}
+
+<div id="content">
+    <section id="title">
+        <h1>ARTICULOS</h1>
+    </section>
+    <section id="articles">
+        {% for item in articles %}
+            <article>
+                <div class="header">
+                    {% if item.banner %}
+                    <figure class="blog-image">
+                        <a href="/articles/{{item.id}}">
+                            <img alt="{{item.slug}}" src="{{item.banner}}">
+                        </a>
+                    </figure>
+                    {% else %}
+                    <figure class="blog-image">
+                        <a href="/articles/{{item.id}}">
+                            <img alt="{{item.slug}}" src="/assets/images/banner.png" >
+                        </a>
+                    </figure>
+                    {% endif %}
+                    <h2>
+                        <a href="/articles/{{item.id}}">{{item.title}}</a>
+                    </h2>
+                    <p class="date-author">
+                        <a href="/profiles/{{item.author.id}}" class="external author" target="_blank" rel="noreferrer">
+                            <img src="{{item.author.image}}" alt="Author avatar">
+                            <span>{{item.author.name}}</span>
+                        </a>
+                        <time class="date">{{item.creation_date | date("DD/MM/YYYY HH:mm") }}</time>
+                    </p>
+                </div>
+                <p>{{item.short_description}}</p>
+                <a href="/articles/{{item.id}}" target="_self" class="button primary">
+                    <span class="button-wrap">Read more →</span>
+                </a>    
+            </article>
+
+        {% endfor %}
+
+        
+    </section>
+</div>
+{% endblock %}

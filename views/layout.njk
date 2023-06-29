@@ -21,8 +21,11 @@
                 ['/articles', 'Articulos'],
                 ['/resources', 'Recursos']
             ] %}
-                <li{% if req.path === link[0] %} class="active"{% endif %}><a href="{{ baseUrl + link[0] }}">{{ link[1] }}</a></li>
+                <li{% if req.path === link[0] %} class="active"{% endif %}><a href="{{ link[0] }}">{{ link[1] }}</a></li>
             {% endfor %}
+            <li>
+                <a href="/auth/logout" style="float: right;">Logout</a>
+            </li>
         </ul>
         <ul class="social-icons">
             <li><a href="#"><i class="fab fa-facebook"></i></a></li>

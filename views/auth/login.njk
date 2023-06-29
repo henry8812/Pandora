@@ -1,12 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
-</head>
-<body>
-    LOGIN
-</body>
-</html>
+{% extends 'layout_auth.njk' %}
+
+{% block body %}
+<section class="loginLeft">
+    <div class="white">
+        Welcome to PANDORA
+    </div>
+</section>
+<section class="loginRight pt-40">
+    <div class="card secondary border-0 mb-0">
+        <div class="card-header bg-transparent pb-5 pd-10 pr-10">
+            <div class="text-muted text-center mt-2 mb-3">
+                <small>Inicia sesión con:</small>
+            </div>
+            <div class="btn-wrapper text-center">
+                <a href="#" class="btn btn-neutral btn-icon">
+                    <span class="btn-inner--icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span class="btn-inner--text">Github</span>
+                </a>
+                <a href="#" class="btn btn-neutral btn-icon">
+                    <span class="btn-inner--icon">
+                        <i class="fab fa-google"></i>
+                    </span>
+                    <span class="btn-inner--text">Google</span>
+                </a>
+            </div>
+        </div>
+        <div class="card-body px-lg-5 py-lg-5" style="min-width: 600px; margin: 0 auto;">
+            <div class="text-center text-muted mb-4">
+                <small>O ingresa usando tus credenciales</small>
+            </div>
+            <form role="form" class="" id="loginForm" action="/auth/login" method="POST">
+                <div class="mb-4">
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                            </div>
+                            <input type="text" placeholder="Email" class="form-control" id="emailField" name="email">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                            <input id="passwordField" type="password" placeholder="Password" class="form-control" name="password">
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" autocomplete="off" class="custom-control-input" value="true" id="__BVID__163">
+                    <label class="custom-control-label" for="__BVID__163">Remember me</label>
+                </div>
+                <div class="text-center">
+                    
+                    <button type="submit" class="btn base-button my-4 btn-primary" id="loginButton">
+                        Sign in
+                    </button>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  var email = document.getElementById('emailField').value;
+  var password = document.getElementById('passwordField').value;
+
+  var data = {
+    email: email,
+    password: password
+  };
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/auth/login', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        console.log(response);
+
+        if (response.status === 'success') {
+          // La solicitud fue exitosa
+          // Realiza las acciones necesarias
+          location.href = "/";
+        } else {
+          // La solicitud falló
+          console.error('Error en la solicitud de inicio de sesión');
+        }
+      } else {
+        console.error('Error en la solicitud de inicio de sesión');
+      }
+    }
+  };
+
+  xhr.send(JSON.stringify(data));
+});
+
+
+ </script>
+ 
+<style>
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        color: #000000 !important;
+        background-color: #a0a0a0 !important;
+        text-align: center;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+</style>
+{% endblock %}

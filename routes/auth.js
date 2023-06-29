@@ -1,24 +1,49 @@
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
+const NodeCache = require('node-cache');
+const auth = require("../DAO/auth");
+
+// Crea una instancia de NodeCache
+const sessionCache = new NodeCache();
 
 // Ruta de inicio de sesión
-router.get('/login', (req, res) => {
+router.get('/login',  (req, res) => {
   // Lógica para mostrar la página de inicio de sesión
-  console.log("login")
+  console.log("login");
   res.render('auth/login', { title: 'Login', req });
 });
 
-router.post('/login', (req,res) => {
-    
-    
+router.post('/login',async (req, res) => {
+  // Acceder a los datos del cuerpo de la solicitud POST
+  const email = req.body.email;
+  const password = req.body.password;
+  let resp = await auth.authenticateUser(email, password)
+  
+  if(resp === null) {
     let response = {
-        status : "success",
-        message : "Login succesfully"
-    }
-    res.render('auth')
+      status: "failed",
+      message: "Email and Password combination are incorrect"
+    };  
+    res.send(response);
+  } else {
+    // Eliminar el campo "password" del objeto resp
+    delete resp[0].password;
+    
+    res.cookie('sessionId', email, { httpOnly: true, maxAge: 60*60*90});
 
-})
-
+    let response = {
+      status: "success",
+      message: "Login successfully",
+      data: resp[0]
+    };  
+    res.send(response);
+  }
+  
+  
+});
 // Ruta de registro
 router.get('/register', (req, res) => {
   // Lógica para mostrar la página de registro
@@ -27,6 +52,19 @@ router.get('/register', (req, res) => {
 // Ruta de cierre de sesión
 router.get('/logout', (req, res) => {
   // Lógica para cerrar sesión del usuario
+  // Borrar la cookie de sesión
+  res.clearCookie('sessionId');
+  
+  // Redirigir al usuario a la página de inicio de sesión
+  res.redirect('/auth/login');
 });
+
+// Función para generar un identificador único para la sesión
+function generateSessionId() {
+  // Aquí puedes implementar tu lógica para generar un identificador único
+  // Puede ser un token aleatorio, un UUID, un hash, etc.
+  // En este ejemplo, simplemente se genera un número aleatorio entre 1 y 100000
+  return Math.floor(Math.random() * 100000) + 1;
+}
 
 module.exports = router;

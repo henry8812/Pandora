@@ -1,41 +1,55 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
-const passport = require('passport');
-const flash = require('connect-flash');
+const MemoryStore = require('memorystore')(session);
+const cookieParser = require('cookie-parser');
+const authMiddleware = require('./authMiddleware'); // Ruta al archivo del middleware
 
 const app = express();
 const port = 3000;
 
 // Configurar el motor de plantillas Nunjucks
-app.use('/assets', express.static('assets'));
-
 app.set('view engine', 'njk');
-nunjucks.configure('views', {
+const njkEnv = nunjucks.configure('views', {
   autoescape: true,
   express: app
 });
 
-// Configurar las sesiones
-/**
+// Middlewares
+app.use(cookieParser());
 app.use(session({
-  secret: 'sec6u88(%1_-poqwy', // Cambia esto por una clave secreta más segura
+  secret: 'sec6u88(%1_-poqwy',
   resave: false,
   saveUninitialized: false,
+  store: new MemoryStore({
+    checkPeriod: 600
+  })
 }));
+app.use(authMiddleware);
 
+// Configuración adicional de Nunjucks
+njkEnv.addFilter('date', function(value, format) {
+  const options = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  };
+  return value.toLocaleString('en-US', options);
+});
+njkEnv.addFilter('renderHtml', function (value) {
+  return new nunjucks.runtime.SafeString(value);
+});
 
-// Configurar Passport.js
-require('./config/passport')(passport);
+// Configuración de rutas
+app.use('/assets', express.static('assets'));
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-*/
-// Importar las rutas
+app.use('/', function(req, res, next) {
+  njkEnv.addGlobal('req', req);
+  res.locals.currentPath = req.path;
+  next();
+});
+
 const indexRouter = require('./routes/index');
-
-// Rutas
 app.use('/', indexRouter);
 
 // Iniciar el servidor
