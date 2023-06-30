@@ -1,0 +1,33 @@
+{% extends 'layout_articles.njk' %}
+
+{% block body %}
+
+<div class="container">
+    <div id="content">
+        <section id="title">
+            <h1>MANUALES</h1>
+        </section>
+        <section id="guides">
+            <section class="leftContainer" >
+                acceso rapido
+            </section>
+            <section class="rightContainer">
+                {% for guide in guides %}
+                <p>
+                    <h2 class="Title"><a href="/guides/{{guide.id}}">{{guide.title}}</a></h2>
+                    <span>
+                        <p>{{guide.short_description}}</p>
+                    </span>
+                </p>
+                {% endfor %}
+                
+            </section>
+            
+            
+            
+        </section>
+        
+    </div>
+    
+</div>
+{% endblock %}

@@ -35,6 +35,7 @@ router.use('/auth', require('./auth'));
 router.use('/articles', require('./articles'));
 router.use('/guides', require('./guides'));
 router.use('/resources', require('./resources'));
+router.use('/files', require('./files'));
 
 
 

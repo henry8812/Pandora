@@ -1,27 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const articles = require("../DAO/articles");
+const guides = require("../DAO/guides");
 // Ruta de cierre de sesión
 router.get('/', async(req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("articles")
-  let items = await articles.listArticles();
+  console.log("guides")
+  let items = await guides.listGuides();
   console.log(items)
   
-  res.render('articles/index', { title: 'Articles', articles: items, req });
+  res.render('guides/index', { title: 'Articles', guides: items, req });
 });
 
 router.get('/new', async (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("article")
+  
 
 
-  res.render('articles/index', { title: 'Articles', req });
+  res.render('guides/index', { title: 'Guides', req });
 });
 
 router.post('/', (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("articles")
+  console.log("guides")
   res.response("test")  
 });
 
@@ -29,15 +29,15 @@ router.post('/', (req, res) => {
 router.get('/:id', async(req, res) => {
   // Lógica para cerrar sesión del usuario
   console.log("article:", req.params.id)
-  let article = await articles.getArticle(req.params.id)
+  let guide = await guides.getGuide(req.params.id)
   
-  res.render('articles/article', { title: article.title,  article: article, req });
+  res.render('guides/guide', { title: guide.title,  guide: guide, req });
 });
 
 router.put('/:id', (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("article")
-  res.render('articles/article', { title: 'Articles', req });
+  console.log("guide")
+  res.render('guides/guide', { title: 'Articles', req });
 });
 router.delete('/:id', (req, res) => {
   // Lógica para cerrar sesión del usuario

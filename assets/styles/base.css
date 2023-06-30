@@ -382,3 +382,53 @@ footer{
 .useful-links ul {
   list-style-type: disc;
 }
+.Title>a {
+  
+  font-weight: bold;
+  font-size: 15px;
+  text-decoration: #007bff;
+  color: #007bff !important;
+}
+
+.leftContainer{
+  width: 30%;
+  position: relative;
+  left: 0;
+}
+.rightContainer{
+  width: 70%;
+  position: relative;
+  left: 30%;
+}
+.guide-container{
+  margin-top: 30px;
+}
+.guide-container>h1{
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.guide-container>p{
+  margin-bottom: 15px;
+  text-align: justify;
+}
+.comsistelco >img{
+  position: absolute;
+  top: 0px;
+  left: 0;
+  height: 70px;
+  width: 70px;
+  margin: 0;
+  padding: 0;
+
+}
+.emcali >img{
+  position: absolute;
+  top: 0px;
+  right: 0;
+  height: 70px;
+  width: 70px;
+  margin: 0;
+  padding: 0;
+
+}

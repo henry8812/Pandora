@@ -10,32 +10,30 @@
 <body>
 <nav>
     <div class="navbar-content">
-        <div class="logo">
+        <div class="logo comsistelco">
             <!-- Aquí puedes agregar tu logo -->
+            <img src="/assets/images/comsistelco.png" alt="comsistelco">
         </div>
         <ul>
         
-            <li{% if req.path === '/' %} class="active"{% endif %}><a href="{{ baseUrl }}">Inicio</a></li>
+            <li{% if currentPath === '/' %} class="active"{% endif %}><a href="/">Inicio</a></li>
             {% for link in [
                 ['/guides', 'Manuales'],
                 ['/articles', 'Articulos'],
                 ['/resources', 'Recursos']
             ] %}
-                <li{% if req.path === link[0] %} class="active"{% endif %}><a href="{{ link[0] }}">{{ link[1] }}</a></li>
+            
+                <li{% if currentPath === link[0] %} class="active"{% endif %}><a href="{{  link[0] }}">{{ link[1] }}</a></li>
             {% endfor %}
-            <li>
-                <a href="/auth/logout" style="float: right;">Logout</a>
-            </li>
         </ul>
-        <ul class="social-icons">
-            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-        </ul>
+        <div class="logo emcali">
+            <!-- Aquí puedes agregar tu logo -->
+            <img src="/assets/images/emcali.png" alt="emcali">
+        </div>
     </div>
 </nav>
 
-{% include 'partials/header.njk' %}
+{% include 'partials/header_auth.njk' %}
 
 {% block body %}{% endblock %}
 
