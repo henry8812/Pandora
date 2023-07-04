@@ -11,12 +11,12 @@ router.get('/', async(req, res) => {
   res.render('articles/index', { title: 'Articles', articles: items, req });
 });
 
-router.get('/new', async (req, res) => {
+router.get('/article/new', async (req, res) => {
   // Lógica para cerrar sesión del usuario
   console.log("article")
 
 
-  res.render('articles/index', { title: 'Articles', req });
+  res.render('articles/new', { title: 'Articles', req });
 });
 
 router.post('/', (req, res) => {

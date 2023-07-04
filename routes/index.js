@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const router = express.Router();
 const NodeCache = require('node-cache');
+const users = require('../DAO/users')
 
 // Crea una instancia de NodeCache
 const sessionCache = new NodeCache();
@@ -10,18 +11,51 @@ const sessionCache = new NodeCache();
 router.use(cookieParser());
 
 // Ruta de inicio
-router.get('/', (req, res) => {
+router.get('/', async(req, res) => {
   // Verificar si la cookie de sesión existe
   const sessionId = req.cookies.sessionId;
-
-  if (sessionId) {
+  const email = sessionId;
+  let user = req.cookies.user;
+  if (sessionId && user == undefined) {
+    try {
+      user = await users.getUserByEmail(email);
+      user = user[0]
+      res.cookie('user', user, { httpOnly: true, maxAge: 60*60*90*60});  
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+  
+  if (sessionId && user !== undefined) {
     // La sesión está activa, obtener los datos de la sesión
-    const email = sessionId;
-
+    
+    
     console.log("Hay sesión");
     console.log("Email:", email);
-
-    res.render('index', { title: 'Base de Conocimiento', req });
+    console.log("USER:", user);
+    
+    let next = "/";
+    switch(user.role_name){
+      case 'Front':
+        next = "index";
+      break;
+      case 'Premium':
+        next = "index";
+        break;
+      case 'coordinator':
+        next = 'Coordinador'
+      break;
+      case 'Administrador':
+        next = 'admin'
+      break;
+      default:
+        next = '401'
+      break;
+    }
+    
+    
+    res.render(next, { title: 'Base de Conocimiento', req , user : user });
   } else {
     // La sesión no está activa, redirigir a la página de inicio de sesión
     console.log("No hay sesión");

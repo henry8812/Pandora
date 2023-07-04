@@ -5,6 +5,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 const NodeCache = require('node-cache');
 const auth = require("../DAO/auth");
+const users= require("../DAO/users")
 
 // Crea una instancia de NodeCache
 const sessionCache = new NodeCache();
@@ -18,6 +19,7 @@ router.get('/login',  (req, res) => {
 
 router.post('/login',async (req, res) => {
   // Acceder a los datos del cuerpo de la solicitud POST
+  let user = null;
   const email = req.body.email;
   const password = req.body.password;
   let resp = await auth.authenticateUser(email, password)
@@ -30,9 +32,24 @@ router.post('/login',async (req, res) => {
     res.send(response);
   } else {
     // Eliminar el campo "password" del objeto resp
+    console.log(user)
+    console.log("user after")
     delete resp[0].password;
+    try {
+      console.log(email)
+      user = await users.getUserByEmail(email);
+      console.log("after queery")
+      console.log(user)
+      
+      res.cookie('user', user, { httpOnly: true, maxAge: 60*60*90*60});  
+      
+      console.log("just")
+      console.log(user)
+    } catch (error) {
+      console.log(error)
+    }
     
-    res.cookie('sessionId', email, { httpOnly: true, maxAge: 60*60*90});
+    res.cookie('sessionId', email, { httpOnly: true, maxAge: 60*60*90*60});
 
     let response = {
       status: "success",

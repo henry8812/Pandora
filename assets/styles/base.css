@@ -199,7 +199,7 @@
     margin-top: 25px;
   }
   #articles > article >p{
-    min-height: 150px;
+    min-height: 100px;
   }
   
   #content>#title{
@@ -272,7 +272,7 @@
   img {
     width: 100%;
     margin-top:5px;
-    margin-bottom: 5px;
+    margin-bottom: 30px;
   }
 
 
@@ -376,9 +376,7 @@ form .g-inp{
     font-weight: 500;
 }
 
-footer{
-  margin-top:70px;
-}
+
 .useful-links ul {
   list-style-type: disc;
 }
@@ -443,7 +441,7 @@ footer{
   width: 101vw;
   height: 150px;
   position: relative;
-  left: -18%;
+  
   padding-top: 50px;
   
 }
@@ -473,4 +471,118 @@ footer{
 }
 #articles.featured>article{
   min-height: 70px !important;
+}
+
+#latest_articles {
+  margin-top: 20px;
+}
+
+.article-list {
+  list-style: disc;
+  margin-top: 10px;
+  
+  padding-left: 20px; /* Agrega un espacio entre el marcador y el texto del enlace */
+}
+
+.article-list > li{
+  display: list-item ;
+  margin-left: 0;
+  text-decoration: underline;
+  list-style: none;
+}
+.help-sec>ul>li>a{
+  color: white !important;
+}
+#contact-form>input{
+  height: 25px;
+  padding: 4px  ;
+  border-radius: 5px;
+}
+#contact-form>textarea{
+  height: 100px;
+  padding: 4px;
+  border-radius: 10px;
+}
+#contact-form>button{
+  height: 30px;
+  background: #2d4bf0;
+  color: #e7e7e7;
+  border-radius: 10px;
+  
+}
+.useful-links>ul>li>a{
+  color: #FFFFFF;
+}
+#leftMenu {
+  width: 20% !important;
+  background: #0f172a;
+  min-height: 400px;
+}
+#rightSection{
+  margin-left: 5%;
+  width: 90%;
+}
+#adminSection {
+  display: flex;
+  min-height: 200px;
+}
+
+#leftMenu {
+  flex: 0 0 20%;
+  color: white;
+  background-color: #003369;
+  height: 100%;
+  padding: 20px;
+}
+
+#rightSection {
+  flex: 1;
+  padding: 20px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 960px;
+}
+.menu > ul{
+  list-style: none;
+}
+.menu > ul >li {
+  display: list-item;
+  color: white;
+  text-decoration: none;
+}
+
+.menu > ul >li>a {
+  color: white;
+}
+.menu > ul >li>ul>li {
+
+  display: list-item;
+  color: white;
+  text-decoration: none;
+}
+.menu > ul >li>ul>li>a {
+  color:white;
+}
+#leftMenu {
+  flex: 1;
+  background-color: #0f172a;
+  color: #e7e7e7;
+  min-height: 700px;
+}
+
+#rightSection {
+  flex: 4;
+
+}
+
+.container {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banner>.news{
+  display: block !important;
 }

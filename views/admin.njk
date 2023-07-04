@@ -1,0 +1,44 @@
+{% extends 'layout.njk' %}
+
+{% block body %}
+
+<div id="adminSection">
+  <div id="leftMenu">
+    <div class="menu">
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li>Artículos
+          <ul>
+            <li><a href="/articles">Listar Articulos</a></li>
+            <li><a href="/articles/article/new">Crear articulo</a></li>
+          </ul>
+        </li>
+        <li>Manuales
+          <ul>
+            <li><a href="/guides">Listar Manuales</a></li>
+            <li><a href="/guides/guide/new">Crear manual</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Recursos</a>
+          <ul>
+            <li><a href="/resources">Listar Recursos</a></li>
+            <li><a href="/resources/resource/new">Cargar Recurso</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Perfil</a>
+        <ul>
+          <li><a href="/auth/profile"></a>Perfil</li>
+          <li><a href="/auth/logout">Cerrar Sesion</a></li>
+        </ul></li>
+      </ul>
+    </div>
+  </div>
+  
+  <section id="rightSection">
+    <div class="container">
+      <!-- Contenido principal -->
+    </div>
+  </section>
+</div>
+
+{% endblock %}
