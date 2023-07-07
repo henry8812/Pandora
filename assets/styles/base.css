@@ -1,3 +1,6 @@
+.hidden {
+  display: none !important;
+}
 * {
     margin: 0;
     padding: 0;
@@ -189,7 +192,7 @@
   }
   
   #articles > article {
-    width: 35%;
+    width: 40%;
     margin: 0 auto;
     padding: 30px;
     border: 1px solid #cdcdcd;
@@ -438,7 +441,7 @@ form .g-inp{
   background: linear-gradient(to right, #0f172a 0%, #192e80 50%, #0f172a 100%);
   padding: 10px;
   color: #e7e7e7;
-  width: 101vw;
+  width: 97.8vw;
   height: 150px;
   position: relative;
   
@@ -585,4 +588,55 @@ form .g-inp{
 }
 .banner>.news{
   display: block !important;
+}
+.content{
+  width: 80%;
+  margin: 0 auto;
+}
+#latest{
+  margin-bottom: 50px;
+}
+
+#article-editor {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 80px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.article-header label,
+.article-content label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.article-header input[type="text"],
+.article-header textarea,
+.article-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.article-content textarea {
+  height: 300px;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
 }

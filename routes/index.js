@@ -38,16 +38,16 @@ router.get('/', async(req, res) => {
     let next = "/";
     switch(user.role_name){
       case 'Front':
-        next = "index";
+        next = "agent/index";
       break;
       case 'Premium':
-        next = "index";
+        next = "agent/index";
         break;
-      case 'coordinator':
-        next = 'Coordinador'
+      case 'Coordinador':
+        next = 'coordinator/index'
       break;
       case 'Administrador':
-        next = 'admin'
+        next = 'admin/index'
       break;
       default:
         next = '401'
@@ -70,6 +70,7 @@ router.use('/articles', require('./articles'));
 router.use('/guides', require('./guides'));
 router.use('/resources', require('./resources'));
 router.use('/files', require('./files'));
+router.use('/admin', require('./admin'));
 
 
 

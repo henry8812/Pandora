@@ -1,0 +1,96 @@
+{% extends 'layout_auth.njk' %}
+
+{% block body %}
+
+<div id="article-editor">
+  <form id="article-form">
+    <div class="article-header">
+      <label for="banner">Banner Image</label>
+      <input type="file" id="banner" name="banner">
+      <button type="button" id="upload">Upload Image</button>
+      <label for="banner">URL del Banner</label>
+      <input type="text" id="bannerurl" name="bannerurl">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title">
+      <label for="short-description">Short Description</label>
+      <textarea id="short-description" name="short-description"></textarea>
+    </div>
+    <div class="article-content">
+      <label for="content">Content</label>
+      <textarea id="content" name="content"></textarea>
+    </div>
+    <button type="submit" id="publish">Publish</button>
+  </form>
+</div>
+
+<script src="https://cdn.tiny.cloud/1/ro7zz3s8qd5agecj1yw4flgil4i2wwk0qu7ka7oilyiduxcv/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    tinymce.init({
+      selector: '#content',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      toolbar_mode: 'floating',
+      height: '400',
+      content_style: 'body { font-family: Arial,sans-serif; font-size: 14px; }',
+    });
+
+    const articleForm = document.querySelector("#article-form");
+    const uploadButton = document.querySelector("#upload");
+
+    uploadButton.addEventListener("click", function() {
+      const bannerInput = document.querySelector("#banner");
+      const bannerURL = document.querySelector("#bannerurl");
+      const formData = new FormData();
+
+      if (bannerInput.files.length > 0) {
+        const file = bannerInput.files[0];
+        formData.append("file", file);
+      }
+
+      fetch("/articles/uploadBanner", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        const imageURL = data.imageURL;
+        bannerURL.value = imageURL;
+      })
+      .catch(error => {
+        console.error("Error al cargar la imagen:", error);
+      });
+    });
+
+    articleForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const titleInput = document.querySelector("#title");
+      const bannerURL = document.querySelector("#bannerurl");
+      const shortDescriptionInput = document.querySelector("#short-description");
+      const contentInput = tinymce.get('content').getContent();
+
+      const articleData = {
+        title: titleInput.value,
+        bannerurl: bannerURL.value,
+        shortDescription: shortDescriptionInput.value,
+        content: contentInput
+      };
+
+      fetch("/publishArticle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(articleData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error("Error al publicar el artículo:", error);
+      });
+    });
+  });
+</script>
+{% endblock %}

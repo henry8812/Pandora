@@ -1,0 +1,60 @@
+{% extends 'layout.njk' %}
+
+{% block body %}
+<div class="">
+  
+  <div class="banner">
+    <div class="news container">
+      <h2 class="title">Caso Masivo</h2>
+      <p class="message">Se esta presentando un caso masivo, relacionado a problemas de red, recuerden que si llega algo relacionado, deben analizar el modelo OSI.</p>
+    </div>
+  </div>
+  <div class="content">
+    
+  <section id="featured">
+    <h1 style="text-align: center;">ARTICULOS POPULARES</h1>
+    <div id="articles" class="featured">
+      <article>
+        <h3 class="tile-title">
+          <a href="/en-US/blog/regular-expressions-reference-updates/">New reference pages on MDN for JavaScript regular expressions</a>
+        </h3>
+        <p>See the latest updates to the MDN reference pages about JavaScript regular expressions, including new sections on sub-features and browser compatibility information.</p>
+      </article>
+      <article class="article-tile">
+        <h3 class="tile-title"><a href="/en-US/blog/aria-accessibility-html-landmark-roles/">Using HTML landmark roles to improve accessibility</a>
+        </h3>
+        <p>Learn what HTML landmark roles are, how they improve accessibility, and how you can include them on your website effectively.</p>
+      </article>
+      <article class="article-tile"><a href="/en-US/docs/Web/API" class="tile-tag">Web APIs</a>
+        <h3 class="tile-title"><a href="/en-US/docs/Web/API/Performance_API">Performance API</a>
+        </h3>
+        <p>The Performance API is a group of standards used to measure the performance of web applications.</p>
+      </article>
+      <article class="article-tile"><a href="/en-US/docs/Web/CSS" class="tile-tag">CSS</a>
+        <h3 class="tile-title">
+          <a href="/en-US/docs/Web/CSS/font-palette">font-palette</a>
+        </h3>
+        <p>The font-palette CSS property allows specifying one of the many palettes contained in a font that a user agent should use for the font. Users can also override the values in a palette or create a new palette by using the @font-palette-values at-rule.</p>
+      </article>
+    </div>
+  </section>
+  <!--
+    <section id="latest_news">
+      list latest news
+    </section>-->
+    <section id="latest_articles">
+      <h1 style="text-align: center;">ULTIMOS ARTICULOS</h1>
+      <div id="latest">
+        <ul class="article-list">
+          <li><a href="/en-US/blog/regular-expressions-reference-updates/">New reference pages on MDN for JavaScript regular expressions</a></li>
+          <li><a href="/en-US/blog/aria-accessibility-html-landmark-roles/">Using HTML landmark roles to improve accessibility</a></li>
+          <li><a href="/en-US/docs/Web/CSS/font-palette">font-palette</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</section>
+
+</div>
+
+{% endblock %}
