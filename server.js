@@ -25,6 +25,8 @@ app.use(session({
     checkPeriod: 600
   })
 }));
+app.use(express.json());
+
 app.use(authMiddleware);
 
 // Configuración adicional de Nunjucks

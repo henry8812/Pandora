@@ -11,6 +11,14 @@ router.get('/', async(req, res) => {
   res.render('articles/index', { title: 'Articles', articles: items, req });
 });
 
+router.get('/guide/new', async (req, res) => {
+  // Lógica para cerrar sesión del usuario
+  console.log("guide")
+
+
+  res.render('guides/new', { title: 'Guides', req });
+});
+
 router.get('/article/new', async (req, res) => {
   // Lógica para cerrar sesión del usuario
   console.log("article")
@@ -18,6 +26,8 @@ router.get('/article/new', async (req, res) => {
 
   res.render('articles/new', { title: 'Articles', req });
 });
+
+
 
 router.post('/', (req, res) => {
   // Lógica para cerrar sesión del usuario

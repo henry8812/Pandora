@@ -1,5 +1,4 @@
 {% extends 'layout_articles.njk' %}
-
 {% block body %}
 
 <div id="content">
@@ -31,7 +30,7 @@
                             <img src="{{item.author.image}}" alt="Author avatar">
                             <span>{{item.author.name}}</span>
                         </a>
-                        <time class="date">{{item.creation_date | date("DD/MM/YYYY HH:mm") }}</time>
+                        <time class="date">{{item.created_at | date("DD/MM/YYYY HH:mm") }}</time>
                     </p>
                 </div>
                 <p>{{item.short_description}}</p>

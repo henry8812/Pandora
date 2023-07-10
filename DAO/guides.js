@@ -20,6 +20,18 @@ async function getFile(id) {
     throw error;
   }
 }
+async function createFile(fileData) {
+  try {
+    const result = await db.query('INSERT INTO files SET ?', fileData);
+    
+    const fileId = result.insertId;
+    return fileId
+
+  } catch (error) {
+    console.log(error)
+  }
+  return null;
+}
 
 // Función para autenticar al usuario
 async function listGuides() {
@@ -28,6 +40,7 @@ async function listGuides() {
     const query = 'SELECT * FROM manuals';
     
     let manuals = await db.query(query);
+    
 
     return manuals;
 

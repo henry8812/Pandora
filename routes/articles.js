@@ -5,8 +5,13 @@ const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
+const fileUpload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
+const NodeCache = require('node-cache');
 
-router.get('/', async(req, res) => {
+router.use(fileUpload());
+
+router.get('/', async (req, res) => {
   try {
     const items = await articles.listArticles();
     res.render('articles/index', { title: 'Articles', articles: items, req });
@@ -27,33 +32,32 @@ router.get('/new', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
+    console.log(req.body)
     const { title, bannerurl, shortDescription, content } = req.body;
-
+    
     if (!title || !shortDescription || !content) {
       return res.status(400).send('Missing required fields');
     }
-
-    let bannerPath = '';
-
-    if (bannerurl) {
-      const fileName = `${uuidv4()}.jpg`;
-      const imagePath = path.join(__dirname, '../public/assets/images/uploads', fileName);
-
-      await downloadImage(bannerurl, imagePath);
-
-      bannerPath = `/assets/images/uploads/${fileName}`;
-    }
-
+    
+    
+    const sessionId = req.cookies.sessionId;
+    const email = sessionId;
+    let author = email
     const articleData = {
       title,
-      banner: bannerPath,
+      banner: bannerurl,
       shortDescription,
       content,
+      creator : author
     };
-
+    
     await articles.createArticle(articleData);
-
-    res.redirect('/articles');
+    let response = {
+      status: "success",
+      message: "article created succesfully",
+      data: articleData
+    };  
+    res.send(response);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error creating article');
@@ -62,7 +66,7 @@ router.post('/', async (req, res) => {
 
 async function downloadImage(url, imagePath) {
   const response = await axios.get(url, { responseType: 'stream' });
-
+  
   return new Promise((resolve, reject) => {
     const writer = fs.createWriteStream(imagePath);
     response.data.pipe(writer);
@@ -94,16 +98,16 @@ router.get('/:id/edit', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { title, bannerurl, shortDescription, content } = req.body;
-
+    
     const articleData = {
       title,
       bannerurl,
       shortDescription,
       content,
     };
-
+    
     await articles.updateArticle(req.params.id, articleData);
-
+    
     res.redirect(`/articles/${req.params.id}`);
   } catch (error) {
     console.error(error);
@@ -114,7 +118,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await articles.deleteArticle(req.params.id);
-
+    
     res.redirect('/articles');
   } catch (error) {
     console.error(error);
@@ -122,25 +126,36 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+
+
 router.post('/uploadBanner', async (req, res) => {
   try {
     if (!req.files || !req.files.banner) {
       return res.status(400).send('No banner image provided');
     }
-
+    
     const banner = req.files.banner;
+    
+    // Generar un nombre único para el archivo
     const fileName = `${uuidv4()}.jpg`;
-    const imagePath = path.join(__dirname, '/assets/images/uploads', fileName);
-
-    await banner.mv(imagePath);
-
+    
+    // Ruta de destino para guardar la imagen
+    const imagePath = path.join(__dirname, '../assets/images/uploads', fileName);
+    
+    // Cargar la imagen en el directorio de destino utilizando fs
+    fs.writeFileSync(imagePath, banner.data);
+    
+    // Ruta de la imagen cargada en la carpeta /assets/images/uploads
     const bannerPath = `/assets/images/uploads/${fileName}`;
-
+    
     res.json({ imagePath: bannerPath });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error uploading banner image');
   }
 });
+
+
+
 
 module.exports = router;

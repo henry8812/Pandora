@@ -5,11 +5,11 @@
 <div id="article-editor">
   <form id="article-form">
     <div class="article-header">
-      <label for="banner">Banner Image</label>
-      <input type="file" id="banner" name="banner">
-      <button type="button" id="upload">Upload Image</button>
+      <label for="document">Documento del manual</label>
+      <input type="file" id="document" name="document">
+      <button type="button" id="upload">Upload Document</button>
       <label for="banner">URL del Banner</label>
-      <input type="text" id="bannerurl" name="bannerurl">
+      <input type="text" id="documenturl" name="documenturl" style="display: none;">
       <label for="title">Title</label>
       <input type="text" id="title" name="title">
       <label for="short-description">Short Description</label>
@@ -47,7 +47,7 @@
         formData.append("banner", file);
       }
 
-      fetch("/articles/uploadBanner", {
+      fetch("/guides/uploadDocument", {
         method: "POST",
         body: formData
       })
@@ -57,16 +57,16 @@
         bannerURL.value = imageURL;
         Swal.fire({
             title: 'Carga Completa',
-            text: 'Haz cargado una imagen de Banner para tu articulo',
+            text: 'Haz cargado el documento para el manueal exitosamente',
             icon: 'success',
             confirmButtonText: 'OK'
           })
       })
       .catch(error => {
-        console.error("Error al cargar la imagen:", error);
+        console.error("Error al cargar el documento:", error);
         Swal.fire({
             title: 'Carga Fallida',
-            text: 'Ha ocurrido un error al cargar el banner, intentalo nuevamente, si el error persiste contacta al equipo de soporte',
+            text: 'Ha ocurrido un error al cargar el documento, intentalo nuevamente, si el error persiste contacta al equipo de soporte',
             icon: 'error',
             confirmButtonText: 'OK'
           })
@@ -77,18 +77,17 @@
       event.preventDefault();
 
       const titleInput = document.querySelector("#title");
-      const bannerURL = document.querySelector("#bannerurl");
+      const documentURL = document.querySelector("#documenturl");
       const shortDescriptionInput = document.querySelector("#short-description");
       const contentInput = tinymce.get('content').getContent();
 
       // Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
-      if (!bannerURL.value) {
-        const bannerInput = document.querySelector("#banner");
-        if (!bannerInput.files || bannerInput.files.length === 0) {
-          console.error("Debes cargar una imagen o proporcionar una URL de imagen");
+      if (!documentURL.value) {
+        const documentInput = document.querySelector("#document");
+        if (!documentInput.files || documentInput.files.length === 0) {
           Swal.fire({
             title: 'Error!',
-            text: 'Debes cargar una imagen o proporcionar una URL de imagen',
+            text: 'Debes cargar un documento para este manual',
             icon: 'error',
             confirmButtonText: 'OK'
           })
@@ -96,31 +95,31 @@
         }
       }
 
-      const articleData = {
+      const guideData = {
         title: titleInput.value,
-        bannerurl: bannerURL.value,
+        bannerurl: documentURL.value,
         shortDescription: shortDescriptionInput.value,
         content: contentInput
       };
 
-      fetch("/articles", {
+      fetch("/guides", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(articleData)
+        body: JSON.stringify(guideData)
       })
       .then(response => response.json())
       .then(data => {
         console.log(data);
         Swal.fire({
-            title: 'Articulo creado correctamente',
-            text: 'Haz creado un articulo de fomra exitosa',
+            title: 'Manual creado correctamente',
+            text: 'Haz creado un manual de fomra exitosa',
             icon: 'success',
             confirmButtonText: 'OK'
           }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
-            location.href = "/articles";
+            location.href = "/guides";
         })
       })
       .catch(error => {

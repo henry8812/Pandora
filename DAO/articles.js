@@ -50,8 +50,51 @@ async function getArticle(id) {
   }  
 }
 
+async function createArticle(articleData) {
+  try {
+    // Obtener el usuario por su email
+    console.log("cookie:", articleData.creator)
+    const user = await users.getUserByEmail(articleData.creator);
+    console.log("user:", user)
+    
+    // Verificar si se encontró el usuario
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Crear el artículo con la información proporcionada
+    const newArticle = {
+      title: articleData.title,
+      banner: articleData.banner,
+      short_description: articleData.shortDescription,
+      content: articleData.content,
+      creator: user.id,
+      created_at: new Date(),
+      updated_at: new Date()
+    };
+
+    console.log(JSON.stringify(newArticle, null, 4))
+
+    // Insertar el artículo en la base de datos
+    const result = await db.query('INSERT INTO articles SET ?', newArticle);
+
+    // Obtener el ID del artículo creado
+    const articleId = result.insertId;
+
+    // Asignar el ID al artículo creado
+    newArticle.id = articleId;
+
+    // Retornar el artículo creado
+    return newArticle;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error creating article");
+  }
+}
+
 
 module.exports = {
   listArticles,
-  getArticle
+  getArticle,
+  createArticle
 };
