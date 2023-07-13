@@ -8,5 +8,12 @@ router.get('/:id/:filename', (req, res) => {
 
   res.sendFile(filePath);
 });
+router.get('/:filename', (req, res) => {
+  const { filename } = req.params;
+  const filePath = path.join(__dirname, '..', 'files', filename);
+
+  res.sendFile(filePath);
+});
+
 
 module.exports = router;

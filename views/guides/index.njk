@@ -2,32 +2,27 @@
 
 {% block body %}
 
-<div class="container">
-    <div id="content">
-        <section id="title">
-            <h1>MANUALES</h1>
-        </section>
-        <section id="guides">
-            <section class="leftContainer" >
-                acceso rapido
-            </section>
-            <section class="rightContainer">
-                {% for guide in guides %}
-                <p>
-                    <h2 class="Title"><a href="/guides/{{guide.id}}">{{guide.title}}</a></h2>
-                    <span>
-                        <p>{{guide.short_description}}</p>
-                    </span>
-                </p>
-                {% endfor %}
+
+<div id="content" style="width: 80%; margin: 0 auto;">
+    <section id="title">
+        <h1>MANUALES</h1>
+    </section>
+    <section id="guides">
+        <div class="card-container">
+            {% for guide in guides %}
+            <a class="card" style="height: 200px;padding: 10px;" href="/guides/{{guide.id}}">
                 
-            </section>
-            
-            
-            
-        </section>
-        
-    </div>
-    
+                <h2 class="card-title" style="text-align: center;margin-top: 20px;">{{guide.title}}</h2>
+                <p class="card-description" style="text-align: justify;">{{guide.short_description | truncateText(150)}}</p>
+                <div class="card-stats">
+                    <!-- Aquí puedes agregar las estadísticas del manual -->
+                </div>
+                
+            </a>
+            {% endfor %}
+        </div>
+    </section>
 </div>
+
+
 {% endblock %}

@@ -8,7 +8,6 @@
       <label for="document">Documento del manual</label>
       <input type="file" id="document" name="document">
       <button type="button" id="upload">Upload Document</button>
-      <label for="banner">URL del Banner</label>
       <input type="text" id="documenturl" name="documenturl" style="display: none;">
       <label for="title">Title</label>
       <input type="text" id="title" name="title">
@@ -37,24 +36,28 @@
     const articleForm = document.querySelector("#article-form");
     const uploadButton = document.querySelector("#upload");
 
+    let guide = null;
+    let resource = null;
+
     uploadButton.addEventListener("click", function() {
-      const bannerInput = document.querySelector("#banner");
-      const bannerURL = document.querySelector("#bannerurl");
+      const documentInput = document.querySelector("#document");
+      const documentURL = document.querySelector("#documenturl");
       const formData = new FormData();
 
-      if (bannerInput.files.length > 0) {
-        const file = bannerInput.files[0];
-        formData.append("banner", file);
+      if (documentInput.files.length > 0) {
+        const file = documentInput.files[0];
+        formData.append("file", file);
       }
 
-      fetch("/guides/uploadDocument", {
+      fetch("/resources/", {
         method: "POST",
         body: formData
       })
       .then(response => response.json())
       .then(data => {
-        const imageURL = data.imagePath;
-        bannerURL.value = imageURL;
+        resource = data;
+        
+        
         Swal.fire({
             title: 'Carga Completa',
             text: 'Haz cargado el documento para el manueal exitosamente',
@@ -82,9 +85,8 @@
       const contentInput = tinymce.get('content').getContent();
 
       // Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
-      if (!documentURL.value) {
-        const documentInput = document.querySelector("#document");
-        if (!documentInput.files || documentInput.files.length === 0) {
+      if (!resource) {
+        
           Swal.fire({
             title: 'Error!',
             text: 'Debes cargar un documento para este manual',
@@ -92,12 +94,12 @@
             confirmButtonText: 'OK'
           })
           return;
-        }
+        
       }
 
       const guideData = {
         title: titleInput.value,
-        bannerurl: documentURL.value,
+        resource : resource.resource,
         shortDescription: shortDescriptionInput.value,
         content: contentInput
       };

@@ -28,7 +28,13 @@ app.use(session({
 app.use(express.json());
 
 app.use(authMiddleware);
-
+njkEnv.addFilter('truncateText', function(value, maxLength) {
+  if (value.length <= maxLength) {
+    return value;
+  } else {
+    return value.slice(0, maxLength) + '...';
+  }
+});
 // Configuración adicional de Nunjucks
 njkEnv.addFilter('date', function(value, format) {
   const options = {
@@ -37,6 +43,18 @@ njkEnv.addFilter('date', function(value, format) {
     year: 'numeric'
   };
   return value.toLocaleString('en-US', options);
+});
+njkEnv.addFilter('groupby', function (collection, key) {
+  const groups = {};
+  collection.forEach(function (item) {
+    const groupKey = item[key];
+    if (!groups[groupKey]) {
+      groups[groupKey] = [];
+    }
+    groups[groupKey].push(item);
+  });
+  console.log(groups)
+  return groups;
 });
 njkEnv.addFilter('renderHtml', function (value) {
   return new nunjucks.runtime.SafeString(value);

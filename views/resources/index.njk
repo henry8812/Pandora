@@ -1,0 +1,40 @@
+{% extends 'layout_articles.njk' %}
+
+{% block body %}
+
+<div id="content" style="width: 80%; margin: 0 auto;">
+    <section id="title">
+        <h1>RECURSOS</h1>
+    </section>
+    
+        <div class="resources-container">
+            <div class="category-list" style="width: 30%;">
+                <ul>
+                    {% for categoryId, categoryResources in resources | groupby('category_id') %}
+                        <li style="display: list-item;">
+                            <a  href="#category{{ categoryId }}" style="text-decoration: steelblue;">{{ categoryResources[0].category }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="resource-details" style="width: 70%; position: relative;left: 30%;">
+                {% for categoryId, categoryResources in resources | groupby('category_id') %}
+                    <div id="category{{ categoryId }}" class="category">
+                        <h2>{{ categoryResources[0].category }}</h2>
+                        <div class="resources">
+                            {% for resource in categoryResources %}
+                                <div class="resource">
+                                    <h3>{{ resource.title }}</h3>
+                                    <p>{{ resource.description }}</p>
+                                    <a href="/resources/{{ resource.file_id }}">Download</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    
+</div>
+
+{% endblock %}

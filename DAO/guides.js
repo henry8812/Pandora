@@ -20,12 +20,12 @@ async function getFile(id) {
     throw error;
   }
 }
-async function createFile(fileData) {
+async function createGuide(guideData) {
   try {
-    const result = await db.query('INSERT INTO files SET ?', fileData);
+    const result = await db.query('INSERT INTO manuals SET ?', guideData);
     
-    const fileId = result.insertId;
-    return fileId
+    const guideId = result.insertId;
+    return guideId
 
   } catch (error) {
     console.log(error)
@@ -58,7 +58,7 @@ async function getGuide(id) {
     let manual = await db.query(query, values);
     manual = manual[0]
     let file = await getFile(manual.file_id)
-    manual.file =`/files/${manual.file_id}/${file.path}`;
+    manual.file =`/files/${file.path}`;
     
 
     return manual;
@@ -72,5 +72,6 @@ async function getGuide(id) {
 
 module.exports = {
   listGuides,
-  getGuide
+  getGuide,
+  createGuide
 };

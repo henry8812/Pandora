@@ -44,7 +44,8 @@ router.delete('/:id', (req, res) => {
 router.post('/', async (req, res) => {
   try {
     console.log(req.body)
-    const { title, documenturl, shortDescription, content } = req.body;
+    let { title, resource, shortDescription, content } = req.body;
+    
 
     if (!title || !shortDescription || !content) {
       return res.status(400).send('Missing required fields');
@@ -53,20 +54,19 @@ router.post('/', async (req, res) => {
     
     const sessionId = req.cookies.sessionId;
     const email = sessionId;
-    let author = email
+ 
     const guideData = {
       title,
-      document: documenturl,
-      shortDescription,
-      content,
-      creator : author
+      file_id: resource.file.id,
+      short_description : shortDescription,
+      content
     };
 
     await guides.createGuide(guideData);
     let response = {
       status: "success",
       message: "article created succesfully",
-      data: articleData
+      data: guideData
     };  
     res.send(response);
   } catch (error) {
