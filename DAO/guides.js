@@ -57,6 +57,17 @@ async function getGuide(id) {
     const values = [id];
     let manual = await db.query(query, values);
     manual = manual[0]
+    let comments = await db.query("SELECT * FROM COMMENTS where comment_type_id =1 and object_id = ?", values)
+    manual.comments = [];
+    for(let i=0; i<comments.length;i++){
+      let comment = comments[i];
+      let author = comment.author_id
+      let values_1 = [id, author]
+      comment.rating = (await db.query("select * from ratings where object_type = 1 and object_id = ? and user_id = ?", values_1))[0];
+      console.log(comment)
+      manual.comments.push(comment)
+    }
+
     let file = await getFile(manual.file_id)
     manual.file =`/files/${file.path}`;
     

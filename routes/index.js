@@ -71,6 +71,8 @@ router.use('/guides', require('./guides'));
 router.use('/resources', require('./resources'));
 router.use('/files', require('./files'));
 router.use('/admin', require('./admin'));
+router.use('/comments', require('./comments'));
+
 
 
 

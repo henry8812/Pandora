@@ -6,31 +6,6 @@ const users = require("./users");
 
 dotenv.config();
 
-// Función para autenticar al usuario
-async function listArticles() {
-  
-  try {
-    const query = 'SELECT * FROM articles';
-    
-    let articles = await db.query(query);
-
-    for(article of articles ){
-      console.log(JSON.stringify(article))
-      let author = await users.getUser(article.creator)
-      article.author = author;
-      console.log(article)
-      console.log(JSON.stringify(article))
-
-    }
-
-    return articles;
-
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
-  }
-}
-
 async function createFile(fileData) {
   try {
     
@@ -67,6 +42,24 @@ async function createResource(resourceData) {
   }
 }
 
+async function listCategories(){
+  try {
+    const query = `
+      SELECT
+        *
+      FROM
+        categories
+     
+    `;
+    
+    let result = await db.query(query);
+    console.log("Categories:", result)
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
 async function listResources() {
   try {
     const query = `
@@ -112,5 +105,6 @@ async function listResources() {
 module.exports = {
   createResource,
   createFile,
-  listResources
+  listResources,
+  listCategories
 };

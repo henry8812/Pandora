@@ -26,7 +26,7 @@
                                 <div class="resource">
                                     <h3>{{ resource.title }}</h3>
                                     <p>{{ resource.description }}</p>
-                                    <a href="/resources/{{ resource.file_id }}">Download</a>
+                                    <a href="/files/{{ resource.title }}/" download="{{resource.title}}">Download</a>
                                 </div>
                             {% endfor %}
                         </div>

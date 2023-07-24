@@ -12,7 +12,8 @@ router.get('/', async(req, res) => {
   let items = await resources.listResources();
   console.log(items)
   
-  res.render('resources/index', { title: 'Resources', resources: items, req });
+  let categories = await resources.listCategories();
+  res.render('resources/index', { title: 'Resources', resources: items,  categories: categories, req });
 });
 
 
@@ -47,11 +48,13 @@ router.post('/', async (req, res) => {
     let resourceData = {
       title : fileData.filename,
       description : fileData.filename,
-      file_id : response.id
+      file_id : response.id,
+      category_id : req.body.category || 3
     }
 
     let resource = resources.createResource(resourceData);
     resource.file = fileData
+    
     /**
      * END Resource creation
      */

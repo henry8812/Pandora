@@ -233,8 +233,11 @@ a{
   color: #333
   
 }
-article>.header>figure>a>img{
-  width: 100%;
+article>.header>figure>a>img {
+  width: 112% !important;
+  position: relative;
+  left: -30px;
+  top: -31px;
 }
 .date-author{
   display: flex;
@@ -640,7 +643,6 @@ button[type="submit"]:hover {
 .card-container {
   display: inline-flex;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .card {
@@ -652,6 +654,7 @@ button[type="submit"]:hover {
   padding: 10px;
   box-sizing: border-box;
   margin: 2%;
+  height: 250px;
 }
 
 .card-title {
@@ -660,16 +663,14 @@ button[type="submit"]:hover {
 }
 
 .card-description {
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .card-stats {
   /* Estilos para las estadísticas del manual */
 }
 
-img {
-  max-width: 100%;
-}
+
 #loginForm{
   width: 60%;
   margin: 0 auto;
@@ -753,4 +754,66 @@ img {
 
 .resource-list>li{
   display: list-item;
+}
+.card-container>a>figure>img{
+  width: 100%;
+}
+
+.comments-section {
+  margin-top: 30px;
+}
+
+.comment-form textarea {
+  width: 100%;
+  height: 80px;
+  resize: none;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.comment-form button {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.comment {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #dcdcdc;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+.rating {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.rating label {
+  font-size: 24px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.rating input[type="radio"] {
+  display: none;
+}
+
+.star {
+  color: orange;
+}
+.comments-list{
+  margin-bottom: 20px;
 }

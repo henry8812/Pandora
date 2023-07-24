@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const articles = require("../DAO/articles");
+const resources = require("../DAO/resources")
 // Ruta de cierre de sesión
 router.get('/', async(req, res) => {
   // Lógica para cerrar sesión del usuario
@@ -18,6 +19,16 @@ router.get('/guide/new', async (req, res) => {
 
   res.render('guides/new', { title: 'Guides', req });
 });
+
+
+router.get('/resources/new', async (req, res) => {
+  // Lógica para cerrar sesión del usuario
+  
+
+  let categories = await resources.listCategories();
+  res.render('resources/new', { title: 'Resources', categories: categories, req });
+});
+
 
 router.get('/article/new', async (req, res) => {
   // Lógica para cerrar sesión del usuario

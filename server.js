@@ -4,6 +4,7 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 const cookieParser = require('cookie-parser');
 const authMiddleware = require('./authMiddleware'); // Ruta al archivo del middleware
+const filters = require('./filters'); // Ruta al archivo filters.js que contiene los filtros personalizados
 
 const app = express();
 const port = 3000;
@@ -59,6 +60,7 @@ njkEnv.addFilter('groupby', function (collection, key) {
 njkEnv.addFilter('renderHtml', function (value) {
   return new nunjucks.runtime.SafeString(value);
 });
+njkEnv.addFilter('renderStars', filters.renderStars);
 
 // Configuración de rutas
 app.use('/assets', express.static('assets'));

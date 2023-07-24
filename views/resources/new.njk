@@ -1,0 +1,115 @@
+{% extends 'layout_articles.njk' %}
+
+{% block body %}
+
+<div class="form-container">
+  <form id="resource-form">
+    <label for="title">Título:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="description">Descripción:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="category">Categoría:</label>
+    <select id="category" name="category" required>
+      {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="file">Archivo:</label>
+    <input type="file" id="file" name="file" required>
+
+    <button type="submit">Crear Recurso</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const resourceForm = document.querySelector("#resource-form");
+
+    resourceForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const titleInput = document.querySelector("#title");
+      const descriptionInput = document.querySelector("#description");
+      const categoryInput = document.querySelector("#category");
+      const fileInput = document.querySelector("#file");
+
+      const formData = new FormData();
+      formData.append("title", titleInput.value);
+      formData.append("description", descriptionInput.value);
+      formData.append("category", categoryInput.value);
+      formData.append("file", fileInput.files[0]);
+
+      fetch("/resources", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Manejar la respuesta del servidor
+        console.log(data);
+        // Redirigir o realizar cualquier otra acción después de enviar el formulario con éxito
+         Swal.fire({
+            title: 'Carga Completa',
+            text: 'Haz cargado el documento para el manueal exitosamente',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+            location.href = "/resources";
+        })
+      })
+      .catch(error => {
+        // Manejar errores de la solicitud
+        console.error("Error al enviar el formulario:", error);
+      });
+    });
+  });
+</script>
+
+<style>
+  .form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .form-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .form-container input,
+  .form-container textarea,
+  .form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .form-container button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .form-container button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .form-container::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+</style>
+{% endblock %}
