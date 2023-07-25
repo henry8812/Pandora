@@ -60,7 +60,7 @@
                         });
                     });
                     function postComment() {
-                        let guide_id = parseInt("{{guide.id}}");
+                        let guide_id = '{{guide.id}}';
                         let comment = tinymce.get("comment").getContent();
                         let rating = document.querySelector('input[name="rating"]:checked');
                         if (rating) {
@@ -72,32 +72,38 @@
                         console.log(comment);
                         console.log(rating);
                         
-                        const formData = new FormData();
-                        formData.append("guide_id", guide_id);
-                        formData.append("comment", comment);
-                        formData.append("rating", rating);
+                        const data = {
+                            object_id: guide_id,
+                            comment: comment,
+                            rating: rating,
+                            object_type : 1
+                        };
                         
                         fetch("/comments", {
                             method: "POST",
-                            body: formData
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
                         })
-                        .then(response => response.json())
-                        .then(data => {
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data);
                             // Manejar la respuesta del servidor
                             console.log(data);
                             // Redirigir o realizar cualquier otra acción después de enviar el formulario con éxito
                             Swal.fire({
-                                title: 'Carga Completa',
-                                text: 'Haz cargado el documento para el manueal exitosamente',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
+                                title: "Carga Completa",
+                                text: "El comentario se ha cargado correctamente",
+                                icon: "success",
+                                confirmButtonText: "OK",
                             }).then((result) => {
                                 /* Read more about isConfirmed, isDenied below */
-                                location.href = "/resources";
-                            })
-                        })
-                        
+                                location.href = "/guides/{{guide.id}}";
+                            });
+                        });
                     }
+                    
                     document.addEventListener("DOMContentLoaded", function() {
                         tinymce.init({
                             selector: '#comment',
@@ -121,14 +127,14 @@
                     {% for comment in guide.comments %}
                     <div class="comment">
                         <div class="date-author">
-                            <a href="/profiles/{{article.author.id}}" class="external author" target="_blank" rel="noreferrer">
+                            <a href="/profiles/{{comment.user_id}}" class="external author" target="_blank" rel="noreferrer">
                                 <img src="https://img.freepik.com/free-icon/user_318-219687.jpg?t=st=1690227747~exp=1690228347~hmac=190afb2db5142c249d9a28ee4a2f0e01c088bdda5124db537524ce317017ef13" alt="Author avatar" style="margin-right: 5px;">{{comment.author.name}}</a>
                                 <time class="date" style="margin-left: 10px;">{{comment.created_at | date("DD/MM/YYYY HH:mm")}}</time>
                                 
                             </div>
                             <p class="comment-text">Comento: {{ comment.comment_text | safe }}</p>
                             <div class="rating">
-                                {{ comment.rating.rating | renderStars | renderHtml}}
+                               rating:  {{ comment.rating.rating | renderStars |safe}}
                             </div>
                             
                         </div>

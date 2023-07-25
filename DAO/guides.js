@@ -61,7 +61,7 @@ async function getGuide(id) {
     manual.comments = [];
     for(let i=0; i<comments.length;i++){
       let comment = comments[i];
-      let author = comment.author_id
+      let author = comment.user_id
       let values_1 = [id, author]
       comment.rating = (await db.query("select * from ratings where object_type = 1 and object_id = ? and user_id = ?", values_1))[0];
       console.log(comment)

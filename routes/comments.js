@@ -1,12 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const articles = require("../DAO/comments");
-const path = require('path');
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
-const axios = require('axios');
-const fileUpload = require('express-fileupload');
-const cookieParser = require('cookie-parser');
-const NodeCache = require('node-cache');
+router.use(express.urlencoded({ extended: true }));
+const comments = require('../DAO/comments')
 
-router.use(fileUpload());
+router.post('/', async (req, res) => {
+    // Lógica para cerrar sesión del usuario
+    console.log(JSON.stringify(req.body, null, 4))
+    const {object_id, comment, rating, object_type} = req.body
+    const sessionId = req.cookies.sessionId;
+    const email = sessionId;
+    let author = email
+    console.log(object_id)
+    console.log(comment)
+    console.log(rating)
+    console.log(object_type)
+    const commentData = {
+        object_id,
+        author,
+        comment,
+        object_type
+      };
+
+      let response = await comments.createComment(commentData)
+      console.log(response)
+
+    res.send({
+        status:"sucess"
+    })
+  });
+  
+module.exports = router;
