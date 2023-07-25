@@ -22,6 +22,15 @@ router.post('/', async (req, res) => {
       };
 
       let response = await comments.createComment(commentData)
+      let rating_value = rating || 0
+      let ratingData = {
+        object_id,
+        object_type,
+        author,
+        rating_value
+      }
+
+      rating_response = await comments.rateContent(ratingData)
       console.log(response)
 
     res.send({

@@ -40,6 +40,42 @@ async function createComment(data){
     }
 }
 
+async function rateContent(data)  {
+    try {
+        console.log(JSON.stringify(data, null, 4))
+        console.log("cookie:", data.author)
+        const user = await users.getUserByEmail(data.author);
+        console.log("user:", user)
+        
+        // Crear el artículo con la información proporcionada
+        const newRate = {
+            object_id: data.object_id,
+            user_id:    user.id,
+            rating : data.rating_value,
+            object_type: data.object_type
+        };
+        
+        console.log(JSON.stringify(newRate, null, 4))
+        
+        
+        // Insertar el artículo en la base de datos
+        const result = await db.query('INSERT INTO ratings SET ?', newRate);
+        
+        // Obtener el ID del artículo creado
+        const rateId = result.insertId;
+        
+        // Asignar el ID al artículo creado
+        
+        
+        // Retornar el artículo creado
+        return rateId;
+    } catch (error) {
+        console.error(error);
+        throw new Error("Error creating rate");
+    }
+}
+
 module.exports = {
-    createComment
+    createComment,
+    rateContent
 };
