@@ -7,15 +7,27 @@
     <title>Base de Conocimiento - Inicio</title>
     <link rel="stylesheet" href="{{ baseUrl }}/assets/styles/base.css">
 
-    <style>
-        /* Estilos adicionales para el despliegue de los submenús */
-        .submenu {
-            display: none;
-        }
-        .submenu.active {
-            display: block;
-        }
-    </style>
+
+        <style>
+            /* Estilos adicionales para el despliegue de los submenús */
+            .submenu {
+                display: none;
+                position: absolute;
+                top: 26px;
+                background-color: #000;
+                padding: 8px;
+                border-radius: 5px;
+                color: white;
+                height: 100px;
+                width: 100px;
+                /* z-index: 1000; */
+                left: -15px;
+            }
+    
+            .has-submenu:hover .submenu {
+                display: block;
+            }
+        </style>
 </head>
 
 <body>
@@ -26,31 +38,30 @@
                 <img src="/assets/images/comsistelco.png" alt="comsistelco">
             </div>
             <ul class="menu">
-                <li{% if currentPath === '/' %} class="active"{% endif %}><a href="/">INICIO</a></li>
+                <li{% if currentPath === '/' %} class="active"{% endif %}><a href="/">Inicio</a></li>
                 <li class="has-submenu{% if currentPath.startsWith('/guides') %} active{% endif %}">
-                    MANUALES
+                    <a href="/guides">Manuales</a>
                     <ul class="submenu">
-                        <li><a href="#">Todo</a></li>
                         <li><a href="#">Front</a></li>
                         <li><a href="#">Premium</a></li>
                         <li><a href="#">Operativo</a></li>
                     </ul>
                 </li>
                 <li class="has-submenu{% if currentPath.startsWith('/articles') %} active{% endif %}">
-                    ARTICULOS
+                    <a href="/articles">Articulos</a>
                     <ul class="submenu">
-                        <li><a href="#">Todo</a></li>
                         <li><a href="#">Front</a></li>
                         <li><a href="#">Premium</a></li>
                         <li><a href="#">Operativo</a></li>
                     </ul>
                 </li>
-                <li{% if currentPath === '/resources' %} class="active"{% endif %}><a  href="/resources">Recursos</a></li>
+                <li{% if currentPath === '/resources' %} class="active"{% endif %}><a href="/resources">Recursos</a></li>
             </ul>
             <div class="logo emcali">
                 <!-- Aquí puedes agregar tu logo -->
                 <img src="/assets/images/emcali.png" alt="emcali">
             </div>
+        </div>
     </nav>
 
     <script>
@@ -70,6 +81,40 @@
     {% block body %}{% endblock %}
 
     {% include 'partials/footer.njk' %}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const submenus = document.querySelectorAll(".has-submenu");
+            let timeoutId;
+
+            function hideSubmenus() {
+                submenus.forEach((submenu) => {
+                    if (!submenu.classList.contains("hovered")) {
+                        submenu.querySelector(".submenu").style.display = "none";
+                    
+                    }
+                });
+            }
+
+            submenus.forEach((submenu) => {
+                submenu.addEventListener("mouseenter", () => {
+                    clearTimeout(timeoutId);
+                    hideSubmenus();
+                    submenu.querySelector(".submenu").style.display = "flex";
+                    submenu.classList.add("hovered");
+                    
+                });
+
+                submenu.addEventListener("mouseleave", () => {
+                    submenu.classList.remove("hovered");
+                    timeoutId = setTimeout(hideSubmenus, 2000);
+                });
+            });
+
+            document.addEventListener("DOMContentLoaded", () => {
+                hideSubmenus();
+            });
+        });
+    </script>
 
 </body>
 
