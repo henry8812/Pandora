@@ -1,43 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base de Conocimiento - Inicio</title>
     <link rel="stylesheet" href="{{ baseUrl }}/assets/styles/base.css">
-    
+
+    <style>
+        /* Estilos adicionales para el despliegue de los submenús */
+        .submenu {
+            display: none;
+        }
+        .submenu.active {
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
-<nav>
-    <div class="navbar-content">
-        <div class="logo comsistelco">
-            <!-- Aquí puedes agregar tu logo -->
-            <img src="/assets/images/comsistelco.png" alt="comsistelco">
-        </div>
-        <ul>
-        
-            <li{% if currentPath === '/' %} class="active"{% endif %}><a href="/">Inicio</a></li>
-            {% for link in [
-                ['/guides', 'Manuales'],
-                ['/articles', 'Articulos'],
-                ['/resources', 'Recursos']
-            ] %}
-            
-                <li{% if currentPath === link[0] %} class="active"{% endif %}><a href="{{  link[0] }}">{{ link[1] }}</a></li>
-            {% endfor %}
-        </ul>
-        <div class="logo emcali">
-            <!-- Aquí puedes agregar tu logo -->
-            <img src="/assets/images/emcali.png" alt="emcali">
-        </div>
-    </div>
-</nav>
+    <nav>
+        <div class="navbar-content">
+            <div class="logo comsistelco">
+                <!-- Aquí puedes agregar tu logo -->
+                <img src="/assets/images/comsistelco.png" alt="comsistelco">
+            </div>
+            <ul class="menu">
+                <li{% if currentPath === '/' %} class="active"{% endif %}><a href="/">INICIO</a></li>
+                <li class="has-submenu{% if currentPath.startsWith('/guides') %} active{% endif %}">
+                    MANUALES
+                    <ul class="submenu">
+                        <li><a href="#">Todo</a></li>
+                        <li><a href="#">Front</a></li>
+                        <li><a href="#">Premium</a></li>
+                        <li><a href="#">Operativo</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu{% if currentPath.startsWith('/articles') %} active{% endif %}">
+                    ARTICULOS
+                    <ul class="submenu">
+                        <li><a href="#">Todo</a></li>
+                        <li><a href="#">Front</a></li>
+                        <li><a href="#">Premium</a></li>
+                        <li><a href="#">Operativo</a></li>
+                    </ul>
+                </li>
+                <li{% if currentPath === '/resources' %} class="active"{% endif %}><a  href="/resources">Recursos</a></li>
+            </ul>
+            <div class="logo emcali">
+                <!-- Aquí puedes agregar tu logo -->
+                <img src="/assets/images/emcali.png" alt="emcali">
+            </div>
+    </nav>
 
-{% include 'partials/header_auth.njk' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuItems = document.querySelectorAll('.has-submenu');
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const submenu = item.querySelector('.submenu');
+                    submenu.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 
-{% block body %}{% endblock %}
+    {% include 'partials/header_auth.njk' %}
 
-{% include 'partials/footer.njk' %}
+    {% block body %}{% endblock %}
+
+    {% include 'partials/footer.njk' %}
 
 </body>
+
 </html>

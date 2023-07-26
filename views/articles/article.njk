@@ -17,6 +17,139 @@
             {{article.content | renderHtml }}
         </div>
     </article>
+    <div class="comments-section">
+                <form action="/add_comment" method="post">
+                    <label for="rating">Calificación:</label>
+                    <div class="rating">
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="1 estrella">&#9733;</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="2 estrellas">&#9733;</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="3 estrellas">&#9733;</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="4 estrellas">&#9733;</label>
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5" title="5 estrellas">&#9733;</label>
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                </form>
+                
+                <div class="comment-form">
+                    <textarea id="comment" placeholder="Escribe tu comentario"></textarea>
+                    <button onclick="postComment()">Comentar</button>
+                </div>
+                
+                <script src="https://cdn.tiny.cloud/1/ro7zz3s8qd5agecj1yw4flgil4i2wwk0qu7ka7oilyiduxcv/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+                <script>
+                    // Variable para almacenar la calificación seleccionada
+                    // Función para marcar el rating seleccionado
+                    function setRating(rating) {
+                        const stars = document.querySelectorAll(".rating label");
+                        stars.forEach((star, index) => {
+                            if (index < rating) {
+                                star.classList.add("star");
+                            } else {
+                                star.classList.remove("star");
+                            }
+                        });
+                    }
+                    
+                    // Evento change para los elementos de calificación
+                    const ratingInputs = document.querySelectorAll(".rating input[type='radio']");
+                    ratingInputs.forEach((input) => {
+                        input.addEventListener("change", function () {
+                            let rating = parseInt(this.value);
+                            setRating(rating);
+                        });
+                    });
+                    function postComment() {
+                        let guide_id = '{{article.id}}';
+                        let comment = tinymce.get("comment").getContent();
+                        let rating = document.querySelector('input[name="rating"]:checked');
+                        if (rating) {
+                            rating = rating.value;
+                        } else {
+                            rating = null;
+                        }
+                        console.log(guide_id);
+                        console.log(comment);
+                        console.log(rating);
+                        
+                        const data = {
+                            object_id: guide_id,
+                            comment: comment,
+                            rating: rating,
+                            object_type : 3
+                        };
+                        
+                        fetch("/comments", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data);
+                            // Manejar la respuesta del servidor
+                            console.log(data);
+                            // Redirigir o realizar cualquier otra acción después de enviar el formulario con éxito
+                            Swal.fire({
+                                title: "Carga Completa",
+                                text: "El comentario se ha cargado correctamente",
+                                icon: "success",
+                                confirmButtonText: "OK",
+                            }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                location.href = "/articles/{{article.id}}";
+                            });
+                        });
+                    }
+                    
+                    document.addEventListener("DOMContentLoaded", function() {
+                        tinymce.init({
+                            selector: '#comment',
+                            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                            toolbar_mode: 'floating',
+                            height: '200',
+                            content_style: 'body { font-family: Arial,sans-serif; font-size: 14px; }',
+                        });
+                    })
+                    function renderStars(rating) {
+                        let starsHtml = "";
+                        for (let i = 1; i <= 5; i++) {
+                            const starClass = i <= rating ? "star" : "";
+                            starsHtml += `<label class="${starClass}" title="${i} estrella">&#9733;</label>`;
+                        }
+                        return starsHtml;
+                    }
+                </script>
+                
+                <div class="comments-list">
+                    {% for comment in article.comments %}
+                    <div class="comment">
+                        <div class="date-author">
+                            <a href="/profiles/{{comment.user_id}}" class="external author" target="_blank" rel="noreferrer">
+                                <img src="https://img.freepik.com/free-icon/user_318-219687.jpg?t=st=1690227747~exp=1690228347~hmac=190afb2db5142c249d9a28ee4a2f0e01c088bdda5124db537524ce317017ef13" alt="Author avatar" style="margin-right: 5px;">{{comment.author.name}}</a>
+                                <time class="date" style="margin-left: 10px;">{{comment.created_at | date("DD/MM/YYYY HH:mm")}}</time>
+                                
+                            </div>
+                            <p class="comment-text">Comento: {{ comment.comment_text | safe }}</p>
+                            <div class="rating">
+                               rating:  {{ comment.rating.rating | renderStars |safe}}
+                            </div>
+                            
+                        </div>
+                        {% endfor %}
+                        
+                    </div>
+</div>
 
 </div>
 {% endblock %}

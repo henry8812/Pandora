@@ -42,6 +42,18 @@ async function getArticle(id) {
     article.author = author;
     console.log(article)
     console.log(JSON.stringify(article))
+
+    let comments = await db.query("SELECT * FROM COMMENTS where comment_type_id =3 and object_id = ? order by created_at desc", values)
+    article.comments = [];
+    for(let i=0; i<comments.length;i++){
+      let comment = comments[i];
+      let user = comment.user_id
+      let values_1 = [id, user]
+      comment.rating = (await db.query("select * from ratings where object_type = 3 and object_id = ? and user_id = ? order by rating desc", values_1))[0];
+      console.log(comment)
+      article.comments.push(comment)
+    }
+    
     return article;
 
   } catch (error) {

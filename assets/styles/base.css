@@ -817,3 +817,32 @@ button[type="submit"]:hover {
 .comments-list{
   margin-bottom: 20px;
 }
+
+.submenu {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  opacity: 0; /* Establecemos la opacidad en 0 para que esté oculto inicialmente */
+  transition: opacity 4s; /* Agregar la propiedad de transición con 4 segundos de duración */
+}
+
+.has-submenu {
+  position: relative;
+}
+
+.has-submenu:hover .submenu {
+  display: flex;
+  opacity: 1; /* Al hacer hover, establecemos la opacidad en 1 para que se muestre */
+}
+
+.submenu li {
+  list-style: none;
+  margin-left: 10px;
+}
