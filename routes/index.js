@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const router = express.Router();
 const NodeCache = require('node-cache');
 const users = require('../DAO/users')
+const _news = require('../DAO/news')
 
 // Crea una instancia de NodeCache
 const sessionCache = new NodeCache();
@@ -36,9 +37,12 @@ router.get('/', async(req, res) => {
     console.log("USER:", user);
     
     let next = "/";
+    let news = null;
     switch(user.role_name){
       case 'Front':
         next = "agent/index";
+        news = await _news.listNews()
+        console.log(news)
       break;
       case 'Premium':
         next = "agent/index";
@@ -54,8 +58,8 @@ router.get('/', async(req, res) => {
       break;
     }
     
-    
-    res.render(next, { title: 'Base de Conocimiento', req , user : user });
+    console.log(JSON.stringify(news, null, 4))
+    res.render(next, { title: 'Base de Conocimiento', req , user : user, news : news });
   } else {
     // La sesión no está activa, redirigir a la página de inicio de sesión
     console.log("No hay sesión");
@@ -71,7 +75,13 @@ router.use('/guides', require('./guides'));
 router.use('/resources', require('./resources'));
 router.use('/files', require('./files'));
 router.use('/admin', require('./admin'));
-router.use('/comments', require('./comments'));
+router.use('/front', require('./front'));
+
+router.use('/premium', require('./premium'));
+router.use('/ops', require('./ops'));
+
+router.use('/comments', require('./comments.js'));
+
 
 
 

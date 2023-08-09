@@ -4,6 +4,7 @@
 <div class="content">
     <article class="guide-container post main-page-content">
         <h1>{{ guide.title }}</h1>
+        <p>{{ guide.short_description}}</p>
         <p>{{ guide.content | renderHtml }}</p>
         <div class="section-content">
             <embed src="{{ guide.file }}" width="100%" height="600px" type="application/pdf">

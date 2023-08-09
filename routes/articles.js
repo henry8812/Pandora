@@ -8,6 +8,7 @@ const axios = require('axios');
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const NodeCache = require('node-cache');
+const { Console } = require('console');
 
 router.use(fileUpload());
 
@@ -33,9 +34,9 @@ router.get('/new', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     console.log(req.body)
-    const { title, bannerurl, shortDescription, content } = req.body;
+    const { title, bannerurl, shortDescription, content, target_id } = req.body;
     
-    if (!title || !shortDescription || !content) {
+    if (!title || !shortDescription ) {
       return res.status(400).send('Missing required fields');
     }
     
@@ -47,8 +48,9 @@ router.post('/', async (req, res) => {
       title,
       banner: bannerurl,
       shortDescription,
-      content,
-      creator : author
+      content: content || '',
+      creator : author,
+      target_id
     };
     
     await articles.createArticle(articleData);
@@ -135,9 +137,12 @@ router.post('/uploadBanner', async (req, res) => {
     }
     
     const banner = req.files.banner;
+
     
     // Generar un nombre único para el archivo
-    const fileName = `${uuidv4()}.jpg`;
+    let ext = banner.name.substr(banner.name.length - 4, banner.name.length)
+
+    const fileName = `${uuidv4()}`+ext;
     
     // Ruta de destino para guardar la imagen
     const imagePath = path.join(__dirname, '../assets/images/uploads', fileName);

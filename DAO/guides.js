@@ -50,6 +50,52 @@ async function listGuides() {
   }
 }
 
+async function listFrontGuides() {
+  
+  try {
+    const query = 'SELECT * FROM manuals where target_id = 3';
+    
+    let manuals = await db.query(query);
+    
+
+    return manuals;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+async function listPremiumGuides() {
+  
+  try {
+    const query = 'SELECT * FROM manuals where target_id = 5';
+    
+    let manuals = await db.query(query);
+    
+
+    return manuals;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+async function listOpsGuides() {
+  
+  try {
+    const query = 'SELECT * FROM manuals where target_id = 6';
+    
+    let manuals = await db.query(query);
+    
+
+    return manuals;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
 async function getGuide(id) {
 
   try {
@@ -84,5 +130,9 @@ async function getGuide(id) {
 module.exports = {
   listGuides,
   getGuide,
-  createGuide
+  createGuide,
+  listFrontGuides,
+  listPremiumGuides,
+  listOpsGuides
+
 };

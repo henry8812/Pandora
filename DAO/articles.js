@@ -31,6 +31,77 @@ async function listArticles() {
   }
 }
 
+async function listFrontArticles() {
+  
+  try {
+    const query = 'SELECT * FROM articles where target_id = 3';
+    
+    let articles = await db.query(query);
+
+    for(article of articles ){
+      console.log(JSON.stringify(article))
+      let author = await users.getUser(article.creator)
+      article.author = author;
+      console.log(article)
+      console.log(JSON.stringify(article))
+
+    }
+
+    return articles;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+async function listPremiumArticles() {
+  
+  try {
+    const query = 'SELECT * FROM articles where target_id = 5';
+    
+    let articles = await db.query(query);
+
+    for(article of articles ){
+      console.log(JSON.stringify(article))
+      let author = await users.getUser(article.creator)
+      article.author = author;
+      console.log(article)
+      console.log(JSON.stringify(article))
+
+    }
+
+    return articles;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+async function listOpsArticles() {
+  
+  try {
+    const query = 'SELECT * FROM articles where target_id = 6';
+    
+    let articles = await db.query(query);
+
+    for(article of articles ){
+      console.log(JSON.stringify(article))
+      let author = await users.getUser(article.creator)
+      article.author = author;
+      console.log(article)
+      console.log(JSON.stringify(article))
+
+    }
+
+    return articles;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+
 async function getArticle(id) {
 
   try {
@@ -82,7 +153,8 @@ async function createArticle(articleData) {
       content: articleData.content,
       creator: user.id,
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
+      target_id : articleData.target_id
     };
 
     console.log(JSON.stringify(newArticle, null, 4))
@@ -108,5 +180,8 @@ async function createArticle(articleData) {
 module.exports = {
   listArticles,
   getArticle,
-  createArticle
+  createArticle,
+  listFrontArticles,
+  listPremiumArticles,
+  listOpsArticles
 };

@@ -5,7 +5,7 @@
 <div class="content">
     <article class="blog-container post  main-page-content" lang="en-US">
         <figure class="blog-image">
-            <img alt="{{article.title}}" src="{{article.banner}}" height="" width="800">
+           <embed src="{{ article.banner }}">
         </figure>
         <h1>{{article.title}}</h1>
         <div class="date-author">
@@ -17,6 +17,7 @@
             {{article.content | renderHtml }}
         </div>
     </article>
+
     <div class="comments-section">
                 <form action="/add_comment" method="post">
                     <label for="rating">Calificación:</label>

@@ -274,11 +274,19 @@ article>.header>figure>a>img {
   margin: 0 auto;
   
 }
-article>figure>img {
-  width: 100%;
+article>figure{
+  overflow: auto; /* Permite el desplazamiento si la imagen es más grande que el contenedor */
+
+}
+article>figure>embed {
+  height: auto; /* Mantiene la relación de aspecto original de la imagen */
+  min-height: 500px;
+  display: block; /* Asegura que la imagen se comporte como bloque dentro del contenedor */
   margin-top:5px;
   margin-bottom: 30px;
+  overflow: auto;
 }
+
 
 :root{
   --theme-col: #2d4bf0;
@@ -845,4 +853,127 @@ button[type="submit"]:hover {
 .submenu li {
   list-style: none;
   margin-left: 10px;
+}
+
+/**
+.slider-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slider {
+  display: flex;
+}
+
+.slide {
+  flex-shrink: 0;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.slide.active {
+  transform: translateX(-100%);
+}
+
+.slide.next {
+  transform: translateX(100%);
+}
+*/
+/* Estilos para el contenedor de la presentación de diapositivas */
+.slider-container {
+  background-color: #34495e; /* Color de fondo azul metalizado */
+  width: 100%;
+  overflow: hidden;
+  height: 400px;
+  padding: 25px;
+  position: relative;
+  box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+}
+
+/* Estilos para los slides */
+.swiper-slide {
+  display: inline-table; /* Cambiado a inline-table para permitir centrado horizontal */
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 20px;
+  position: relative;
+  text-align: center;
+  width: 100%; /* Asegura que el slide ocupe todo el ancho disponible */
+  box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+}
+
+/* Estilos para los slides de texto */
+.text-slide {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 80%;
+  width: 100%; /* Asegura que el slide de texto ocupe todo el ancho disponible */
+  margin: 0 auto; /* Centra horizontalmente el slide de texto */
+  text-align: center;
+  box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+}
+
+/* Estilos para los títulos de slide */
+.slide-title {
+  color: #e67e22;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el contenido de slide */
+.slide-content {
+  color: white;
+  font-size: 18px;
+  line-height: 1.5;
+  width:90%;
+  margin:0 auto;
+}
+
+/* Estilos para las imágenes de slide */
+.swiper-slide img {
+  width: 100%;
+  
+}
+
+/* Estilos para el paginador de Swiper */
+.swiper-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+/* Estilos para los botones de navegación */
+.swiper-button-prev,
+.swiper-button-next {
+    background-color: rgba(150, 150, 150, 0.5); /* Gris con transparencia */
+    color: white; /* Color de la flecha */
+    width: 50px; /* Ancho del botón */
+    height: 50px; /* Altura del botón */
+    border-radius: 50%; /* Hace que el botón sea circular */
+    font-size: 18px; /* Tamaño de la flecha (más pequeño) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; /* Asegura que los botones estén por encima de las diapositivas */
+    cursor: pointer;
+    border: none;
+}
+
+/* Tamaño del círculo 10% más grande */
+.swiper-button-prev,
+.swiper-button-next {
+    width: 55px;
+    height: 55px;
+}
+
+/* Flechas un 50% más pequeñas */
+.swiper-button-prev::before,
+.swiper-button-next::before {
+    font-size: 10px !important; /* Tamaño más pequeño */
+    transform: scale(0.6);
 }

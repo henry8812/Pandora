@@ -8,6 +8,10 @@ const filters = require('./filters'); // Ruta al archivo filters.js que contiene
 
 const app = express();
 const port = 3000;
+function toJsonFilter(obj) {
+  return JSON.stringify(obj);
+}
+
 
 // Configurar el motor de plantillas Nunjucks
 app.set('view engine', 'njk');
@@ -36,6 +40,9 @@ njkEnv.addFilter('truncateText', function(value, maxLength) {
     return value.slice(0, maxLength) + '...';
   }
 });
+
+njkEnv.addFilter("tojson", toJsonFilter);
+
 // Configuración adicional de Nunjucks
 njkEnv.addFilter('date', function(value, format) {
   const options = {

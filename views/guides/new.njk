@@ -13,6 +13,13 @@
       <input type="text" id="title" name="title">
       <label for="short-description">Short Description</label>
       <textarea id="short-description" name="short-description"></textarea>
+      <label for="publico">Público</label>
+			<select id="publico" name="publico">
+				<option value="">Seleccionar público</option>
+				<option value="3">FRONT</option>
+				<option value="5">PREMIUM</option>
+				<option value="6">OPERATIVO</option>
+			</select>
     </div>
     <div class="article-content">
       <label for="content">Content</label>
@@ -83,7 +90,7 @@
       const documentURL = document.querySelector("#documenturl");
       const shortDescriptionInput = document.querySelector("#short-description");
       const contentInput = tinymce.get('content').getContent();
-
+      const publicoInput = document.querySelector("#publico");
       // Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
       if (!resource) {
         
@@ -101,7 +108,8 @@
         title: titleInput.value,
         resource : resource.resource,
         shortDescription: shortDescriptionInput.value,
-        content: contentInput
+        content: contentInput,
+        target_id :  publicoInput.value || null
       };
 
       fetch("/guides", {

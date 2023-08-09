@@ -44,10 +44,11 @@ router.delete('/:id', (req, res) => {
 router.post('/', async (req, res) => {
   try {
     console.log(req.body)
-    let { title, resource, shortDescription, content } = req.body;
+    let { title, resource, shortDescription, content, target_id } = req.body;
     
-
-    if (!title || !shortDescription || !content) {
+    console.log("TARGET")
+    console.log(target_id)
+    if (!title || !shortDescription) {
       return res.status(400).send('Missing required fields');
     }
 
@@ -59,7 +60,8 @@ router.post('/', async (req, res) => {
       title,
       file_id: resource.file.id,
       short_description : shortDescription,
-      content
+      content : content || '',
+      target_id : target_id
     };
 
     await guides.createGuide(guideData);
