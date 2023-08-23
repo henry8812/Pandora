@@ -2,7 +2,40 @@
 
 {% block body %}
 
-
+<style>
+    /* Estilos generales de los botones */
+    .button {
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    
+    /* Estilos para el botón de editar */
+    .edit-button {
+        background-color: #e0e0e0;
+        color: #333;
+        float: left;
+    }
+    .edit-button.disabled {
+        background-color: #f0f0f0;
+        color: #aaa;
+        cursor: not-allowed;
+    }
+    
+    /* Estilos para el botón de eliminar */
+    .delete-button {
+        background-color: #e74c3c;
+        color: #fff;
+        float: right;
+    }
+    
+    /* Estilos específicos para el botón de eliminar con ícono */
+    .delete-button .icon {
+        margin-right: 5px;
+    }
+</style>
 <div id="content" style="width: 80%; margin: 0 auto;">
     <section id="title">
         <h1>MANUALES</h1>
@@ -16,12 +49,50 @@
                 </figure>
                 <h2 class="card-title" style="text-align: center;margin-top: 2px;">{{guide.title}}</h2>
                 <!--<p class="card-description" style="text-align: justify;">{{guide.short_description | truncateText(100)}}</p>-->
-                <div class="card-stats">
-                    <!-- Aquí puedes agregar las estadísticas del manual -->
-                </div>
+                <br>
+                
+               
                 
             </a>
+            
+            
             {% endfor %}
+            <script>
+                
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            
+            // Convertir la NodeList en un array
+            const deleteButtonsArray = Array.from(deleteButtons);
+            
+            // Agregar un evento de clic a cada botón de eliminar
+            deleteButtonsArray.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Determinar cuál botón de eliminar fue presionado
+                    const articleId = this.dataset["id"]
+                    console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
+                    console.log("/guides/delete/"+articleId)
+                    fetch("/guides/delete/"+articleId, {
+                        method: "POST",
+                      
+                    })
+                    .then(data => {
+                        console.log(data);
+                        Swal.fire({
+                            title: 'Manual eliminado correctamente',
+                            text: 'Haz eliminado un manual de forma exitosa',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            
+                            location.href = "/guides";
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                });
+            }); 
+            </script>
         </div>
     </section>
 </div>

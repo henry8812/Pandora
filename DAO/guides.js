@@ -33,6 +33,27 @@ async function createGuide(guideData) {
   return null;
 }
 
+async function deleteGuide(id) {
+  try {
+    // Eliminar comentarios asociados al artículo
+   
+    await db.query("DELETE FROM ratings WHERE comment_type_id = 1 AND object_id = ?", [id]);
+    // Eliminar calificaciones asociadas al artículo
+    await db.query("DELETE FROM comments WHERE comment_type_id = 1 AND object_id = ?", [id]);
+
+    // Eliminar el artículo
+    await db.query("DELETE FROM manuals WHERE id = ?", [id]);
+
+    console.log(`Manual con ID ${id} y sus comentarios/calificaciones asociadas han sido eliminados.`);
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+
+
+
 // Función para autenticar al usuario
 async function listGuides() {
   
@@ -95,6 +116,21 @@ async function listOpsGuides() {
     throw error;
   }
 }
+async function listToolsGuides() {
+  
+  try {
+    const query = 'SELECT * FROM manuals where target_id = 7';
+    
+    let manuals = await db.query(query);
+    
+
+    return manuals;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
 
 async function getGuide(id) {
 
@@ -133,6 +169,8 @@ module.exports = {
   createGuide,
   listFrontGuides,
   listPremiumGuides,
-  listOpsGuides
+  listOpsGuides,
+  listToolsGuides,
+  deleteGuide
 
 };

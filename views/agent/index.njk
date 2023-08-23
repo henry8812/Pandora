@@ -1,19 +1,22 @@
 {% extends 'layout.njk' %}
 
 {% block body %}
-
+{% if news.length > 0 %}
 <div class="slider-container">
   <div class="swiper-wrapper">
+    
+   
     {% for content in news %}
     {% if content.image_url %}
     <div class="swiper-slide">
-
-      <img src="{{content.image_url}}" alt="Imagen">
+      <h2 class="slide-title">{{content.title}}</h2>
+      <img src="{{content.image_url}}" width="80%" alt="Imagen">
+      <p class="slide-content">{{content.content | renderHtml}}</p>
     </div>
     {% else %}
     <div class="swiper-slide">
       <h2 class="slide-title">{{content.title}}</h2>
-      <p class="slide-content">{{content.content}}</p>
+      <p class="slide-content">{{content.content | renderHtml}}</p>
     </div>
     {% endif %}
     {% endfor %}
@@ -25,6 +28,7 @@
   <button class="swiper-button-prev"></button>
   <button class="swiper-button-next"></button>
 </div>
+{% endif %}
 
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>

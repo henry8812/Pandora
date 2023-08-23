@@ -15,11 +15,10 @@ async function listArticles() {
     let articles = await db.query(query);
 
     for(article of articles ){
-      console.log(JSON.stringify(article))
+      
       let author = await users.getUser(article.creator)
       article.author = author;
-      console.log(article)
-      console.log(JSON.stringify(article))
+      
 
     }
 
@@ -100,7 +99,48 @@ async function listOpsArticles() {
     throw error;
   }
 }
+async function listToolsArticles() {
+  
+  try {
+    const query = 'SELECT * FROM articles where target_id = 7';
+    
+    let articles = await db.query(query);
 
+    for(article of articles ){
+      console.log(JSON.stringify(article))
+      let author = await users.getUser(article.creator)
+      article.author = author;
+      console.log(article)
+      console.log(JSON.stringify(article))
+
+    }
+
+    return articles;
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+
+async function deleteArticle(id) {
+  try {
+    // Eliminar comentarios asociados al artículo
+   
+    await db.query("DELETE FROM ratings WHERE comment_type_id = 3 AND object_id = ?", [id]);
+    // Eliminar calificaciones asociadas al artículo
+    await db.query("DELETE FROM comments WHERE comment_type_id = 3 AND object_id = ?", [id]);
+
+    // Eliminar el artículo
+    await db.query("DELETE FROM articles WHERE id = ?", [id]);
+
+    console.log(`Artículo con ID ${id} y sus comentarios/calificaciones asociadas han sido eliminados.`);
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
 
 async function getArticle(id) {
 
@@ -183,5 +223,7 @@ module.exports = {
   createArticle,
   listFrontArticles,
   listPremiumArticles,
-  listOpsArticles
+  listOpsArticles,
+  listToolsArticles,
+  deleteArticle
 };

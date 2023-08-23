@@ -1,0 +1,136 @@
+{% extends 'layout.njk' %}
+<style>
+    /* Estilos generales para las tarjetas y botones */
+    .card-container{
+        width: 100% !important;
+    }
+    .ver-mas-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .ver-menos-button {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    /* Estilos específicos para cada sección */
+    /* Aquí puedes agregar estilos únicos para cada categoría si es necesario */
+    
+    /* Asegura que las tarjetas sean responsivas */
+    @media (max-width: 768px) {
+        .card {
+            width: calc(50% - 20px);
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .card {
+            width: calc(100% - 20px);
+        }
+    }
+    
+</style>
+{% block body %}
+<div class="">
+    
+    <section id="manuales">
+        <h3>Manuales</h3>
+        <div class="card-container">
+            {% for guide in data.guides %}
+            <a class="card {% if loop.index > 4 %}hidden{% endif %}" style="height: 250px;padding: 15px;" href="/guides/{{guide.id}}">
+                <figure class="" style="    width: 114%; position: relative;left: -15px; top:-15px;">
+                    <img src="/assets/images/manual.jpg" alt="">
+                </figure>
+                <h2 class="card-title" style="text-align: center;margin-top: 2px;">{{guide.title}}</h2>
+                <br>
+            </a>
+            {% endfor %}
+            {% if data.guides.length > 4 %}
+            <a href="#" class="ver-mas-button" id="ver-mas-manuales">Ver más</a>
+            <a href="#" class="ver-menos-button hidden" id="ver-menos-manuales">Ver menos</a>
+            {% endif %}
+        </div>
+    </section>
+    
+    <section id="procedimientos">
+        <h3>Procedimientos</h3>
+        <div class="card-container">
+            {% for article in data.articles %}
+            <a class="card {% if loop.index > 4 %}hidden{% endif %}" style="height: 250px;padding: 15px;" href="/guides/{{article.id}}">
+                <figure class="" style="    width: 114%; position: relative;left: -15px; top:-15px;">
+                    <img src="/assets/images/article.jpg" alt="">
+                </figure>
+                <h2 class="card-title" style="text-align: center;margin-top: 2px;">{{article.title}}</h2>
+                <br>
+            </a>
+            {% endfor %}
+            {% if data.articles.length > 4 %}
+            <a href="#" class="ver-mas-button" id="ver-mas-procedimientos">Ver más</a>
+            <a href="#" class="ver-menos-button hidden" id="ver-menos-procedimientos">Ver menos</a>
+            {% endif %}
+        </div>
+    </section>
+    
+    <section id="recursos">
+        <h3>Recursos</h3>
+        <div class="card-container">
+            {% for resource in data.resources %}
+            <a class="card {% if loop.index > 4 %}hidden{% endif %}" style="height: 250px;padding: 15px;" href="/files/{{ resource.title }}/" download="{{resource.title}}">
+                <figure class="" style="    width: 114%; position: relative;left: -15px; top:-15px;">
+                    <img src="/assets/images/resource.jpg" alt="">
+                </figure>
+                <h2 class="card-title" style="text-align: center;margin-top: 2px;">{{resource.title}}</h2>
+                <br>
+            </a>
+            {% endfor %}
+            {% if data.resources.length > 4 %}
+            <a href="#" class="ver-mas-button" id="ver-mas-recursos">Ver más</a>
+            <a href="#" class="ver-menos-button hidden" id="ver-menos-recursos">Ver menos</a>
+            {% endif %}
+        </div>
+    </section>
+    
+</div>
+<script>
+    function toggleCards(sectionId, verMasId, verMenosId) {
+        const section = document.getElementById(sectionId);
+        const verMasButton = document.getElementById(verMasId);
+        const verMenosButton = document.getElementById(verMenosId);
+        
+        verMasButton.addEventListener("click", () => {
+            section.querySelectorAll(".card.hidden").forEach(card => {
+                card.classList.remove("hidden");
+            });
+            verMasButton.classList.add("hidden");
+            verMenosButton.classList.remove("hidden");
+        });
+        
+        verMenosButton.addEventListener("click", () => {
+            section.querySelectorAll(".card").forEach((card, index) => {
+                if (index > 4) {
+                    card.classList.add("hidden");
+                }
+            });
+            verMasButton.classList.remove("hidden");
+            verMenosButton.classList.add("hidden");
+        });
+    }
+    
+    toggleCards("manuales", "ver-mas-manuales", "ver-menos-manuales");
+    toggleCards("procedimientos", "ver-mas-procedimientos", "ver-menos-procedimientos");
+    toggleCards("recursos", "ver-mas-recursos", "ver-menos-recursos");
+</script>
+{% endblock %}

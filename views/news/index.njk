@@ -1,0 +1,30 @@
+{% extends 'layout_articles.njk' %}
+
+{% block body %}
+
+
+<div id="content" style="width: 80%; margin: 0 auto;">
+    <section id="title">
+        <h1>NEWS</h1>
+    </section>
+    <section id="guides">
+        <div class="card-container">
+            {% for notification in news %}
+            <a class="card" style="height: 250px;padding: 15px;" href="/guides/{{guide.id}}">
+                <figure class="" style="    width: 114%; position: relative;left: -15px; top:-15px;">
+                    <img src="/assets/images/manual.jpg" alt="">
+                </figure>
+                <h2 class="card-title" style="text-align: center;margin-top: 2px;">{{notification.title}}</h2>
+                <p class="card-description" style="text-align: justify;">{{notification.content | truncateText(100)}}</p>
+                <div class="card-stats">
+                    <!-- Aquí puedes agregar las estadísticas del manual -->
+                </div>
+                
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+
+{% endblock %}

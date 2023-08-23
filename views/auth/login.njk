@@ -96,7 +96,13 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         if (response.status === 'success') {
           // La solicitud fue exitosa
           // Realiza las acciones necesarias
-          location.href = "/";
+          console.log(response)
+          if(response.next) {
+              location.href = response.next
+          }else {
+            location.href = "/";
+          }
+          
         } else {
           // La solicitud falló
           console.error('Error en la solicitud de inicio de sesión');

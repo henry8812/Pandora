@@ -1,12 +1,27 @@
 <header>
   <div class="search-bar">
-    <input type="text" class="search-input" placeholder="Buscar...">
-    <select class="search-select">
-      <option value="opcion0">Todo</option>
-      <option value="opcion1">Articulos</option>
-      <option value="opcion2">Manuales</option>
-      <option value="opcion3">Recursos</option>
+    <input type="text" id="search-input" class="search-input" placeholder="Buscar...">
+    <select id="search-select" class="search-select">
+      <option value="">Todo</option>
+      <option value="articles">Procedimientos</option>
+      <option value="guides">Manuales</option>
+      <option value="resources">Recursos</option>
     </select>
-    <button class="search-button">Buscar</button>
+    <button id="search-button" class="search-button">Buscar</button>
   </div>
 </header>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const searchButton = document.getElementById("search-button");
+  searchButton.addEventListener("click", () => {
+    const searchInput = document.getElementById("search-input").value;
+    const searchSelect = document.getElementById("search-select").value;
+    
+    // Reemplaza "ruta-de-busqueda" con la ruta real de tu página de búsqueda
+    const searchUrl = `/search?criteria=${searchInput}&category=${searchSelect}`;
+    
+    window.location.href = searchUrl;
+  });
+});
+
+</script>

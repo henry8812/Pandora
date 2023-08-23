@@ -228,11 +228,7 @@ article>.header>h2{
   margin-bottom: 2.25rem;
   margin-top: 1.5rem;
 }
-a{
-  text-decoration: none;
-  color: #333
-  
-}
+
 article>.header>figure>a>img {
   width: 112% !important;
   position: relative;
@@ -651,6 +647,7 @@ button[type="submit"]:hover {
 .card-container {
   display: inline-flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .card {
@@ -666,7 +663,7 @@ button[type="submit"]:hover {
 }
 
 .card-title {
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 10px;
 }
 
@@ -882,10 +879,11 @@ button[type="submit"]:hover {
 */
 /* Estilos para el contenedor de la presentación de diapositivas */
 .slider-container {
-  background-color: #34495e; /* Color de fondo azul metalizado */
+  font-size: 20px;
+  background-color: #657c87; /* Color de fondo azul metalizado */
   width: 100%;
   overflow: hidden;
-  height: 400px;
+  min-height: 500px;
   padding: 25px;
   position: relative;
   box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
@@ -934,7 +932,7 @@ button[type="submit"]:hover {
 
 /* Estilos para las imágenes de slide */
 .swiper-slide img {
-  width: 100%;
+  width: 400px;
   
 }
 
@@ -976,4 +974,7 @@ button[type="submit"]:hover {
 .swiper-button-next::before {
     font-size: 10px !important; /* Tamaño más pequeño */
     transform: scale(0.6);
+}
+.swiper-slide>p>a{
+  text-decoration: #0056b3  !important;
 }

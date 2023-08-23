@@ -51,6 +51,7 @@ router.post('/', async (req, res) => {
       file_id : response.id,
       category_id : req.body.category || 3
     }
+    console.log(resourceData)
 
     let resource = resources.createResource(resourceData);
     resource.file = fileData

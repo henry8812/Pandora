@@ -30,6 +30,18 @@ router.get('/resources/new', async (req, res) => {
 });
 
 
+router.get('/news/new', async (req, res) => {
+  // Lógica para cerrar sesión del usuario
+  
+
+
+  res.render('news/new', { title: 'News',  req });
+});
+
+
+
+
+
 router.get('/article/new', async (req, res) => {
   // Lógica para cerrar sesión del usuario
   console.log("article")

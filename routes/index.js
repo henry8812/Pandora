@@ -42,10 +42,13 @@ router.get('/', async(req, res) => {
       case 'Front':
         next = "agent/index";
         news = await _news.listNews()
+        
         console.log(news)
       break;
       case 'Premium':
         next = "agent/index";
+        news = await _news.listNews()
+        console.log(news)
         break;
       case 'Coordinador':
         next = 'coordinator/index'
@@ -79,8 +82,13 @@ router.use('/front', require('./front'));
 
 router.use('/premium', require('./premium'));
 router.use('/ops', require('./ops'));
+router.use('/tools', require('./tools'));
+
 
 router.use('/comments', require('./comments.js'));
+
+router.use('/news', require('./news.js'));
+router.use('/search', require('./search.js'));
 
 
 

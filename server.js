@@ -21,6 +21,8 @@ const njkEnv = nunjucks.configure('views', {
 });
 
 // Middlewares
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 app.use(session({
   secret: 'sec6u88(%1_-poqwy',

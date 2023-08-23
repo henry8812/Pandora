@@ -19,6 +19,8 @@
 				<option value="3">FRONT</option>
 				<option value="5">PREMIUM</option>
 				<option value="6">OPERATIVO</option>
+        <option value="7">HERRAMIENTAS DE GESTION</option>
+        
 			</select>
     </div>
     <div class="article-content">
@@ -92,21 +94,10 @@
       const contentInput = tinymce.get('content').getContent();
       const publicoInput = document.querySelector("#publico");
       // Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
-      if (!resource) {
-        
-          Swal.fire({
-            title: 'Error!',
-            text: 'Debes cargar un documento para este manual',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          })
-          return;
-        
-      }
 
       const guideData = {
         title: titleInput.value,
-        resource : resource.resource,
+        resource : resource ? resource.resource : null ,
         shortDescription: shortDescriptionInput.value,
         content: contentInput,
         target_id :  publicoInput.value || null

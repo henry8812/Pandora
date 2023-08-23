@@ -1,5 +1,39 @@
 {% extends 'layout_articles.njk' %}
 {% block body %}
+<style>
+    /* Estilos generales de los botones */
+    .button {
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    
+    /* Estilos para el botón de editar */
+    .edit-button {
+        background-color: #e0e0e0;
+        color: #333;
+        float: left;
+    }
+    .edit-button.disabled {
+        background-color: #f0f0f0;
+        color: #aaa;
+        cursor: not-allowed;
+    }
+    
+    /* Estilos para el botón de eliminar */
+    .delete-button {
+        background-color: #e74c3c;
+        color: #fff;
+        float: right;
+    }
+    
+    /* Estilos específicos para el botón de eliminar con ícono */
+    .delete-button .icon {
+        margin-right: 5px;
+    }
+</style>
 
 <div id="content">
     <section id="title">
@@ -7,40 +41,136 @@
     </section>
     <section id="articles">
         {% for item in articles %}
-            <article>
-                <div class="header">
-                    {% if item.banner %}
-                    <figure class="blog-image">
-                        <a href="/articles/{{item.id}}">
-                            <img alt="{{item.slug}}" src="{{item.banner}}">
-                        </a>
-                    </figure>
-                    {% else %}
-                    <figure class="blog-image">
-                        <a href="/articles/{{item.id}}">
-                            <img alt="{{item.slug}}" src="/assets/images/banner.png" >
-                        </a>
-                    </figure>
-                    {% endif %}
-                    <h2>
-                        <a href="/articles/{{item.id}}">{{item.title}}</a>
-                    </h2>
-                    <p class="date-author">
-                        <a href="/profiles/{{item.author.id}}" class="external author" target="_blank" rel="noreferrer">
-                            <img src="{{item.author.image}}" alt="Author avatar">
-                            <span>{{item.author.name}}</span>
-                        </a>
-                        <time class="date">{{item.created_at | date("DD/MM/YYYY HH:mm") }}</time>
-                    </p>
-                </div>
-                <p>{{item.short_description}}</p>
-                <a href="/articles/{{item.id}}" target="_self" class="button primary">
-                    <span class="button-wrap">Read more →</span>
-                </a>    
-            </article>
-
+        <article>
+            <div class="header">
+                {% if item.banner %}
+                <figure class="blog-image">
+                    <a href="/articles/{{item.id}}">
+                        <img alt="{{item.slug}}" src="{{item.banner}}">
+                    </a>
+                </figure>
+                {% else %}
+                <figure class="blog-image">
+                    <a href="/articles/{{item.id}}">
+                        <img alt="{{item.slug}}" src="/assets/images/banner.png" >
+                    </a>
+                </figure>
+                {% endif %}
+                <h2>
+                    <a href="/articles/{{item.id}}">{{item.title}}</a>
+                </h2>
+                <p class="date-author">
+                    <a href="/profiles/{{item.author.id}}" class="external author" target="_blank" rel="noreferrer">
+                        <img src="{{item.author.image}}" alt="Author avatar">
+                        <span>{{item.author.name}}</span>
+                    </a>
+                    <time class="date">{{item.created_at | date("DD/MM/YYYY HH:mm") }}</time>
+                </p>
+            </div>
+            <p>{{item.short_description}}</p>
+            <a href="/articles/{{item.id}}" target="_self" class="button primary">
+                <span class="button-wrap">Read more →</span>
+            </a>    
+            <br>
+            {% if user.role_id == 2 %}
+            <!-- Botón de Editar -->
+            <button data-id="{{item.id}}" class="button edit-button disabled">Editar</button>
+            
+            <!-- Botón de Eliminar -->
+            <button data-id="{{item.id}}" class="button delete-button">
+                <span class="icon">❌</span>Eliminar
+            </button>
+            {% endif %}
+            
+        </article>
+        
+        
+        
         {% endfor %}
-
+        <script>
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            
+            // Convertir la NodeList en un array
+            const deleteButtonsArray = Array.from(deleteButtons);
+            
+            // Agregar un evento de clic a cada botón de eliminar
+            deleteButtonsArray.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Determinar cuál botón de eliminar fue presionado
+                    const articleId = this.dataset["id"]
+                    console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
+                    console.log("/articles/delete/"+articleId)
+                    fetch("/articles/delete/"+articleId, {
+                        method: "POST",
+                      
+                    })
+                    .then(data => {
+                        console.log(data);
+                        Swal.fire({
+                            title: 'Articulo eliminado correctamente',
+                            text: 'Haz eliminado un articulo de forma exitosa',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            
+                            location.href = "/articles";
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                });
+            }); 
+            
+            /**
+            articleForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                const titleInput = document.querySelector("#title");
+                const bannerURL = document.querySelector("#bannerurl");
+                const shortDescriptionInput = document.querySelector("#short-description");
+                const contentInput = tinymce.get('content').getContent();
+                const publicoInput = document.querySelector("#publico");
+                
+                // Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
+                
+                
+                const articleData = {
+                    title: titleInput.value,
+                    bannerurl: bannerURL.value ? bannerURL.value : null,
+                    shortDescription: shortDescriptionInput.value,
+                    content: contentInput,
+                    target_id: publicoInput.value || null
+                };
+                
+                fetch("/articles", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(articleData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    Swal.fire({
+                        title: 'Articulo creado correctamente',
+                        text: 'Haz creado un articulo de fomra exitosa',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        
+                        location.href = "/articles";
+                    })
+                })
+                .catch(error => {
+                    console.error("Error al publicar el artículo:", error);
+                });
+            });
+            */
+        </script>
+        
+        
         
     </section>
 </div>
