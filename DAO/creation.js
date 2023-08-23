@@ -11,8 +11,8 @@ dotenv.config();
 const emailConfig = {
   service: 'outlook',
   auth: {
-    user: 'hagomez@emcali.com.co',
-    pass: 'Swordfish3842',
+    user: 'xxxxxx@xxxxx.xxx.xx',
+    pass: 'xxxxxxxxxxxxx',
   },
 };
 
@@ -101,7 +101,7 @@ async function sendEmail(to, subject, text) {
   const transporter = nodemailer.createTransport(emailConfig);
 
   const mailOptions = {
-    from: 'hagomez@emcali.com.co',
+    from: 'xxxxxxxxxx@xxxxxxx.xxxx.xxx',
     to: to,
     subject: subject,
     text: text,
