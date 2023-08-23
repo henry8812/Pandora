@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: 'hagomez@emcali.com.co',
-    pass: 'Swordfish3842',
+    user: 'xxxxx@xxxxxx.xxx.xxxx',
+    pass: 'xxxxxxxxxx',
   },
 });
 
@@ -64,8 +64,8 @@ router.post('/', async (req, res) => {
   const link = `<a href="${base_dir}${BASE[object_type]}${object_id}">Enlace</a>`;
   // Envía el correo electrónico
   const mailOptions = {
-    from: '"bc-pandora" <hagomez@emcali.com.co>', // Nombre y dirección de origen personalizados
-    to: 'hacastillo@emcali.com.co', // Destinatario
+    from: '"bc-pandora" <xxxxxx@xxxxxx.com.co>', // Nombre y dirección de origen personalizados
+    to: 'xxxxx@xxxxxx.xxxx.xxxx', // Destinatario
     subject: 'Nuevo comentario',
     html: `El usuario ${author} ha comentado lo siguiente: ${commentLink} en el ${link}`,
   };
