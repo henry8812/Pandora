@@ -2,8 +2,6 @@
 
 Pandora is a powerful and user-friendly knowledge base system built using Node.js, NJK, MySQL, and Express. It allows you to easily create, manage, and access knowledge articles, making information sharing within your organization seamless.
 
-![Pandora Logo](link_to_your_logo.png)
-
 ## Features
 
 - **Intuitive Interface:** Pandora provides a clean and intuitive web interface for creating, editing, and organizing knowledge articles.
