@@ -23,6 +23,21 @@ async function createFile(fileData) {
     throw new Error("Error creating file");
   }
 }
+async function deleteResource(id) {
+  try {
+    
+    // actualizarel recurso para que no sea visible ya que puede estar asociado a un elemento del sistema
+    let values = [id]
+    const result = await db.query('update resources set resource = 0 where id = ?',values);
+
+    // Obtener el ID del archivo creado
+   
+    return id;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error hiding resource");
+  }
+}
 
 async function createResource(resourceData) {
   try {
@@ -33,6 +48,7 @@ async function createResource(resourceData) {
     const resourceId = result.insertId;
 
     resourceData.id = resourceId;
+    
 
     // Retornar el artículo creado
     return resourceData;
@@ -74,6 +90,7 @@ async function listResources() {
         resources
       JOIN
         categories ON resources.category_id = categories.id
+      where resources.resource = 1
     `;
     
     let result = await db.query(query);
@@ -106,5 +123,6 @@ module.exports = {
   createResource,
   createFile,
   listResources,
-  listCategories
+  listCategories,
+  deleteResource
 };

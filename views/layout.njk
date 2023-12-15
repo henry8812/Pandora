@@ -8,7 +8,12 @@
     <link   rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="{{ baseUrl }}/assets/styles/base.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+    
+    <!-- Agrega jQuery (es necesario para DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <style>
         /* Estilos adicionales para el despliegue de los submenús */
         .submenu {
@@ -60,7 +65,11 @@
                         
                     </ul>
                 </li>
-                <li{% if currentPath === '/resources' %} class="active"{% endif %}><a href="/resources">Recursos</a></li>
+                <li class="has-submenu{% if currentPath === '/resources' %} active{% endif %}"><a href="/resources">Recursos</a>
+                    <ul class="submenu">
+                        <li><a href="/ops/form">Mantenimiento</a></li>
+                    </ul>
+                </li>
             </ul>
             <div class="logo emcali">
                 <!-- Aquí puedes agregar tu logo -->

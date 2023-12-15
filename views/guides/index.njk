@@ -35,6 +35,21 @@
     .delete-button .icon {
         margin-right: 5px;
     }
+    section.buttons {
+        position: absolute; /* Establece la posición absoluta para el section.buttons */
+        /**left: 10%; /* Centra horizontalmente el contenido */
+        bottom: 10%;
+        transform: translateX(0%); /* Centra horizontalmente el contenido */
+    }
+    .card {
+        position: relative;
+    }
+    
+    .buttons {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+    }
 </style>
 <div id="content" style="width: 80%; margin: 0 auto;">
     <section id="title">
@@ -43,55 +58,93 @@
     <section id="guides">
         <div class="card-container">
             {% for guide in guides %}
-            <a class="card" style="height: 250px;padding: 15px;" href="/guides/{{guide.id}}">
-                <figure class="" style="    width: 114%; position: relative;left: -15px; top:-15px;">
-                    <img src="/assets/images/manual.jpg" alt="">
-                </figure>
-                <h2 class="card-title" style="text-align: center;margin-top: 2px;">{{guide.title}}</h2>
-                <!--<p class="card-description" style="text-align: justify;">{{guide.short_description | truncateText(100)}}</p>-->
+            <span class="card" style="height: 290px;padding: 15px;" >
+                <a class="" href="/guides/{{guide.id}}">
+                    <figure class="" style="    width: 114%; position: relative;left: -15px; top:-15px;">
+                        <img src="/assets/images/manual.jpg" alt="">
+                    </figure>
+                    <h2 class="card-title" style="text-align: center;margin-top: 2px;">{{guide.title}}</h2>
+                    <!--<p class="card-description" style="text-align: justify;">{{guide.short_description | truncateText(100)}}</p>-->
+                </a>
+                
                 <br>
+                {% if user.role_id == 2 %}
+                <section class="buttons">
+                    
+                    <br>
+                    
+                    <button class="delete-button" data-id="{{guide.id}}">ELIMINAR</button>
+                    
+                </section>
+                {% endif %} 
                 
-               
-                
-            </a>
-            
+            </span>
             
             {% endfor %}
             <script>
                 
-            const deleteButtons = document.querySelectorAll('.delete-button');
-            
-            // Convertir la NodeList en un array
-            const deleteButtonsArray = Array.from(deleteButtons);
-            
-            // Agregar un evento de clic a cada botón de eliminar
-            deleteButtonsArray.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Determinar cuál botón de eliminar fue presionado
-                    const articleId = this.dataset["id"]
-                    console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
-                    console.log("/guides/delete/"+articleId)
-                    fetch("/guides/delete/"+articleId, {
-                        method: "POST",
-                      
-                    })
-                    .then(data => {
-                        console.log(data);
+                
+                const deleteButtons = document.querySelectorAll('.delete-button');
+                
+                // Convertir la NodeList en un array
+                const deleteButtonsArray = Array.from(deleteButtons);
+                
+                // Agregar un evento de clic a cada botón de eliminar
+                deleteButtonsArray.forEach(button => {
+                    button.addEventListener('click', function() {
+                        
+                        
                         Swal.fire({
-                            title: 'Manual eliminado correctamente',
-                            text: 'Haz eliminado un manual de forma exitosa',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
+                            title: 'Estas seguro?',
+                            text: "No podras revertir este proceso!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, Eliminalo!'
                         }).then((result) => {
-                            
-                            location.href = "/guides";
+                            if (result.isConfirmed) {
+                                
+                                
+                                
+                                
+                                
+                                // Determinar cuál botón de eliminar fue presionado
+                                console.log(this)
+                                const articleId = this.dataset["id"]
+                                console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
+                                console.log("/guides/delete/"+articleId) 
+                                var xhr = new XMLHttpRequest();
+                                var url = "/guides/delete/"+articleId; // Reemplaza 'tu_url_de_destino' con la URL a la que deseas enviar la petición POST
+                                var data = null
+                                
+                                xhr.open('POST', url, true);
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState === 4 && xhr.status === 200) {
+                                        // La respuesta del servidor estará en xhr.responseText
+                                        console.log(xhr.responseText);
+                                        Swal.fire({
+                                            title: 'Manual eliminado correctamente',
+                                            text: 'Haz eliminado un manual de forma exitosa',
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        }).then((result) => {
+                                            
+                                            location.href = "/guides";
+                                        })
+                                    }
+                                };
+                                
+                                xhr.send(data);
+                                
+                            }
                         })
-                    })
-                    .catch(error => {
-                        console.log(error);
+                        
+                        
                     });
-                });
-            }); 
+                }); 
             </script>
         </div>
     </section>

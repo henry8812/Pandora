@@ -10,7 +10,7 @@
     {% if content.image_url %}
     <div class="swiper-slide">
       <h2 class="slide-title">{{content.title}}</h2>
-      <img src="{{content.image_url}}" width="80%" alt="Imagen">
+      <img src="{{content.image_url}}" width="950px" alt="Imagen">
       <p class="slide-content">{{content.content | renderHtml}}</p>
     </div>
     {% else %}
@@ -52,28 +52,14 @@
   <section id="featured">
     <h1 style="text-align: center;">ARTICULOS POPULARES</h1>
     <div id="articles" class="featured">
+      {% for item in articles %}
       <article>
         <h3 class="tile-title">
-          <a href="/en-US/blog/regular-expressions-reference-updates/">New reference pages on MDN for JavaScript regular expressions</a>
+          <a href="/articles/{{item.id}}">{{item.title}}</a>
         </h3>
-        <p class="tile-content">See the latest updates to the MDN reference pages about JavaScript regular expressions, including new sections on sub-features and browser compatibility information.</p>
+        <p class="tile-content">{{  item.short_description | truncateText(150)}}</p>
       </article>
-      <article class="article-tile">
-        <h3 class="tile-title"><a href="/en-US/blog/aria-accessibility-html-landmark-roles/">Using HTML landmark roles to improve accessibility</a>
-        </h3>
-        <p class="tile-content">Learn what HTML landmark roles are, how they improve accessibility, and how you can include them on your website effectively.</p>
-      </article>
-      <article class="article-tile"><a href="/en-US/docs/Web/API" class="tile-tag">Web APIs</a>
-        <h3 class="tile-title"><a href="/en-US/docs/Web/API/Performance_API">Performance API</a>
-        </h3>
-        <p class="tile-content">The Performance API is a group of standards used to measure the performance of web applications.</p>
-      </article>
-      <article class="article-tile"><a href="/en-US/docs/Web/CSS" class="tile-tag">CSS</a>
-        <h3 class="tile-title">
-          <a href="/en-US/docs/Web/CSS/font-palette">font-palette</a>
-        </h3>
-        <p class="tile-content">The font-palette CSS property allows specifying one of the many palettes contained in a font that a user agent should use for the font. Users can also override the values in a palette or create a new palette by using the @font-palette-values at-rule.</p>
-      </article>
+      {% endfor %}
     </div>
   </section>
   

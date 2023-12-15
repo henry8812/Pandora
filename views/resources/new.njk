@@ -40,6 +40,8 @@
       formData.append("title", titleInput.value);
       formData.append("description", descriptionInput.value);
       formData.append("category", categoryInput.value);
+      formData.append("resource", 1);
+      
       formData.append("file", fileInput.files[0]);
 
       fetch("/resources", {

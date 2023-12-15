@@ -4,6 +4,10 @@ const resources = require("../DAO/resources");
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const fs = require('fs');
+const cookieParser = require('cookie-parser');
+const NodeCache = require('node-cache');
+const { Console } = require('console');
+const users = require('../DAO/users'); // Importa el módulo users
 router.use(fileUpload());
 // Ruta de cierre de sesión
 router.get('/', async(req, res) => {
@@ -13,7 +17,11 @@ router.get('/', async(req, res) => {
   console.log(items)
   
   let categories = await resources.listCategories();
-  res.render('resources/index', { title: 'Resources', resources: items,  categories: categories, req });
+  const sessionId = req.cookies.sessionId;
+  const email = sessionId;
+  let author = email;
+  let user = await users.getUserByEmail(email);
+  res.render('resources/index', { title: 'Resources', resources: items,  categories: categories, user: user, req });
 });
 
 
@@ -49,7 +57,8 @@ router.post('/', async (req, res) => {
       title : fileData.filename,
       description : fileData.filename,
       file_id : response.id,
-      category_id : req.body.category || 3
+      category_id : req.body.category || 3,
+      resource : req.body.resource || 0
     }
     console.log(resourceData)
 
@@ -69,7 +78,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async(req, res) => {
-  res.response("test")  
+  res.send("test")  
 });
 
 router.put('/:id', (req, res) => {
@@ -77,8 +86,10 @@ router.put('/:id', (req, res) => {
   res.response("test")  
 });
 router.delete('/:id', (req, res) => {
-  
-  res.response("test")  
+  console.log(req.params.id)
+
+  resources.deleteResource(req.params.id)
+  res.send("deleted")  
 });
 
 

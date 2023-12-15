@@ -4,6 +4,8 @@ const router = express.Router();
 const NodeCache = require('node-cache');
 const users = require('../DAO/users')
 const _news = require('../DAO/news')
+const _articles = require('../DAO/articles')
+
 
 // Crea una instancia de NodeCache
 const sessionCache = new NodeCache();
@@ -38,23 +40,42 @@ router.get('/', async(req, res) => {
     
     let next = "/";
     let news = null;
+    let articles = null;
     switch(user.role_name){
       case 'Front':
         next = "agent/index";
         news = await _news.listNews()
+
+        articles = await _articles.listPopularArticles();
         
-        console.log(news)
       break;
+
       case 'Premium':
         next = "agent/index";
         news = await _news.listNews()
-        console.log(news)
+        articles = await _articles.listPopularArticles();
         break;
+      case 'Operativo':
+        next = "agent/index";
+        news = await _news.listNews()
+        
+        articles = await _articles.listPopularArticles();
+      break;
+      case 'Herramientas de Gestion':
+        next = "agent/index";
+        news = await _news.listNews()
+        
+        articles = await _articles.listPopularArticles();
+      break;
+      
+      
       case 'Coordinador':
         next = 'coordinator/index'
+        articles = await _articles.listPopularArticles();
       break;
       case 'Administrador':
         next = 'admin/index'
+        articles = await _articles.listPopularArticles();
       break;
       default:
         next = '401'
@@ -62,7 +83,7 @@ router.get('/', async(req, res) => {
     }
     
     console.log(JSON.stringify(news, null, 4))
-    res.render(next, { title: 'Base de Conocimiento', req , user : user, news : news });
+    res.render(next, { title: 'Base de Conocimiento', req , user : user, news : news, articles : articles });
   } else {
     // La sesión no está activa, redirigir a la página de inicio de sesión
     console.log("No hay sesión");
@@ -89,6 +110,8 @@ router.use('/comments', require('./comments.js'));
 
 router.use('/news', require('./news.js'));
 router.use('/search', require('./search.js'));
+router.use('/reports', require('./reports.js'));
+
 
 
 

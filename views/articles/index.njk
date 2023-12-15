@@ -3,7 +3,7 @@
 <style>
     /* Estilos generales de los botones */
     .button {
-        padding: 10px 20px;
+        /** padding: 10px 20px;**/
         border: none;
         cursor: pointer;
         font-size: 16px;
@@ -21,17 +21,27 @@
         color: #aaa;
         cursor: not-allowed;
     }
-    
+    section.buttons {
+        margin-top: 20px;
+        position: absolute; /* Establece la posición absoluta para el section.buttons */
+        bottom: 20px; /* Alinea el section.buttons a 20px de la parte inferior */
+        /**left: 10%; /* Centra horizontalmente el contenido */
+        transform: translateX(0%); /* Centra horizontalmente el contenido */
+    }
     /* Estilos para el botón de eliminar */
     .delete-button {
         background-color: #e74c3c;
         color: #fff;
-        float: right;
+        padding: 5px;
+        
     }
     
     /* Estilos específicos para el botón de eliminar con ícono */
     .delete-button .icon {
         margin-right: 5px;
+    }
+    article{
+        position: relative;
     }
 </style>
 
@@ -68,19 +78,24 @@
                 </p>
             </div>
             <p>{{item.short_description}}</p>
-            <a href="/articles/{{item.id}}" target="_self" class="button primary">
-                <span class="button-wrap">Read more →</span>
-            </a>    
-            <br>
-            {% if user.role_id == 2 %}
-            <!-- Botón de Editar -->
-            <button data-id="{{item.id}}" class="button edit-button disabled">Editar</button>
             
-            <!-- Botón de Eliminar -->
-            <button data-id="{{item.id}}" class="button delete-button">
-                <span class="icon">❌</span>Eliminar
-            </button>
-            {% endif %}
+            
+            <section class="buttons">
+                <a href="/articles/{{item.id}}" target="_self" class="button primary">
+                    <span class="button-wrap">Read more →</span>
+                </a> 
+                <br>
+                
+                {% if user.role_id == 2 %}
+                <button class="delete-button" data-id="{{item.id}}">ELIMINAR</button>
+                {% endif %} 
+            </section>
+            
+            <br>
+            
+            
+            
+            
             
         </article>
         
@@ -88,6 +103,8 @@
         
         {% endfor %}
         <script>
+            
+            
             const deleteButtons = document.querySelectorAll('.delete-button');
             
             // Convertir la NodeList en un array
@@ -95,83 +112,63 @@
             
             // Agregar un evento de clic a cada botón de eliminar
             deleteButtonsArray.forEach(button => {
+                
                 button.addEventListener('click', function() {
-                    // Determinar cuál botón de eliminar fue presionado
-                    const articleId = this.dataset["id"]
-                    console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
-                    console.log("/articles/delete/"+articleId)
-                    fetch("/articles/delete/"+articleId, {
-                        method: "POST",
-                      
-                    })
-                    .then(data => {
-                        console.log(data);
-                        Swal.fire({
-                            title: 'Articulo eliminado correctamente',
-                            text: 'Haz eliminado un articulo de forma exitosa',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then((result) => {
+                    Swal.fire({
+                        title: 'Estas seguro?',
+                        text: "No podras revertir este proceso!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Eliminalo!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
                             
-                            location.href = "/articles";
-                        })
+                            // Determinar cuál botón de eliminar fue presionado
+                            console.log(this)
+                            const articleId = this.dataset["id"]
+                            console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
+                            console.log("/articles/delete/"+articleId) 
+                            var xhr = new XMLHttpRequest();
+                            var url = "/articles/delete/"+articleId; // Reemplaza 'tu_url_de_destino' con la URL a la que deseas enviar la petición POST
+                            var data = null
+                            
+                            xhr.open('POST', url, true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    // La respuesta del servidor estará en xhr.responseText
+                                    console.log(xhr.responseText);
+                                    
+                                }
+                            };
+                            
+                            xhr.send(data);
+                            
+                            
+                            Swal.fire({
+                                title: 'Procedimiento eliminado correctamente',
+                                text: 'Haz eliminado un procedimiento de forma exitosa',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                
+                                location.href = "/articles";
+                            })
+                        }
                     })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                    
                 });
             }); 
             
-            /**
-            articleForm.addEventListener("submit", function(event) {
-                event.preventDefault();
-                
-                const titleInput = document.querySelector("#title");
-                const bannerURL = document.querySelector("#bannerurl");
-                const shortDescriptionInput = document.querySelector("#short-description");
-                const contentInput = tinymce.get('content').getContent();
-                const publicoInput = document.querySelector("#publico");
-                
-                // Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
-                
-                
-                const articleData = {
-                    title: titleInput.value,
-                    bannerurl: bannerURL.value ? bannerURL.value : null,
-                    shortDescription: shortDescriptionInput.value,
-                    content: contentInput,
-                    target_id: publicoInput.value || null
-                };
-                
-                fetch("/articles", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(articleData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    Swal.fire({
-                        title: 'Articulo creado correctamente',
-                        text: 'Haz creado un articulo de fomra exitosa',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        
-                        location.href = "/articles";
-                    })
-                })
-                .catch(error => {
-                    console.error("Error al publicar el artículo:", error);
-                });
-            });
-            */
         </script>
-        
         
         
     </section>
 </div>
+<script>
+    let role_id = '{{user.role_id}}'
+</script>
 {% endblock %}

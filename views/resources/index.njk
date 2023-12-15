@@ -7,34 +7,130 @@
         <h1>RECURSOS</h1>
     </section>
     
-        <div class="resources-container">
-            <div class="category-list" style="width: 30%;">
-                <ul>
-                    {% for categoryId, categoryResources in resources | groupby('category_id') %}
-                        <li style="display: list-item;">
-                            <a  href="#category{{ categoryId }}" style="text-decoration: steelblue;">{{ categoryResources[0].category }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="resource-details" style="width: 70%; position: relative;left: 30%;">
-                {% for categoryId, categoryResources in resources | groupby('category_id') %}
-                    <div id="category{{ categoryId }}" class="category">
-                        <h2>{{ categoryResources[0].category }}</h2>
-                        <div class="resources">
-                            {% for resource in categoryResources %}
-                                <div class="resource">
-                                    <h3>{{ resource.title }}</h3>
-                                    <p>{{ resource.description }}</p>
-                                    <a href="/files/{{ resource.title }}/" download="{{resource.title}}">Download</a>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+    <div class="resources-container">
+        <table id="resourceDataTable" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Descargar</th>
+                    {% if user.role_id == 2 %}
+                    <th>Eliminar</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                <tr>
+                    <td>{{ resource.title }}</td>
+                    <td>{{ resource.description }}</td>
+                    <td>
+                        <a href="/files/{{ resource.title }}/" download="{{ resource.title }}">Download</a>
+                    </td>
+                    {% if user.role_id == 2 %}
+                    <td>
+                        <button class="delete-button" data-id="{{resource.id}}">Eliminar</button>
+                    </td>
+                    {% endif %}
+                </tr>
                 {% endfor %}
-            </div>
-        </div>
-    
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<script>
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    
+    // Convertir la NodeList en un array
+    const deleteButtonsArray = Array.from(deleteButtons);
+    
+    // Agregar un evento de clic a cada botón de eliminar
+    deleteButtonsArray.forEach(button => {
+        button.addEventListener('click', function() {
+            
+            // Determinar cuál botón de eliminar fue presionado
+            console.log(this)
+            const articleId = this.dataset["id"]
+            console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
+            console.log("/resources/"+articleId) 
+            var xhr = new XMLHttpRequest();
+            var url = "/resources/"+articleId; // Reemplaza 'tu_url_de_destino' con la URL a la que deseas enviar la petición POST
+            var data = null
+
+            xhr.open('DELETE', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // La respuesta del servidor estará en xhr.responseText
+                    console.log(xhr.responseText);
+                    Swal.fire({
+                        title: 'Recurso eliminado correctamente',
+                        text: 'Haz eliminado un recurso de forma exitosa',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        
+                        location.href = "/resources";
+                    })
+                }
+            };
+
+            xhr.send(data);
+           
+          
+         
+        });
+    }); 
+    
+    /**
+    articleForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const titleInput = document.querySelector("#title");
+        const bannerURL = document.querySelector("#bannerurl");
+        const shortDescriptionInput = document.querySelector("#short-description");
+        const contentInput = tinymce.get('content').getContent();
+        const publicoInput = document.querySelector("#publico");
+        
+        // Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
+        
+        
+        const articleData = {
+            title: titleInput.value,
+            bannerurl: bannerURL.value ? bannerURL.value : null,
+            shortDescription: shortDescriptionInput.value,
+            content: contentInput,
+            target_id: publicoInput.value || null
+        };
+        
+        fetch("/articles", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(articleData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            Swal.fire({
+                title: 'Articulo creado correctamente',
+                text: 'Haz creado un articulo de fomra exitosa',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                
+                location.href = "/articles";
+            })
+        })
+        .catch(error => {
+            console.error("Error al publicar el artículo:", error);
+        });
+    });
+    */
+</script>
 {% endblock %}
+
+

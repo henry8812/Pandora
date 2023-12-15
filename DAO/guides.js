@@ -22,9 +22,23 @@ async function getFile(id) {
 }
 async function createGuide(guideData) {
   try {
-    const result = await db.query('INSERT INTO manuals SET ?', guideData);
+    let aux = guideData;
+    let target = guideData.target_id
+    delete aux.target_id
+    console.log("aux")
+    console.log(aux)
+    const result = await db.query('INSERT INTO manuals SET ?', aux);
     
     const guideId = result.insertId;
+    for( var i=0; i < target.length; i++){
+      console.log("lap")
+      let associationData = {
+        manual_id : guideId,
+        target_id :parseInt( target[i])
+      }
+      await db.query('INSERT INTO manual_target_association (manual_id,target_id) VALUES (?,?)', [guideId,associationData.target_id])
+      
+    }
     return guideId
 
   } catch (error) {
@@ -74,8 +88,8 @@ async function listGuides() {
 async function listFrontGuides() {
   
   try {
-    const query = 'SELECT * FROM manuals where target_id = 3';
-    
+   
+    const query = 'SELECT pandora.manuals.* FROM pandora.manuals join pandora.manual_target_association on pandora.manual_target_association.manual_id = pandora.manuals.id where pandora.manual_target_association.target_id = 3';
     let manuals = await db.query(query);
     
 
@@ -89,7 +103,7 @@ async function listFrontGuides() {
 async function listPremiumGuides() {
   
   try {
-    const query = 'SELECT * FROM manuals where target_id = 5';
+    const query = 'SELECT pandora.manuals.* FROM pandora.manuals join pandora.manual_target_association on pandora.manual_target_association.manual_id = pandora.manuals.id where pandora.manual_target_association.target_id = 5';
     
     let manuals = await db.query(query);
     
@@ -104,7 +118,7 @@ async function listPremiumGuides() {
 async function listOpsGuides() {
   
   try {
-    const query = 'SELECT * FROM manuals where target_id = 6';
+    const query = 'SELECT pandora.manuals.* FROM pandora.manuals join pandora.manual_target_association on pandora.manual_target_association.manual_id = pandora.manuals.id where pandora.manual_target_association.target_id = 6';
     
     let manuals = await db.query(query);
     
@@ -119,7 +133,7 @@ async function listOpsGuides() {
 async function listToolsGuides() {
   
   try {
-    const query = 'SELECT * FROM manuals where target_id = 7';
+    const query = 'SELECT pandora.manuals.* FROM pandora.manuals join pandora.manual_target_association on pandora.manual_target_association.manual_id = pandora.manuals.id where pandora.manual_target_association.target_id = 7';
     
     let manuals = await db.query(query);
     
@@ -135,26 +149,35 @@ async function listToolsGuides() {
 async function getGuide(id) {
 
   try {
+    console.log(id)
     const query = 'SELECT * FROM manuals WHERE id = ? ';
     const values = [id];
     let manual = await db.query(query, values);
-    manual = manual[0]
-    let comments = await db.query("SELECT * FROM COMMENTS where comment_type_id =1 and object_id = ? order by created_at desc", values)
-    manual.comments = [];
-    for(let i=0; i<comments.length;i++){
-      let comment = comments[i];
-      let author = comment.user_id
-      let values_1 = [id, author]
-      comment.rating = (await db.query("select * from ratings where object_type = 1 and object_id = ? and user_id = ? order by rating desc", values_1))[0];
-      console.log(comment)
-      manual.comments.push(comment)
-    }
-
-    let file = await getFile(manual.file_id)
-    manual.file =`/files/${file.path}`;
+    if(manual.length > 0) {
+      manual = manual[0]
+      let comments = await db.query("SELECT * FROM COMMENTS join users on users.id = comments.user_id where comment_type_id =1 and object_id = ? order by created_at desc", values)
+      manual.comments = [];
+      for(let i=0; i<comments.length;i++){
+        let comment = comments[i];
+        let author = comment.user_id
+        let values_1 = [id, author]
+        comment.rating = (await db.query("select * from ratings where object_type = 1 and object_id = ? and user_id = ? order by rating desc", values_1))[0];
+        console.log(comment)
+        manual.comments.push(comment)
+      }
+  
+      let file = await getFile(manual.file_id)
+      if(file){
+        manual.file =`/files/${file.path}`;
+      }
+      
+      
+  
+      return manual;
+    } else {
+      return listGuides();
+    } 
     
-
-    return manual;
 
   } catch (error) {
     console.error('Error:', error);

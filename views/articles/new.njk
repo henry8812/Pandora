@@ -10,9 +10,9 @@
 			<button type="button" id="upload">Upload Image</button>
 			<label for="banner">URL del Banner</label>
 			<input type="text" id="bannerurl" name="bannerurl">
-			<label for="publico">Público</label>
-			<select id="publico" name="publico">
-				<option value="">Seleccionar público</option>
+			<label for="publico">Seleccionar público</label>
+			<select id="publico" name="publico" multiple>
+				
 				<option value="3">FRONT</option>
 				<option value="5">PREMIUM</option>
 				<option value="6">OPERATIVO</option>
@@ -90,6 +90,8 @@
 			const shortDescriptionInput = document.querySelector("#short-description");
 			const contentInput = tinymce.get('content').getContent();
 			const publicoInput = document.querySelector("#publico");
+			const selectedOptions = Array.from(publicoInput.selectedOptions);
+			const selectedValues = selectedOptions.map(option => option.value);
 
 			// Validar si se ha cargado una imagen o se ha proporcionado una URL de imagen
 			
@@ -99,7 +101,7 @@
 				bannerurl: bannerURL.value ? bannerURL.value : null,
 				shortDescription: shortDescriptionInput.value,
 				content: contentInput,
-				target_id: publicoInput.value || null
+				target_id: selectedValues || null
 			};
 			
 			fetch("/articles", {

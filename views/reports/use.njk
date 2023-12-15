@@ -1,0 +1,49 @@
+{% extends 'layout.njk' %}
+<style>
+    /* Estilos generales para las tarjetas y botones */
+    .card-container{
+        width: 100% !important;
+    }
+    .ver-mas-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .ver-menos-button {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    /* Estilos específicos para cada sección */
+    /* Aquí puedes agregar estilos únicos para cada categoría si es necesario */
+    
+    /* Asegura que las tarjetas sean responsivas */
+    @media (max-width: 768px) {
+        .card {
+            width: calc(50% - 20px);
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .card {
+            width: calc(100% - 20px);
+        }
+    }
+    
+</style>
+{% block body %}
+<div class="">
+</div>
+{% endblock %}

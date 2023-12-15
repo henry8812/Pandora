@@ -64,6 +64,22 @@ router.get('/new', async (req, res) => {
   }
 });
 
+router.get('/popular', async (req, res) => {
+  try {
+    
+    // Registra el acceso en xapi_logs
+    const sessionId = req.cookies.sessionId;
+    const email = sessionId;
+    let user = await users.getUserByEmail(email);
+    let data = await articles.listPopularArticles()
+
+    res.send(null);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving new article form');
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     console.log(req.body)

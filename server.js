@@ -69,6 +69,7 @@ njkEnv.addFilter('groupby', function (collection, key) {
 njkEnv.addFilter('renderHtml', function (value) {
   return new nunjucks.runtime.SafeString(value);
 });
+
 njkEnv.addFilter('renderStars', filters.renderStars);
 
 // Configuración de rutas

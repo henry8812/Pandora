@@ -17,12 +17,12 @@ router.post('/', async (req, res) => {
       return res.status(400).send('Missing required fields');
     }
 
-    console.log(bannerurl)
+    
     
     const newsData = {
       title,
       author: author,
-      banner: bannerurl,
+      banner: bannerurl || '',
       content: content || '',
       expiration_date
     };

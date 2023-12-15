@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base de Conocimiento - Inicio</title>
     <link rel="stylesheet" href="{{ baseUrl }}/assets/styles/base.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#resourceDataTable').DataTable();
+        });
+    </script>
 
         <style>
             /* Estilos adicionales para el despliegue de los submenús */
@@ -58,7 +66,11 @@
                         <li><a href="/tools/articles">H. Gestion</a></li>
                     </ul>
                 </li>
-                <li{% if currentPath === '/resources' %} class="active"{% endif %}><a href="/resources">Recursos</a></li>
+                <li{% if currentPath === '/resources' %} class="active"{% endif %}><a href="/resources">Recursos</a>
+                <ul class="submenu">
+                    <li><a href="/ops/form">Mantenimiento</a></li>
+                </ul>
+            </li>
             </ul>
             <div class="logo emcali">
                 <!-- Aquí puedes agregar tu logo -->

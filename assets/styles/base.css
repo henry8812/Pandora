@@ -207,7 +207,7 @@ li {
 #content>#title{
   text-align: center;
   font-size: 30px;
-  color: black;
+  color: black;|
   margin-bottom: 40px;
   margin-top: 50px;
 }
@@ -230,10 +230,13 @@ article>.header>h2{
 }
 
 article>.header>figure>a>img {
-  width: 112% !important;
+  width: 100% !important;
+  height: 250px;
+  /***
   position: relative;
   left: -30px;
   top: -31px;
+  */
 }
 .date-author{
   display: flex;
@@ -650,7 +653,7 @@ button[type="submit"]:hover {
   width: 100%;
 }
 
-.card {
+.card-container>span {
   width: 20%;
   margin-bottom: 20px;
   background-color: #f5f5f5;
@@ -760,7 +763,7 @@ button[type="submit"]:hover {
 .resource-list>li{
   display: list-item;
 }
-.card-container>a>figure>img{
+.card-container>span>a>figure>img{
   width: 100%;
 }
 
@@ -932,7 +935,7 @@ button[type="submit"]:hover {
 
 /* Estilos para las imágenes de slide */
 .swiper-slide img {
-  width: 400px;
+  width: 950px;
   
 }
 

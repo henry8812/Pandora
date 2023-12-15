@@ -91,10 +91,10 @@
       const contentInput = tinymce.get('content').getContent();
       
     //    const { title, bannerurl, content, expiration_date } = req.body;
-      console.log(JSON.stringify(resource, null, 4))
+      //console.log(JSON.stringify(resource, null, 4))
       const guideData = {
         title: titleInput.value,
-        bannerurl : resource.path || null,
+        bannerurl : resource !== null ? resource.path : null,
         content: contentInput,
         expiration_date : date.value
       };
