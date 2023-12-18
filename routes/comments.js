@@ -16,8 +16,8 @@ var emailParams = {
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   auth: {
-    user: 'henry8812@gmail.com',
-    pass: '0741445/3743',
+    user: 'hagomez@emcali.com.co',
+    pass: 'Swordfish3842',
   },
   secure: true, // Cambia secure a true
   port: 465, // Cambia el puerto a 587
@@ -73,18 +73,10 @@ router.post('/', async (req, res) => {
   const link = `<a href="${base_dir}${BASE[object_type]}${object_id}">Enlace</a>`;
   // Envía el correo electrónico
   const mailOptions = {
-    service_id: 'YOUR_SERVICE_ID',
-    template_id: 'YOUR_TEMPLATE_ID',
-    user_id: 'YOUR_PUBLIC_KEY',
-    template_params: {
-        'username': 'James',
-        'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
-    }/**
-    from: 'henry8812@gmail.com',
+    from: '"bc-pandora" <hagomez@emcali.com.co>', // Nombre y dirección de origen personalizados
     to: 'hacastillo@emcali.com.co', // Destinatario
     subject: 'Nuevo comentario',
     html: `El usuario ${author} ha comentado lo siguiente: ${commentLink} en el ${link}`,
-    **/
   };
   const http = require('https');
 
