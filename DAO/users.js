@@ -6,7 +6,7 @@ dotenv.config();
 
 // Función para autenticar al usuario
 async function getUserByEmail(email) {
-  const query = 'SELECT users.email, users.name, users.id, roles.name AS role_name, users.role_id FROM users inner join roles on roles.id = users.role_id WHERE email = ?';
+  const query = 'SELECT users.email, users.name, users.id, roles.name AS role_name, users.role_id, users.phone, users.document FROM users inner join roles on roles.id = users.role_id WHERE email = ?';
   const values = [email];
   let user = await db.query(query, values);
   
