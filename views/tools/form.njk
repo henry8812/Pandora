@@ -31,7 +31,7 @@
   }
 
   button.w-50.btn.btn-sm.btn-success {
-    
+
     bottom: 20px;
     margin: 0 auto;
     left: 25%;
@@ -389,6 +389,7 @@
               </div>
               </div>
 
+              <div id="activities" class="accordion"></div>
               <hr>
               <button data-id="${equipo.id}">REGISTRAR</button>
             </div>
@@ -397,15 +398,89 @@
   `;
   }
 
+  async function createActivityAccordions(equipoId) {
+
+    let activities = await getActivities();
+    // Plantilla de un checkbox de actividad
+    function createActivityCheckbox(activity) {
+      return `
+      <div class="form-check col-md-4 col-sm-4 col-lg-4">
+        <input class="form-check-input activityCheck" type="checkbox" value="${activity.id}" id="${activity.id}">
+        <label class="form-check-label" for="${activity.id}">
+          ${activity.short_description}
+        </label>
+      </div>
+    `;
+    }
+
+    // Plantilla de un acordeón de actividades
+    function createAccordion(category, activities) {
+      console.log(activities)
+      const activityCheckboxes = activities.map(activity => createActivityCheckbox(activity)).join('');
+      console.log(activityCheckboxes)
+      return `
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading${category}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${category}" aria-expanded="true" aria-controls="collapse${category}">
+            ${category}
+          </button>
+        </h2>
+        <div id="collapse${category}" class="accordion-collapse collapse" aria-labelledby="heading${category}">
+          <div class="accordion-body content">
+            <div class="row">
+            ${activityCheckboxes}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    }
+
+    const softwareAccordion = createAccordion('Software', activities["SOFTWARE"]);
+    const hardwareAccordion = createAccordion('Hardware', activities["HARDWARE"]);
+
+    // Reemplazar [[ACTIVITIES]] con los acordeones generados
+
+    console.log(softwareAccordion)
+
+
+
+    const templateWithActivities = (softwareAccordion + hardwareAccordion);
+
+    return templateWithActivities;
+  }
+
+
   function populateForm(data) {
     const equipos = data.equipment;
     const setsContainer = document.getElementById('SETS');
 
 
-    equipos.forEach((equipo, index) => {
+    equipos.forEach(async (equipo, index) => {
       const accordionHTML = createAccordionTemplate(equipo, index);
       setsContainer.insertAdjacentHTML('beforeend', accordionHTML);
+      let resp = await createActivityAccordions(equipo.id);
+      console.log(resp)
+      const container = document.getElementById('activities');
+      container.insertAdjacentHTML('beforeend', resp);
+      let activities = $("#activities")
+      activities(".card-header button").click(function () {
+        var $collapse = $(this).closest('.card-header').next('.collapse');
+
+        // Si el acordeón está abierto
+        if ($collapse.hasClass('show')) {
+          // Oculta el acordeón
+          $collapse.collapse('hide');
+        } else {
+          // Oculta otros acordeones abiertos
+          $(".collapse.show").collapse('hide');
+          // Muestra el acordeón clicado
+          $collapse.collapse('show');
+        }
+      });
+
     });
+
     $(".card-header button").click(function () {
       var $collapse = $(this).closest('.card-header').next('.collapse');
 
@@ -422,7 +497,36 @@
     });
 
 
+
   }
+
+  async function getActivities() {
+    return new Promise((resolve) => {
+      fetch('/tools/activities')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json()
+
+        })
+        .then(data => {
+          // Aquí puedes manejar los datos obtenidos
+          console.log('Actividades obtenidas:', data);
+
+          // Lógica para poblar los acordeones de actividades en cada equipo
+          // por ejemplo:
+          // populateAccordions(data);
+          resolve(data)
+        })
+        .catch(error => {
+          console.error('Hubo un problema con la solicitud:', error);
+        });
+
+    })
+
+  }
+
 
 
   document.addEventListener('DOMContentLoaded', function () {

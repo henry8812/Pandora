@@ -22,6 +22,29 @@ const db = require('./db');
   // Agrega otros métodos de acceso a datos relacionados con los usuarios según sea necesario
 }
 
+const getActivitiesByCategory = async () => {
+  try {
+    const query = `
+      SELECT activity.id, activity.short_description, activity.category, activity_type.name AS category_name
+      FROM activity
+      INNER JOIN activity_type ON activity.category = activity_type.id
+    `;
+    const result = await db.query(query);
+
+    if (Array.isArray(result) && result.length > 0) {
+      return result;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+
 module.exports = {
-    getEmployee
+    getEmployee,
+    getActivitiesByCategory
 }

@@ -9,17 +9,30 @@ const { Console } = require('console');
 const users = require('../DAO/users'); // Importa el módulo users
 const tools = require('../DAO/tools');
 
-router.get('/articles', async(req, res) => {
-    // Lógica para cerrar sesión del usuario
-    console.log("articles")
-    let items = await articles.listToolsArticles();
-    console.log(items)
-    const sessionId = req.cookies.sessionId;
-    const email = sessionId;
-    let author = email;
-    let user = await users.getUserByEmail(email);
-    res.render('articles/index', { title: 'Articles', articles: items, user:user, req });
-  });
+router.get('/activities', async (req, res) => {
+  try {
+    const activitiesByCategory = await tools.getActivitiesByCategory();
+    
+    // Objeto para almacenar actividades por categoría
+    const activitiesGroupedByCategory = {};
+    console.log(activitiesByCategory)
+
+    // Organizar actividades por categoría
+    activitiesByCategory.forEach(activity => {
+      const { category_name, short_description } = activity;
+      if (!activitiesGroupedByCategory[category_name]) {
+        activitiesGroupedByCategory[category_name] = [];
+      }
+      activitiesGroupedByCategory[category_name].push(activity);
+    });
+
+    res.json(activitiesGroupedByCategory);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Error al obtener actividades por categoría' });
+  }
+});
+
 
   router.get('/guides', async(req, res) => {
     // Lógica para cerrar sesión del usuario
