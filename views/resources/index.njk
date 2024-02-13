@@ -50,10 +50,10 @@
         button.addEventListener('click', function() {
             
             // Determinar cuál botón de eliminar fue presionado
-            console.log(this)
+            //console.log(this)
             const articleId = this.dataset["id"]
-            console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
-            console.log("/resources/"+articleId) 
+            //console.log(`Botón de eliminar "${articleId.trim()}" fue clickeado`);
+            //console.log("/resources/"+articleId) 
             var xhr = new XMLHttpRequest();
             var url = "/resources/"+articleId; // Reemplaza 'tu_url_de_destino' con la URL a la que deseas enviar la petición POST
             var data = null
@@ -64,7 +64,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     // La respuesta del servidor estará en xhr.responseText
-                    console.log(xhr.responseText);
+                    //console.log(xhr.responseText);
                     Swal.fire({
                         title: 'Recurso eliminado correctamente',
                         text: 'Haz eliminado un recurso de forma exitosa',
@@ -114,7 +114,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             Swal.fire({
                 title: 'Articulo creado correctamente',
                 text: 'Haz creado un articulo de fomra exitosa',

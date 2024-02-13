@@ -28,16 +28,16 @@ async function authenticateUser(email, password) {
 
       if (passwordMatch) {
         // Usuario autenticado
-        console.log('User Authenticated');
+        //console.log('User Authenticated');
         return user;
       } else {
         // Contraseña incorrecta
-        console.log('Incorrect Password');
+        //console.log('Incorrect Password');
         return null;
       }
     } else {
       // Usuario no encontrado
-      console.log('User not found');
+      //console.log('User not found');
       return null;
     }
   } catch (error) {
@@ -69,11 +69,11 @@ async function createRandomPasswordUser(name, email, role) {
     const result = await db.query(query, values);
 
     if (result.affectedRows === 1) {
-      console.log('User created successfully');
+      //console.log('User created successfully');
       sendEmail(email, 'Bienvenido a Pandora', `Has sido creado como usuario en Pandora. Para conocer más, puedes comunicarte con tu coordinador de calidad e ingresar http://172.19.20.140:3000/ usando tu correo y esta contraseña: ${randomPassword}`);
       return result.insertId;
     } else {
-      console.log('Failed to create user');
+      //console.log('Failed to create user');
       return null;
     }
   } catch (error) {
@@ -109,7 +109,7 @@ async function sendEmail(to, subject, text) {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.response);
+    //console.log('Email sent:', info.response);
   } catch (error) {
     console.error('Error sending email:', error);
   }
@@ -124,11 +124,11 @@ async function readCSVAndCreateUsers(filePath) {
   
       for (const row of rows) {
         const [name, email, role] = row.split(',');
-        console.log(row)
+        //console.log(row)
         try {
           const userId = await createRandomPasswordUser(name, email, role);
           if (userId !== null) {
-            console.log(`Usuario creado con ID: ${userId}`);
+            //console.log(`Usuario creado con ID: ${userId}`);
           }
         } catch (error) {
           console.error('Error al crear usuario:', error);

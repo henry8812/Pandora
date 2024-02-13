@@ -200,12 +200,19 @@ li {
 }
 #articles > article >p{
   min-height: 100px;
+  font-size:13px
 }
+#articles > article >h3{
+  min-height: 100px;
+  
+  text-align: center;
+}
+
 
 #content>#title{
   text-align: center;
   font-size: 30px;
-  color: black;|
+  color: black;
   margin-bottom: 40px;
   margin-top: 50px;
 }
@@ -267,7 +274,7 @@ article>.header>figure>a>img {
   border-radius: 29px;
 }
 .container{
-  width:80%;
+  width:90% !important;
   margin: 0 auto;
   
 }
@@ -445,7 +452,7 @@ form .g-inp{
   background: linear-gradient(to right, #0f172a 0%, #192e80 50%, #0f172a 100%);
   padding: 10px;
   color: #e7e7e7;
-  width: 97.8vw;
+
   height: 150px;
   position: relative;
   
@@ -547,10 +554,7 @@ form .g-inp{
   padding: 20px;
 }
 
-.container {
-  margin: 0 auto;
-  max-width: 960px;
-}
+
 .menu > ul{
   list-style: none;
 }
@@ -978,4 +982,8 @@ button[type="submit"]:hover {
 }
 .swiper-slide>p>a{
   text-decoration: #0056b3  !important;
+}
+
+canvas{
+  border: 1px solid;
 }

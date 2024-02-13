@@ -10,10 +10,10 @@ router.get('/', async(req, res) => {
   
 
   let user = await users.getUserByEmail(email);
-  console.log("guides")
+  //console.log("guides")
   let items = await guides.listGuides();
-  console.log(items)
-  console.log(JSON.stringify(user, null, 4))
+  //console.log(items)
+  //console.log(JSON.stringify(user, null, 4))
   
   res.render('guides/index', { title: 'Articles', guides: items, user:user,  req });
 });
@@ -30,7 +30,7 @@ router.get('/new', async (req, res) => {
 
 router.get('/:id', async(req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("article:", req.params.id)
+  //console.log("article:", req.params.id)
   let guide = await guides.getGuide(req.params.id)
   
   res.render('guides/guide', { title: guide.title,  guide: guide, req });
@@ -38,7 +38,7 @@ router.get('/:id', async(req, res) => {
 
 router.put('/:id', (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("guide")
+  //console.log("guide")
   res.render('guides/guide', { title: 'Articles', req });
 });
 
@@ -46,7 +46,7 @@ router.post('/delete/:id', async (req, res) => {
   try {
       const sessionId = req.cookies.sessionId;
       const email = sessionId;
-      console.log("delete")
+      //console.log("delete")
 
       let user = await users.getUserByEmail(email);
   
@@ -63,11 +63,11 @@ router.post('/delete/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body)
+    //console.log(req.body)
     let { title, resource, shortDescription, content, target_id } = req.body;
     
-    console.log("TARGET")
-    console.log(target_id)
+    //console.log("TARGET")
+    //console.log(target_id)
     if (!title || !shortDescription) {
       return res.status(400).send('Missing required fields');
     }

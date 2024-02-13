@@ -12,9 +12,9 @@ router.use(fileUpload());
 // Ruta de cierre de sesión
 router.get('/', async(req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("resources")
+  //console.log("resources")
   let items = await resources.listResources();
-  console.log(items)
+  //console.log(items)
   
   let categories = await resources.listCategories();
   const sessionId = req.cookies.sessionId;
@@ -31,9 +31,9 @@ router.post('/', async (req, res) => {
     /**
      * Start file creation
      */
-    console.log(Object.keys(req))
+    //console.log(Object.keys(req))
     if (!req.files || !req.files.file) {
-      console.log(req.files)
+      //console.log(req.files)
       return res.status(400).send('No file provided');
     }
 
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
       path : file.name
     };
     let response = await resources.createFile(fileData)
-    console.log(response)
+    //console.log(response)
     /**
      * END file creation
      */
@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
       category_id : req.body.category || 3,
       resource : req.body.resource || 0
     }
-    console.log(resourceData)
+    //console.log(resourceData)
 
     let resource = resources.createResource(resourceData);
     resource.file = fileData
@@ -86,7 +86,7 @@ router.put('/:id', (req, res) => {
   res.response("test")  
 });
 router.delete('/:id', (req, res) => {
-  console.log(req.params.id)
+  //console.log(req.params.id)
 
   resources.deleteResource(req.params.id)
   res.send("deleted")  

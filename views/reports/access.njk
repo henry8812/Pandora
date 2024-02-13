@@ -130,17 +130,17 @@
             endDate2 = document.getElementById("end-date").value == '' ? (new Date()) : document.getElementById("end-date").value;
             startDate2 = startDate2.toISOString().split('T')[0]
             endDate2 = endDate2.toISOString().split('T')[0]
-            console.log(startDate2)
+            //console.log(startDate2)
             
-            console.log(endDate2)
+            //console.log(endDate2)
 
             
             url2 = `http://172.19.20.140:3000/reports/getAccessData?start=${startDate2}&end=${endDate2}`
         } else {
             startDate2 = document.getElementById("start-date").value;
             endDate2 = document.getElementById("end-date").value;
-            console.log(startDate2)
-            console.log(endDate2)
+            //console.log(startDate2)
+            //console.log(endDate2)
             url2 = `http://172.19.20.140:3000/reports/getAccessData?start=${startDate2}&end=${endDate2}`
         }
         const url =`/reports/getAccessLogs?start=${startDate2}&end=${endDate2}`;
@@ -156,8 +156,8 @@
             if (xhr.status >= 200 && xhr.status < 300) {
                 // La solicitud se ha completado correctamente
                 const data = JSON.parse(xhr.responseText);
-                console.log(data)
-                console.log('este fueron los logs')
+                //console.log(data)
+                //console.log('este fueron los logs')
                 // Limpia la tabla DataTables antes de agregar nuevos datos
                 dataTable.clear().draw();
                 
@@ -175,7 +175,7 @@
         // Gestionar errores de red
         xhr.onerror = function(err) {
             console.error('Error de red al cargar datos desde la API');
-            console.log(err)
+            //console.log(err)
         };
         
         // Enviar la solicitud
@@ -190,9 +190,9 @@
         searchButton.addEventListener('click', function() {
             chart=document.getElementById("chart")
             chart.innerHTML='';            
-            console.log(document.getElementById("start-date").value)
-            console.log(document.getElementById("end-date").value)
-            console.log('####')
+            //console.log(document.getElementById("start-date").value)
+            //console.log(document.getElementById("end-date").value)
+            //console.log('####')
             if (document.getElementById("start-date").value === '') {
                 const startDate = document.getElementById("start-date").value === '' ? getFirstDayOfWeek() : new Date(document.getElementById("start-date").value);
                 const endDate = document.getElementById("end-date").value == '' ? (new Date()) : document.getElementById("end-date").value;
@@ -204,7 +204,7 @@
                 url = `http://172.19.20.140:3000/reports/getAccessData?start=${startDate}&end=${endDate}`
             }
             
-            console.log(url)
+            //console.log(url)
             
             // Crear una nueva instancia de XMLHttpRequest
             const xhr = new XMLHttpRequest();
@@ -217,7 +217,7 @@
                 if (xhr.status >= 200 && xhr.status < 300) {
                     // La solicitud se ha completado correctamente
                     const data = JSON.parse(xhr.responseText);
-                    console.log(data)
+                    //console.log(data)
                     var options = {
                         maintainAspectRatio: false,
                         scales: {
@@ -248,8 +248,8 @@
                         }]
                     };
                     
-                    console.log(data.values)
-                    console.log(data.labels)
+                    //console.log(data.values)
+                    //console.log(data.labels)
                     
                     // Aquí puedes usar los datos recibidos para generar una gráfica con Chart.js
                     const chartData = {

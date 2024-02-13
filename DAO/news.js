@@ -13,7 +13,7 @@ async function createNews(newsData) {
 
     const creator = await users.getUserByEmail(newsData.author);
     // Crear el artículo con la información proporcionada
-    console.log(JSON.stringify(newsData.banner, null, 4))
+    //console.log(JSON.stringify(newsData.banner, null, 4))
     const newInformation = {
       title: newsData.title,
       image_url: newsData.banner,
@@ -24,7 +24,7 @@ async function createNews(newsData) {
       creator: creator.id
     };
 
-    console.log(JSON.stringify(newInformation, null, 4))
+    //console.log(JSON.stringify(newInformation, null, 4))
 
     // Insertar el artículo en la base de datos
     const result = await db.query('INSERT INTO news SET ?', newInformation);

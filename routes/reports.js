@@ -1,7 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const reports = require("../DAO/reports");
+const tools = require("../DAO/tools");
+const path = require('path');
 
+
+router.get('/', async(req, res) => {
+  // Lógica para cerrar sesión del usuario
+  
+
+  res.render('reports/index', {req });
+});
+router.get('/maintenance', async(req, res) => {
+  // Lógica para cerrar sesión del usuario
+  let dataBySeeds = await tools.getMaintenancesBySedes();
+  let dataByAgent = await tools.getMaintenancesByAgent();
+  let sedesTotal = await tools.getMaintenancesBySedesTotal();
+  let totalGeneral = 0;
+  for(let i=0; i< sedesTotal.length; i++){
+    totalGeneral += sedesTotal[i].cantidad_mantenimientos;
+  }
+  console.log(dataByAgent)
+  console.log(dataBySeeds)
+  res.render('reports/maintenance', {req, data :{
+  sedes : dataBySeeds,
+  technician : dataByAgent,
+  sedesTotal : sedesTotal,
+  totalGeneral : totalGeneral
+  } });
+});
 
 router.get('/access', async(req, res) => {
   // Lógica para cerrar sesión del usuario
@@ -17,10 +44,25 @@ router.get('/getAccessLogs', async(req, res) => {
   res.send(accessLogs)
   //render('reports/access', { title: 'Access Report', data: accessData, req });
 });
+router.get("/tools/general", async(req, res) => {
+  try {
+    const url = await tools.generateGeneralReport();
+
+    // Enviar el archivo al cliente
+    res.sendFile(url, (err) => {
+      if (err) {
+        console.error('Error al enviar el archivo:', err);
+        res.status(500).send('Error interno del servidor');
+      }
+    });
+  } catch (error) {
+    console.error('Error al generar el informe general:', error);
+    res.status(500).send('Error interno del servidor');
+  }})
 
 router.get('/getAccessData', async(req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log(req.query)
+  //console.log(req.query)
   
   let accessData = await reports.getAccessData(req.query.start, req.query.end);
   // Crear un objeto para almacenar los contadores por día y las horas por día

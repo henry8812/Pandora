@@ -26,17 +26,17 @@ const transporter = nodemailer.createTransport({
 
 router.post('/', async (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log(JSON.stringify(req.body, null, 4));
+  //console.log(JSON.stringify(req.body, null, 4));
   const { object_id, comment, rating, object_type } = req.body;
   const sessionId = req.cookies.sessionId;
   const email = sessionId;
   let author = email;
   let user = await users.getUserByEmail(email)
   emailParams.name = user.name;
-  console.log(object_id);
-  console.log(comment);
-  console.log(rating);
-  console.log(object_type);
+  //console.log(object_id);
+  //console.log(comment);
+  //console.log(rating);
+  //console.log(object_type);
   const commentData = {
     object_id,
     author,
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
   let base_dir = 'http://172.19.20.140:3000/'
   
   rating_response = await comments.rateContent(ratingData);
-  console.log(response);
+  //console.log(response);
   
   
   
@@ -101,7 +101,7 @@ const request = http.request(options, function (resp) {
 
 	resp.on('end', function () {
 		const body = Buffer.concat(chunks);
-		console.log(body.toString());
+		//console.log(body.toString());
 	});
 });
 function stripHtmlTags(html) {
@@ -123,9 +123,9 @@ request.end();
   emailParams.message =  `El usuario ${author} ha comentado lo siguiente: ${commentLink} en el ${link}`;
   emailObject.send("service_noa2i0o","template_hdf4zie",emailParams, '4Aiq4PEyKP6jBz-T1')
   .then( info => {
-    console.log('Correo electrónico enviado:', info.response);
+    //console.log('Correo electrónico enviado:', info.response);
   }, error => {
-    console.log('Error al enviar el correo:', error);
+    //console.log('Error al enviar el correo:', error);
   })*/
   
   

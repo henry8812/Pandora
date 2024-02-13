@@ -7,7 +7,7 @@ const NodeCache = require('node-cache');
 router.use(express.urlencoded({ extended: true }));
 
 router.get('/', async (req, res) => {
-  console.log(req.query); // Utilizamos req.query para obtener los parámetros de la consulta
+  //console.log(req.query); // Utilizamos req.query para obtener los parámetros de la consulta
   
   const criteria = req.query.criteria;
   const category = req.query.category;
@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
       break;
   }
 
-  console.log(data);
+  //console.log(data);
   res.render('search/index', { title: 'Search', data: data, req });
 });
 

@@ -25,7 +25,7 @@ router.get('/', async(req, res) => {
       user = user[0]
       res.cookie('user', user, { httpOnly: true, maxAge: 60*60*90*60});  
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
     
   }
@@ -34,9 +34,9 @@ router.get('/', async(req, res) => {
     // La sesión está activa, obtener los datos de la sesión
     
     
-    console.log("Hay sesión");
-    console.log("Email:", email);
-    console.log("USER:", user);
+    //console.log("Hay sesión");
+    //console.log("Email:", email);
+    //console.log("USER:", user);
     
     let next = "/";
     let news = null;
@@ -82,11 +82,11 @@ router.get('/', async(req, res) => {
       break;
     }
     
-    console.log(JSON.stringify(news, null, 4))
+    //console.log(JSON.stringify(news, null, 4))
     res.render(next, { title: 'Base de Conocimiento', req , user : user, news : news, articles : articles });
   } else {
     // La sesión no está activa, redirigir a la página de inicio de sesión
-    console.log("No hay sesión");
+    //console.log("No hay sesión");
     res.clearCookie('sessionId');
     res.redirect('/auth/login');
   }

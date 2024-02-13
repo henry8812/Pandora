@@ -12,6 +12,9 @@
 <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 <title>Bootstrap Example</title>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+
+
 <style>
   .content {
     width: 80%;
@@ -49,6 +52,10 @@
     margin-top: 2%;
   }
 </style>
+<script>
+
+
+</script>
 <div class="content">
   <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -63,13 +70,40 @@
   <div id="tabsContent">
     <section id="tab-1" class="contentTab active">
       <div class="text-center">
+
+
         <div class="row">
-          <div class="col-md-8" id="SETS">
+
+
+          <div class="col-md-7">
+            <div class="row mt-4">
+              <div class="form-group">
+                <input type="text" id="newSede" class="form-control" placeholder="Ingresa el nombre de la sede">
+                <button type="button" class="btn btn-success mt-4" id="addSede">Agregar Sede</button>
+              </div>
+              <div class="col-md-5">
+                <select name="sede" id="sede" class="form-control mx-auto" placeholder="Selecciona la sede">
+                  {% for sede in data.sedes %}
+                  <option value="{{sede.id}}">{{sede.name}}</option>
+                  {% endfor %}
+                </select>
+
+              </div>
+              
+              <div class="col-md-5 mx-auto">
+                <div class="form-group">
+                  <input type="number" id="piso" class="form-control" placeholder="Ingresa el piso">
+                </div>
+              </div>
+            </div>
+            <div id="SETS" class="mt-4">
+
+            </div>
 
 
           </div>
 
-          <div class="col-md-4" id="humans">
+          <div class="col-md-5" id="humans">
             <div class="">
               <div class="card">
                 <div class="card-header">
@@ -78,7 +112,10 @@
                 <div class="card-body">
                   <div class="card">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Fecha : {{date}}</li>
+                      <li class="list-group-item">
+                          <label for="maintenanceDate">Fecha</label>
+                        <input type="date" class="form-control" name="maintenanceDate" id="maintenanceDate" value="{{date}}">
+                      </li>
                       <li class="list-group-item">Agente : {{user.name}}</li>
                       <li class="list-group-item">Correo : {{user.email}}</li>
                       <li class="list-group-item">Tel(ext): {{user.phone}}</li>
@@ -93,6 +130,10 @@
 
               </div>
             </div>
+            <script>
+     
+
+            </script>
             <div class="">
               <div class="card mb-4 rounded-3 shadow-sm">
                 <div class="card-header py-3">
@@ -103,446 +144,274 @@
                     <div class="row">
                       <div class="input-group input-group-sm mb-3 col">
                         <span class="input-group-text" id="usernameLabel">Usuario</span>
-                        <input type="text" class="form-control" aria-label="username" id="username"
+                        <input type="text" class="form-control" aria-label="username" id="username" name="username"
+                          aria-describedby="inputGroup-sizing-sm">
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="usernameLabel">Email</span>
+                        <input type="text" class="form-control" aria-label="email" id="email" name="email"
+                          aria-describedby="inputGroup-sizing-sm">
+                      </div>
+
+
+                    </div>
+
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Registro</span>
+                        <input type="text" class="form-control" aria-label="No. Registro" name="register"
                           aria-describedby="inputGroup-sizing-sm">
                       </div>
 
                     </div>
                     <div class="row">
                       <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Registro</span>
-                        <input type="text" class="form-control" aria-label="No. Registro"
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Documento</span>
+                        <input type="number" class="form-control" aria-label="No. documento" name="document" id="document"
                           aria-describedby="inputGroup-sizing-sm">
                       </div>
 
                     </div>
-
 
                     <div class="row">
                       <div class="input-group input-group-sm mb-3 col">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
-                        <input type="text" class="form-control" aria-label="CPU Name"
+                        <input type="text" class="form-control" aria-label="Name" name="fullName" id="fullName"
                           aria-describedby="inputGroup-sizing-sm">
                       </div>
                     </div>
                     <div class="row">
-
                       <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Gerencia</span>
-                        <input type="text" class="form-control" aria-label="CPU Serial Number"
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Extension (IP) </span>
+                        <input type="number" class="form-control" aria-label="ext" name="ext" id="ext"
                           aria-describedby="inputGroup-sizing-sm">
                       </div>
-
                     </div>
                     <div class="row">
-
                       <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Area</span>
-                        <input type="text" class="form-control" aria-label="CPU Serial Number"
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Celular</span>
+                        <input type="number" class="form-control" aria-label="mobile" name="mobile" id="mobile"
                           aria-describedby="inputGroup-sizing-sm">
                       </div>
-
                     </div>
-                    <div class="row">
 
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Departamento</span>
-                        <input type="text" class="form-control" aria-label="CPU Serial Number"
-                          aria-describedby="inputGroup-sizing-sm">
+                    <div class="row p-2 mb-1">
+                      <input type="text" class="form-control form-control-sm" placeholder="Buscar Gerencia" id="searchManagement">
+                    </div>
+                    <div class="row p-2 mb-1">
+
+                      <select class="form-select form-control-sm"  data-live-search="true"  placeholder="Selecciona la Gerencia" name="management"
+                        id="management">
+                        <option value="">Selecciona la gerencia</option>
+                        {% for management in data.managements %}
+                        <option value="{{management.id}}">{{management.name}}</option>
+                        {% endfor %}
+
+                      </select>
+                    </div>
+
+                    <div class="row p-2 mb-1">
+                      <div class="row p-2 mb-1">
+                        <input type="text" class="form-control form-control-sm" placeholder="Buscar area" id="searchArea">
                       </div>
 
+                      <select class="form-select form-control-sm" placeholder="Selecciona el area" name="area"
+                        id="area">
+                        <option value="">Selecciona el Area</option>
+
+                        {% for area in data.areas %}
+                        <option value="{{area.id}}">{{area.name}}</option>
+                        {% endfor %}
+
+                      </select>
+
                     </div>
+
+                    <div class="row p-2 mb-1">
+                      <div class="row p-2 mb-1">
+                        <input type="text" class="form-control form-control-sm" placeholder="Buscar departamento" id="searchDepartment">
+                      </div>
+
+                      <select class="form-select form-control-sm" placeholder="Selecciona el departamento"
+                        id="department" name="department">
+                        <option value="">Selecciona el Departamento</option>
+                        {% for department in data.departments %}
+                        <option value="{{department.id}}">{{department.name}}</option>
+                        {% endfor %}
+
+                      </select>
+
+
+                    </div>
+
+
                   </form>
-                  <button type="button" id="consultar" class="w-40 btn btn-SM btn-primary">CONSULTAR</button>
+                  <div class="row">
+                    <div class="col"><button type="button" id="consultar"
+                        class="w-40 btn btn-SM btn-primary">CONSULTAR</button></div>
+                    <div class="col"><button type="button" id="actualizar-usuario"
+                        class="w-40 btn btn-SM btn-success">ACTUALIZAR</button></div>
+                    <div class="col"><button type="button" id="limpiar-usuario"
+                        class="w-40 btn btn-SM btn-danger">LIMPIAR</button></div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                  <h4 class="my-0 fw-normal">Equipo</h4>
+                </div>
+                <div class="card-body">
+                  <form id="cpu-info" class="">
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="serial-numberLabel">Serial Number</span>
+                        <input type="text" class="form-control" aria-label="serial-number" id="serial-number"
+                          name="serial-number" id="serial-number" aria-describedby="inputGroup-sizing-sm" style="text-transform: uppercase;">
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Nombre del equipo</span>
+                        <input type="text" class="form-control" aria-label="nombre-equipo" name="nombre-equipo"
+                          id="nombre-equipo2" aria-describedby="inputGroup-sizing-sm"  style="text-transform: uppercase;">
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Modelo</span>
+                        <input type="text" class="form-control" aria-label="modelo-equipo" name="modelo-equipo"
+                          id="modelo-equipo2" aria-describedby="inputGroup-sizing-sm"  style="text-transform: uppercase;">
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Marca</span>
+                        <select name="marca-equipo" id="marca-equipo2" class="form-control mx-auto" placeholder="Selecciona la marca">
+                          {% for brand in data.brands %}
+                          <option value="{{brand.id}}">{{brand.name}}</option>
+                          {% endfor %}
+                        </select>
+                        
+                        
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">TIPO</span>
+                        <select name="tipo-equipo" id="tipo-equipo2" class="form-control mx-auto" placeholder="Selecciona la tipo">
+                          {% for _type in data.types %}
+                          <option value="{{_type.id}}">{{_type.name}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+
+                    </div>
+                    
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Memora RAM</span>
+                        <input type="text" class="form-control" aria-label="ram-equipo" name="ram-equipo"
+                          id="ram-equipo2" aria-describedby="inputGroup-sizing-sm"  style="text-transform: uppercase;">
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="input-group input-group-sm mb-3 col">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Capacidad Disco Duro</span>
+                        <input type="text" class="form-control" aria-label="hd-equipo" name="hd-equipo"
+                          id="hd-equipo2" aria-describedby="inputGroup-sizing-sm"  style="text-transform: uppercase;">
+                      </div>
+
+                    </div>
+                    
+                    
+                    
+                  </form>
+                  <button type="button" id="consultarEquipo" class="w-40 btn btn-SM btn-primary">CONSULTAR</button>
+                  <button type="button" id="crearEquipo" class="w-40 btn btn-SM btn-success">CREAR</button>
+                  
                 </div>
               </div>
             </div>
           </div>
-
-
         </div>
-
-
     </section>
-    <section id="tab-2" class="contentTab">HISTORICO</section>
+    <section id="tab-2" class="contentTab">
+      <div class="row">
+
+          
+      </div>
+    </section>
   </div>
 </div>
+<script src="{{ baseUrl }}/assets/js/maintenance.js"></script>
 <script>
+      $(document).ready(function() {
+      // Agrega un evento de entrada al campo de búsqueda
+      $('#searchManagement').on('input', function() {
+        var searchValue = $(this).val().toLowerCase();
 
-  $(".nav-link").click(function () {
-    // Remover la clase 'active' de todos los tabs y contentTabs
-    $(".nav-link").removeClass("active");
-    $(".contentTab").removeClass("active");
+        // Filtra las opciones del select según la búsqueda
+        $('#management option').each(function() {
+          var optionText = $(this).text().toLowerCase();
+          var optionValue = $(this).val();
 
-    // Obtener el ID del tab haciendo clic
-    var id = $(this).data("id");
-
-    // Agregar la clase 'active' al tab seleccionado y su contenido correspondiente
-    $(this).addClass("active");
-    $("#tab-" + id).addClass("active");
-  });
-
-</script>
-
-<script>
-  $(document).ready(function () {
-    // Cuando se hace clic en un botón de encabezado de acordeón
-    $(".card-header button").click(function () {
-      var $collapse = $(this).closest('.card-header').next('.collapse');
-
-      // Si el acordeón está abierto
-      if ($collapse.hasClass('show')) {
-        // Oculta el acordeón
-        $collapse.collapse('hide');
-      } else {
-        // Oculta otros acordeones abiertos
-        $(".collapse.show").collapse('hide');
-        // Muestra el acordeón clicado
-        $collapse.collapse('show');
-      }
-    });
-  });
-</script>
-
-<script>
-  function getAssignedEquipment(username) {
-    const xhr = new XMLHttpRequest();
-    const endpointURL = `/tools/query/${username}`;
-
-    xhr.open('GET', endpointURL, true);
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          const data = JSON.parse(xhr.responseText);
-          console.log(data)
-          populateForm(data);
-
-        } else {
-          console.error('Hubo un problema con la solicitud:', xhr.statusText);
-        }
-      }
-    };
-
-    xhr.send();
-  }
-
-
-  function createAccordionTemplate(equipo, index) {
-    return `
-    <div class="card">
-      <div class="card-header" id="heading${index + 1}">
-        <h2 class="mb-0">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse${index + 1}"
-            aria-expanded="false" aria-controls="collapse${index + 1}">
-            ${equipo.type} - ${equipo.sn} - ${equipo.name}
-          </button>
-        </h2>
-      </div>
-      <div id="collapse${index + 1}" class="collapse" aria-labelledby="heading${index + 1}"
-        
-        <div class="row " id="INFO">
-          <div class="row">
-              <div class="col-md-5">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                  <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">CPU</h4>
-                  </div>
-                  <div class="card-body">
-                    <form id="cpu-info" class="pt-4">
-                      <div class="row">
-                        <div class="input-group input-group-sm mb-3 col">
-                          <span class="input-group-text" id="inputGroup-sizing-sm">CPU SN</span>
-                          <input type="text" class="form-control" aria-label="CPU Serial Number"
-                            aria-describedby="inputGroup-sizing-sm" value="${equipo.sn}">
-                        </div>
-
-                      </div>
-                      <div class="row">
-                        <div class="input-group input-group-sm mb-3 col">
-                          <span class="input-group-text" id="inputGroup-sizing-sm">NOMBRE</span>
-                          <input type="text" class="form-control" aria-label="CPU NAME" value="${equipo.name}"
-                            aria-describedby="inputGroup-sizing-sm">
-                        </div>
-
-                      </div>
-
-
-                      <div class="row">
-                        <div class="input-group input-group-sm mb-3 col">
-                          <span class="input-group-text" id="inputGroup-sizing-sm">Modelo</span>
-                          <input type="text" class="form-control" aria-label="CPU Name" value="${equipo.model}"
-                            aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                        <div class="input-group input-group-sm mb-3 col">
-                          <span class="input-group-text" id="inputGroup-sizing-sm">Marca</span>
-                          <input type="text" class="form-control" aria-label="CPU Name" value="${equipo.brand}"
-                            aria-describedby="inputGroup-sizing-sm">
-                        </div>
-
-                      </div>
-                      <div class="row">
-
-                        <div class="input-group input-group-sm mb-3 col">
-                          <span class="input-group-text" id="inputGroup-sizing-sm">RAM</span>
-                          <input type="text" class="form-control" aria-label="CPU Serial Number" value="${equipo.ram}"
-                            aria-describedby="inputGroup-sizing-sm">
-                        </div>
-
-                        <div class="input-group input-group-sm mb-3 col">
-                          <span class="input-group-text" id="inputGroup-sizing-sm">Disco</span>
-                          <input type="text" class="form-control" aria-label="CPU Name" value="${equipo.hd}"
-                            aria-describedby="inputGroup-sizing-sm">
-                        </div>
-
-                      </div>
-
-
-
-                    </form>
-                    <button type="button" class="w-50 btn btn-sm btn-success">ACTUALIZAR</button>
-                  </div>
-                </div>
-
-              </div>
-              
-              <div class="col-md-7">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                  <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">PERIFERICOS</h4>
-                  </div>
-                  <div class="card-body">
-                    <h1 class="card-title pricing-card-title">MONITOR</small>
-                    </h1>
-                    <div class="row">
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">SN</span>
-                        <input type="text" class="form-control" aria-label="DISPLAY SN" value="${equipo.peripherical.display.sn}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-
-
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">MODELO</span>
-                        <input type="text" class="form-control" aria-label="DISPLAY MODEL" value="${equipo.peripherical.display.model}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">MARCA</span>
-                        <input type="text" class="form-control" aria-label="DISPLAY BRAND" value="${equipo.peripherical.display.brand}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-
-
-                    </div>
-                    <h1 class="card-title pricing-card-title">TECLADO</small>
-                    </h1>
-                    <div class="row">
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">SN</span>
-                        <input type="text" class="form-control" aria-label="KEYBOARD SN" value="${equipo.peripherical.keyboard.sn}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-
-
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">MODELO</span>
-                        <input type="text" class="form-control" aria-label="KEYBOARD MODEL" value="${equipo.peripherical.keyboard.model}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">MARCA</span>
-                        <input type="text" class="form-control" aria-label="KEYBOARD BRAND" value="${equipo.peripherical.keyboard.brand}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-
-
-                    </div>
-                    <h1 class="card-title pricing-card-title">MOUSE</small>
-                    </h1>
-                    <div class="row">
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">SN</span>
-                        <input type="text" class="form-control" aria-label="MOUSE SN" value="${equipo.peripherical.mouse.sn}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-
-
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">MODELO</span>
-                        <input type="text" class="form-control" aria-label="MOUSE MODEL"  value="${equipo.peripherical.mouse.model}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-                      <div class="input-group input-group-sm mb-3 col">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">MARCA</span>
-                        <input type="text" class="form-control" aria-label="MOUSE BRAND"  value="${equipo.peripherical.mouse.brand}"
-                          aria-describedby="inputGroup-sizing-sm">
-                      </div>
-
-
-                    </div>
-
-
-                    <button type="button" class="w-50 btn btn-sm btn-success">ACTUALIZAR</button>
-                  </div>
-                </div>
-              </div>
-              </div>
-
-              <div id="activities" class="accordion"></div>
-              <hr>
-              <button data-id="${equipo.id}">REGISTRAR</button>
-            </div>
-      </div>
-    </div>
-  `;
-  }
-
-  async function createActivityAccordions(equipoId) {
-
-    let activities = await getActivities();
-    // Plantilla de un checkbox de actividad
-    function createActivityCheckbox(activity) {
-      return `
-      <div class="form-check col-md-4 col-sm-4 col-lg-4">
-        <input class="form-check-input activityCheck" type="checkbox" value="${activity.id}" id="${activity.id}">
-        <label class="form-check-label" for="${activity.id}">
-          ${activity.short_description}
-        </label>
-      </div>
-    `;
-    }
-
-    // Plantilla de un acordeón de actividades
-    function createAccordion(category, activities) {
-      console.log(activities)
-      const activityCheckboxes = activities.map(activity => createActivityCheckbox(activity)).join('');
-      console.log(activityCheckboxes)
-      return `
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="heading${category}">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${category}" aria-expanded="true" aria-controls="collapse${category}">
-            ${category}
-          </button>
-        </h2>
-        <div id="collapse${category}" class="accordion-collapse collapse" aria-labelledby="heading${category}">
-          <div class="accordion-body content">
-            <div class="row">
-            ${activityCheckboxes}
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    }
-
-    const softwareAccordion = createAccordion('Software', activities["SOFTWARE"]);
-    const hardwareAccordion = createAccordion('Hardware', activities["HARDWARE"]);
-
-    // Reemplazar [[ACTIVITIES]] con los acordeones generados
-
-    console.log(softwareAccordion)
-
-
-
-    const templateWithActivities = (softwareAccordion + hardwareAccordion);
-
-    return templateWithActivities;
-  }
-
-
-  function populateForm(data) {
-    const equipos = data.equipment;
-    const setsContainer = document.getElementById('SETS');
-
-
-    equipos.forEach(async (equipo, index) => {
-      const accordionHTML = createAccordionTemplate(equipo, index);
-      setsContainer.insertAdjacentHTML('beforeend', accordionHTML);
-      let resp = await createActivityAccordions(equipo.id);
-      console.log(resp)
-      const container = document.getElementById('activities');
-      container.insertAdjacentHTML('beforeend', resp);
-      let activities = $("#activities")
-      activities(".card-header button").click(function () {
-        var $collapse = $(this).closest('.card-header').next('.collapse');
-
-        // Si el acordeón está abierto
-        if ($collapse.hasClass('show')) {
-          // Oculta el acordeón
-          $collapse.collapse('hide');
-        } else {
-          // Oculta otros acordeones abiertos
-          $(".collapse.show").collapse('hide');
-          // Muestra el acordeón clicado
-          $collapse.collapse('show');
-        }
-      });
-
-    });
-
-    $(".card-header button").click(function () {
-      var $collapse = $(this).closest('.card-header').next('.collapse');
-
-      // Si el acordeón está abierto
-      if ($collapse.hasClass('show')) {
-        // Oculta el acordeón
-        $collapse.collapse('hide');
-      } else {
-        // Oculta otros acordeones abiertos
-        $(".collapse.show").collapse('hide');
-        // Muestra el acordeón clicado
-        $collapse.collapse('show');
-      }
-    });
-
-
-
-  }
-
-  async function getActivities() {
-    return new Promise((resolve) => {
-      fetch('/tools/activities')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
+          // Muestra u oculta las opciones según la búsqueda
+          if (optionText.includes(searchValue)) {
+            $(this).show();
+          } else {
+            $(this).hide();
           }
-          return response.json()
-
-        })
-        .then(data => {
-          // Aquí puedes manejar los datos obtenidos
-          console.log('Actividades obtenidas:', data);
-
-          // Lógica para poblar los acordeones de actividades en cada equipo
-          // por ejemplo:
-          // populateAccordions(data);
-          resolve(data)
-        })
-        .catch(error => {
-          console.error('Hubo un problema con la solicitud:', error);
         });
+      });
+      $('#searchDepartment').on('input', function() {
+        var searchValue = $(this).val().toLowerCase();
 
-    })
+        // Filtra las opciones del select según la búsqueda
+        $('#department option').each(function() {
+          var optionText = $(this).text().toLowerCase();
+          var optionValue = $(this).val();
 
-  }
+          // Muestra u oculta las opciones según la búsqueda
+          if (optionText.includes(searchValue)) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+      $('#searchArea').on('input', function() {
+        var searchValue = $(this).val().toLowerCase();
 
+        // Filtra las opciones del select según la búsqueda
+        $('#area option').each(function() {
+          var optionText = $(this).text().toLowerCase();
+          var optionValue = $(this).val();
 
+          // Muestra u oculta las opciones según la búsqueda
+          if (optionText.includes(searchValue)) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+      
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const button = document.querySelector('#consultar');
-
-    button.addEventListener('click', function () {
-      // Obtener el valor de username del input en tu formulario
-      const usernameValue = document.querySelector('#username').value;
-
-      // Llamar a la función para obtener los equipos asignados al username
-      getAssignedEquipment(usernameValue);
     });
-  });
 
 
 </script>
-
-
 {% endblock %}

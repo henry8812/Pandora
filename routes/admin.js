@@ -5,16 +5,16 @@ const resources = require("../DAO/resources")
 // Ruta de cierre de sesión
 router.get('/', async(req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("dashboard admin")
+  //console.log("dashboard admin")
   let items = await articles.listArticles();
-  console.log(items)
+  //console.log(items)
   
   res.render('articles/index', { title: 'Articles', articles: items, req });
 });
 
 router.get('/guide/new', async (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("guide")
+  //console.log("guide")
 
 
   res.render('guides/new', { title: 'Guides', req });
@@ -44,7 +44,7 @@ router.get('/news/new', async (req, res) => {
 
 router.get('/article/new', async (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("article")
+  //console.log("article")
 
 
   res.render('articles/new', { title: 'Articles', req });
@@ -54,14 +54,14 @@ router.get('/article/new', async (req, res) => {
 
 router.post('/', (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("articles")
+  //console.log("articles")
   res.response("test")  
 });
 
 
 router.get('/:id', async(req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("article:", req.params.id)
+  //console.log("article:", req.params.id)
   let article = await articles.getArticle(req.params.id)
   
   res.render('articles/article', { title: article.title,  article: article, req });
@@ -70,12 +70,12 @@ router.get('/:id', async(req, res) => {
 
 router.put('/:id', (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("article")
+  //console.log("article")
   res.render('articles/article', { title: 'Articles', req });
 });
 router.delete('/:id', (req, res) => {
   // Lógica para cerrar sesión del usuario
-  console.log("article")
+  //console.log("article")
   res.render('articles/article', { title: 'Articles', req });
 });
 

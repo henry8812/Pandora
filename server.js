@@ -63,7 +63,7 @@ njkEnv.addFilter('groupby', function (collection, key) {
     }
     groups[groupKey].push(item);
   });
-  console.log(groups)
+  //console.log(groups)
   return groups;
 });
 njkEnv.addFilter('renderHtml', function (value) {

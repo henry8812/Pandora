@@ -10,9 +10,9 @@ const users = require('../DAO/users'); // Importa el módulo users
 
 router.get('/articles', async(req, res) => {
     // Lógica para cerrar sesión del usuario
-    console.log("articles")
+    //console.log("articles")
     let items = await articles.listFrontArticles();
-    console.log(items)
+    //console.log(items)
     const sessionId = req.cookies.sessionId;
     const email = sessionId;
     let author = email;
@@ -23,9 +23,9 @@ router.get('/articles', async(req, res) => {
 
   router.get('/guides', async(req, res) => {
     // Lógica para cerrar sesión del usuario
-    console.log("guides")
+    //console.log("guides")
     let items = await guides.listFrontGuides();
-    console.log(items)
+    //console.log(items)
     const sessionId = req.cookies.sessionId;
     const email = sessionId;
     let author = email;

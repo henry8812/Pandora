@@ -7,7 +7,7 @@ const NodeCache = require('node-cache');
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body)
+    //console.log(req.body)
     const { title, bannerurl, content, expiration_date } = req.body;
     const sessionId = req.cookies.sessionId;
     const email = sessionId;

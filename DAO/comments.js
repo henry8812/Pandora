@@ -7,10 +7,10 @@ const users = require("../DAO/users");
 dotenv.config();
 async function createComment(data){
     try {
-        console.log(JSON.stringify(data, null, 4))
-        console.log("cookie:", data.author)
+        //console.log(JSON.stringify(data, null, 4))
+        //console.log("cookie:", data.author)
         const user = await users.getUserByEmail(data.author);
-        console.log("user:", user)
+        //console.log("user:", user)
         
         // Crear el artículo con la información proporcionada
         const newComment = {
@@ -42,10 +42,10 @@ async function createComment(data){
 
 async function rateContent(data)  {
     try {
-        console.log(JSON.stringify(data, null, 4))
-        console.log("cookie:", data.author)
+        //console.log(JSON.stringify(data, null, 4))
+        //console.log("cookie:", data.author)
         const user = await users.getUserByEmail(data.author);
-        console.log("user:", user)
+        //console.log("user:", user)
         
         // Crear el artículo con la información proporcionada
         const newRate = {
@@ -55,7 +55,7 @@ async function rateContent(data)  {
             object_type: data.object_type
         };
         
-        console.log(JSON.stringify(newRate, null, 4))
+        //console.log(JSON.stringify(newRate, null, 4))
         
         
         // Insertar el artículo en la base de datos

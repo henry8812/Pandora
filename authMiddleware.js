@@ -15,7 +15,13 @@ const authMiddleware = (req, res, next) => {
     if (currentUrl.startsWith('/assets')) {
         next();
         return;
+      
       }
+
+
+      
+      
+
   
     // Excluir la URL "/auth/login" del middleware
     if (currentUrl === '/auth/login') {
@@ -27,13 +33,13 @@ const authMiddleware = (req, res, next) => {
       // La sesión está activa, obtener los datos de la sesión
       const email = sessionId;
   
-      console.log("Hay sesión");
-      console.log("Email:", email);
+      //console.log("Hay sesión");
+      //console.log("Email:", email);
   
       next(); // Pasar al siguiente middleware
     } else {
       // La sesión no está activa, redirigir a la página de inicio de sesión
-      console.log("No hay sesión");
+      //console.log("No hay sesión");
       res.clearCookie('sessionId');
       res.redirect('/auth/login');
     }

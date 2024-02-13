@@ -60,7 +60,7 @@
       .then(response => response.json())
       .then(data => {
         resource = data;
-        console.log(JSON.stringify(resource, null, 4))
+        //console.log(JSON.stringify(resource, null, 4))
         resource.path = '/files/'+resource.resource.file.filename
         
         
@@ -91,14 +91,14 @@
       const contentInput = tinymce.get('content').getContent();
       
     //    const { title, bannerurl, content, expiration_date } = req.body;
-      //console.log(JSON.stringify(resource, null, 4))
+      ////console.log(JSON.stringify(resource, null, 4))
       const guideData = {
         title: titleInput.value,
         bannerurl : resource !== null ? resource.path : null,
         content: contentInput,
         expiration_date : date.value
       };
-      console.log(guideData)
+      //console.log(guideData)
 
       fetch("/news", {
         method: "POST",
@@ -109,7 +109,7 @@
       })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         Swal.fire({
             title: 'News creada correctamente',
             text: 'Haz creado un news de fomra exitosa',

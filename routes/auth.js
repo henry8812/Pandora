@@ -31,9 +31,9 @@ router.get('/change-password',async (req, res) => {
 
 router.post('/change-password',async (req, res) => {
 
-  console.log(JSON.stringify(req.body, null,  4))
+  //console.log(JSON.stringify(req.body, null,  4))
   let response = await auth.changePassword(req.body.userId, req.body.newPassword)
-  console.log(response)
+  //console.log(response)
   res.send(response)
 })
 
@@ -60,7 +60,7 @@ router.post('/login', async (req, res) => {
       const user = await users.getUserByEmail(email);
       const accessLogs = await auth.getAccessLogsByUserId(user.id);
 
-      console.log(accessLogs)
+      //console.log(accessLogs)
       let next = ''
       if (accessLogs.length === 1) {
         next = '/auth/change-password';
@@ -78,7 +78,7 @@ router.post('/login', async (req, res) => {
       };
       res.send(response);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 });

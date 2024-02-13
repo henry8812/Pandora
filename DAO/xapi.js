@@ -15,7 +15,7 @@ async function createXAPILog(event_type, action, extra_info, req) {
         const query = 'INSERT INTO xapi_logs (user_id, timestamp, event_type, action, extra_info) VALUES (?, ?, ?, ?, ?)';
         const values = [user.id, new Date(), event_type, action, extra_info];
         await db.query(query, values);
-        console.log('xAPI log created successfully');
+        //console.log('xAPI log created successfully');
     } catch (error) {
         console.error('Error creating xAPI log:', error);
         throw error;

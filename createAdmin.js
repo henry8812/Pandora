@@ -31,7 +31,7 @@ prompt.get(
 
     try {
       const userId = await UserDAO.createUser(user);
-      console.log(`Admin user created with ID: ${userId}`);
+      //console.log(`Admin user created with ID: ${userId}`);
       process.exit(); // Agregar esta línea para cerrar el proceso
     } catch (error) {
       console.error('Error creating admin user:', error);

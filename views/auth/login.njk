@@ -96,7 +96,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         if (response.status === 'success') {
           // La solicitud fue exitosa
           // Realiza las acciones necesarias
-          console.log(response)
+          //console.log(response)
           if(response.next) {
               location.href = response.next
           }else {
@@ -105,10 +105,18 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
           
         } else {
           // La solicitud falló
+          Swal.fire({
+            title: "Autenticacion Fallida",
+            text: "EL nombre de usuario y/o contraseña son incorrectos.",
+            icon: "error"
+        });
           console.error('Error en la solicitud de inicio de sesión');
+          
         }
       } else {
         console.error('Error en la solicitud de inicio de sesión');
+      
+        
       }
     }
   };

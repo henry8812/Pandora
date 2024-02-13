@@ -18,17 +18,17 @@ async function authenticateUser(email, password) {
         // Registrar el acceso en la tabla de registros de acceso
         await recordAccess(user[0].id);
 
-        console.log('User Authenticated');
+        //console.log('User Authenticated');
         return user;
       } else {
         // Contraseña incorrecta
-        console.log('Incorrect Password');
-        console.log('Authentication Failed for '+email)
+        //console.log('Incorrect Password');
+        //console.log('Authentication Failed for '+email)
         return null;
       }
     } else {
       // Usuario no encontrado
-      console.log('User not found');
+      //console.log('User not found');
       return null;
     }
   } catch (error) {
@@ -41,7 +41,7 @@ async function recordAccess(userId) {
     const query = 'INSERT INTO access_logs (user_id, timestamp) VALUES (?, ?)';
     const values = [userId, new Date()];
     await db.query(query, values);
-    console.log('Access recorded for user with ID:', userId);
+    //console.log('Access recorded for user with ID:', userId);
   } catch (error) {
     console.error('Error recording access:', error);
     throw error;
@@ -93,9 +93,8 @@ async function changePassword(userId, newPassword) {
   }
 }
 async function recover(){
-    await changePassword(41, 'Emcali2023')
+    await changePassword(10, 'Emcali2023')
     return "done"
 }
 
 recover().then(response=> {console.log(response)})
-

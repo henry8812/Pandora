@@ -82,7 +82,7 @@ router.get('/popular', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body)
+    //console.log(req.body)
     const { title, bannerurl, shortDescription, content, target_id } = req.body;
     
     if (!title || !shortDescription ) {
@@ -199,7 +199,7 @@ router.post('/delete/:id', async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
     const email = sessionId;
-    console.log("delete")
+    //console.log("delete")
 
     let user = await users.getUserByEmail(email);
   

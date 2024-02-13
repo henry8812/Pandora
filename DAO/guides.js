@@ -25,13 +25,13 @@ async function createGuide(guideData) {
     let aux = guideData;
     let target = guideData.target_id
     delete aux.target_id
-    console.log("aux")
-    console.log(aux)
+    //console.log("aux")
+    //console.log(aux)
     const result = await db.query('INSERT INTO manuals SET ?', aux);
     
     const guideId = result.insertId;
     for( var i=0; i < target.length; i++){
-      console.log("lap")
+      //console.log("lap")
       let associationData = {
         manual_id : guideId,
         target_id :parseInt( target[i])
@@ -42,7 +42,7 @@ async function createGuide(guideData) {
     return guideId
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
   return null;
 }
@@ -58,7 +58,7 @@ async function deleteGuide(id) {
     // Eliminar el artículo
     await db.query("DELETE FROM manuals WHERE id = ?", [id]);
 
-    console.log(`Manual con ID ${id} y sus comentarios/calificaciones asociadas han sido eliminados.`);
+    //console.log(`Manual con ID ${id} y sus comentarios/calificaciones asociadas han sido eliminados.`);
   } catch (error) {
     console.error('Error:', error);
     throw error;
@@ -149,7 +149,7 @@ async function listToolsGuides() {
 async function getGuide(id) {
 
   try {
-    console.log(id)
+    //console.log(id)
     const query = 'SELECT * FROM manuals WHERE id = ? ';
     const values = [id];
     let manual = await db.query(query, values);
@@ -162,7 +162,7 @@ async function getGuide(id) {
         let author = comment.user_id
         let values_1 = [id, author]
         comment.rating = (await db.query("select * from ratings where object_type = 1 and object_id = ? and user_id = ? order by rating desc", values_1))[0];
-        console.log(comment)
+        //console.log(comment)
         manual.comments.push(comment)
       }
   

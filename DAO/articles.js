@@ -38,11 +38,11 @@ async function listFrontArticles() {
     let articles = await db.query(query);
 
     for(article of articles ){
-      console.log(JSON.stringify(article))
+      //console.log(JSON.stringify(article))
       let author = await users.getUser(article.creator)
       article.author = author;
-      console.log(article)
-      console.log(JSON.stringify(article))
+      //console.log(article)
+      //console.log(JSON.stringify(article))
 
     }
 
@@ -61,11 +61,11 @@ async function listPremiumArticles() {
     let articles = await db.query(query);
 
     for(article of articles ){
-      console.log(JSON.stringify(article))
+      //console.log(JSON.stringify(article))
       let author = await users.getUser(article.creator)
       article.author = author;
-      console.log(article)
-      console.log(JSON.stringify(article))
+      //console.log(article)
+      //console.log(JSON.stringify(article))
 
     }
 
@@ -83,11 +83,11 @@ async function listOpsArticles() {
     let articles = await db.query(query);
 
     for(article of articles ){
-      console.log(JSON.stringify(article))
+      //console.log(JSON.stringify(article))
       let author = await users.getUser(article.creator)
       article.author = author;
-      console.log(article)
-      console.log(JSON.stringify(article))
+      //console.log(article)
+      //console.log(JSON.stringify(article))
 
     }
 
@@ -106,11 +106,11 @@ async function listToolsArticles() {
     let articles = await db.query(query);
 
     for(article of articles ){
-      console.log(JSON.stringify(article))
+      //console.log(JSON.stringify(article))
       let author = await users.getUser(article.creator)
       article.author = author;
-      console.log(article)
-      console.log(JSON.stringify(article))
+      //console.log(article)
+      //console.log(JSON.stringify(article))
 
     }
 
@@ -134,7 +134,7 @@ async function deleteArticle(id) {
     // Eliminar el artículo
     await db.query("DELETE FROM articles WHERE id = ?", [id]);
 
-    console.log(`Artículo con ID ${id} y sus comentarios/calificaciones asociadas han sido eliminados.`);
+    //console.log(`Artículo con ID ${id} y sus comentarios/calificaciones asociadas han sido eliminados.`);
   } catch (error) {
     console.error('Error:', error);
     throw error;
@@ -150,8 +150,8 @@ async function getArticle(id) {
     article = article[0]
     let author = await users.getUser(article.creator)
     article.author = author;
-    console.log(article)
-    console.log(JSON.stringify(article))
+    //console.log(article)
+    //console.log(JSON.stringify(article))
 
     let comments = await db.query("SELECT * FROM COMMENTS join users on users.id =  comments.user_id where comment_type_id =3 and object_id = ? order by created_at desc", values)
     article.comments = [];
@@ -160,7 +160,7 @@ async function getArticle(id) {
       let user = comment.user_id
       let values_1 = [id, user]
       comment.rating = (await db.query("select * from ratings where object_type = 3 and object_id = ? and user_id = ? order by rating desc", values_1))[0];
-      console.log(comment)
+      //console.log(comment)
       article.comments.push(comment)
     }
     
@@ -175,9 +175,9 @@ async function getArticle(id) {
 async function createArticle(articleData) {
   try {
     // Obtener el usuario por su email
-    console.log("cookie:", articleData.creator)
+    //console.log("cookie:", articleData.creator)
     const user = await users.getUserByEmail(articleData.creator);
-    console.log("user:", user)
+    //console.log("user:", user)
     
     // Verificar si se encontró el usuario
     if (!user) {
@@ -196,7 +196,7 @@ async function createArticle(articleData) {
       //target_id : articleData.target_id
     };
 
-    console.log(JSON.stringify(newArticle, null, 4))
+    //console.log(JSON.stringify(newArticle, null, 4))
 
     // Insertar el artículo en la base de datos
     const result = await db.query('INSERT INTO articles SET ?', newArticle);
@@ -224,11 +224,11 @@ async function createArticle(articleData) {
 }
 
 async function listSelectedArticles(values) {
-  console.log("values:",values)
+  //console.log("values:",values)
   try {
     const placeholders = values.map(() => '?').join(', ');
     const query = `SELECT pandora.articles.* FROM pandora.articles WHERE pandora.articles.id IN (${placeholders}) ORDER BY ID DESC`;
-    console.log(query)
+    //console.log(query)
     let articles = await db.query(query, values);
 
     for (article of articles) {
@@ -268,12 +268,12 @@ async function listPopularArticles() {
         aux[value.article.id] += 1
       }
     }
-    console.log(aux)
+    //console.log(aux)
     aux = ordenarObjetoPorValorNumerico(aux)
-    console.log(aux)
+    //console.log(aux)
     list = await listSelectedArticles(aux)
-    console.log("lista")
-    console.log(list)
+    //console.log("lista")
+    //console.log(list)
 
     return list;
 

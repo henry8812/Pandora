@@ -69,7 +69,7 @@ async function listCategories(){
     `;
     
     let result = await db.query(query);
-    console.log("Categories:", result)
+    //console.log("Categories:", result)
     return result;
   } catch (error) {
     console.error('Error:', error);
